@@ -1,0 +1,37 @@
+<mixer>
+  <!-- These are the initial mixer settings -->
+  <ctl name="Speaker Playback Switch" value="0" />
+  <ctl name="Int Spk Switch" value="0" />
+  <ctl name="HP Playback Switch" value="0" />
+  <ctl name="Headphone Jack Switch" value="0" />
+  <ctl name="Int Mic Switch" value="0" />
+  <ctl name="Mic Jack Switch" value="0" />
+  <ctl name="DMIC Switch" value="Disable" />
+  <ctl name="ADC Capture Volume" value="119" />
+
+  <path name="speaker">
+    <ctl name="Speaker Playback Switch" value="1" />
+    <ctl name="Int Spk Switch" value="1" />
+  </path>
+
+  <path name="headphone">
+    <ctl name="HP Playback Switch" value="1" />
+    <ctl name="Headphone Jack Switch" value="1" />
+  </path>
+
+  <path name="main-mic-top">
+    <ctl name="Int Mic Switch" value="1" />
+    <ctl name="DMIC Switch" value="DMIC1" />
+    <ctl name="ADC IF1 SWITCH" value="right copy to left" />
+  </path>
+
+  <path name="main-mic-left">
+    <ctl name="Int Mic Switch" value="1" />
+    <ctl name="DMIC Switch" value="DMIC1" />
+    <ctl name="ADC IF1 SWITCH" value="left copy to right" />
+  </path>
+
+  <path name="headset-mic">
+    <ctl name="Mic Jack Switch" value="1" />
+  </path>
+</mixer>
