@@ -113,6 +113,7 @@
 
          Must be overridden in platform specific overlays -->
     <integer-array name="config_autoBrightnessLevels">
+        <item>5</item>
         <item>10</item>
         <item>50</item>
         <item>200</item>
@@ -131,8 +132,9 @@
          than the size of the config_autoBrightnessLevels array.
          This must be overridden in platform specific overlays -->
     <integer-array name="config_autoBrightnessLcdBacklightValues">
-        <item>25</item>   <!-- 0-10 -->
-        <item>40</item>   <!-- 10-50 -->
+        <item>5</item>    <!-- 0-5 -->
+        <item>15</item>   <!-- 5-10 -->
+        <item>25</item>   <!-- 10-50 -->
         <item>40</item>   <!-- 50-200 -->
         <item>50</item>   <!-- 200-400 -->
         <item>60</item>   <!-- 400-1000 -->
@@ -169,7 +171,7 @@
     </integer-array>
 
     <!-- Minimum screen brightness allowed by the power manager. -->
-    <integer name="config_screenBrightnessDim">10</integer>
+    <integer name="config_screenBrightnessDim">5</integer>
 
     <!-- This device is not "voice capable"; it's data-only. -->
     <bool name="config_voice_capable">false</bool>
