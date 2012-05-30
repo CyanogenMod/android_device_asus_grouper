@@ -44,7 +44,6 @@
 /system/lib/hw/gps.tegra3.so
 /system/lib/hw/gralloc.tegra3.so
 /system/lib/hw/hwcomposer.tegra3.so
-/system/lib/hw/nfc.tegra3.so
 /system/lib/hw/sensors.grouper.so
 /system/lib/libami.so
 /system/lib/libami_sensor_mw.so
@@ -99,11 +98,6 @@
 /system/lib/libsensors.mpl.so
 /system/lib/libstagefrighthw.so
 /system/lib/libtf_crypto_sst.so
-/system/lib/modules/baseband-xmm-power2.ko
-/system/lib/modules/baseband_usb_chr.ko
-/system/lib/modules/raw_ip_net.ko
-/system/lib/modules/scsi_wait_scan.ko
-/system/lib/modules/tcrypt.ko
 /system/vendor/firmware/libpn544_fw.so
 /system/vendor/lib/drm/libdrmwvmplugin.so
 /system/vendor/lib/libwvdrm_L1.so
