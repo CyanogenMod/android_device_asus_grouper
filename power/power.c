@@ -85,6 +85,10 @@ static void grouper_power_set_interactive(struct power_module *module, int on)
 
     sysfs_write("/sys/devices/system/cpu/cpufreq/interactive/input_boost",
                 on ? "1" : "0");
+
+    sysfs_write("/sys/devices/system/cpu/cpufreq/interactive/boost_factor",
+                on ? "0" : "2");
+
 }
 
 static void grouper_power_hint(struct power_module *module, power_hint_t hint,
