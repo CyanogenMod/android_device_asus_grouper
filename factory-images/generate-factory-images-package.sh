@@ -20,11 +20,11 @@
 # end jb-dev
 
 source ../../../common/clear-factory-images-variables.sh
-BUILD=342231
+BUILD=367578
 DEVICE=grouper
 PRODUCT=nakasi
-VERSION=jrn26d
+VERSION=jrn60b
 BOOTLOADERFILE=bootloader.bin
-BOOTLOADER=3.23
+BOOTLOADER=3.31
 SLEEPDURATION=10
 source ../../../common/generate-factory-images-common.sh
