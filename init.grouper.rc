@@ -91,6 +91,18 @@ on boot
     #write /sys/module/cpuidle_t3/parameters/lp2_0_in_idle 0
     write /sys/module/cpuidle/parameters/lp2_in_idle 0
 
+# Interactive governor settings
+    chown system system /sys/devices/system/cpu/cpufreq/interactive/boost_factor
+    chmod 0660 /sys/devices/system/cpu/cpufreq/interactive/boost_factor
+    chown system system /sys/devices/system/cpu/cpufreq/interactive/go_maxspeed_load
+    chmod 0660 /sys/devices/system/cpu/cpufreq/interactive/go_maxspeed_load
+    chown system system /sys/devices/system/cpu/cpufreq/interactive/io_is_busy
+    chmod 0660 /sys/devices/system/cpu/cpufreq/interactive/io_is_busy
+    chown system system /sys/devices/system/cpu/cpufreq/interactive/max_boost
+    chmod 0660 /sys/devices/system/cpu/cpufreq/interactive/max_boost
+    chown system system /sys/devices/system/cpu/cpufreq/interactive/sustain_load
+    chmod 0660 /sys/devices/system/cpu/cpufreq/interactive/sustain_load
+
 # Default Read Ahead value for sdcards
     write /sys/block/mmcblk0/queue/read_ahead_kb 2048
     write /sys/block/mmcblk1/queue/read_ahead_kb 2048
