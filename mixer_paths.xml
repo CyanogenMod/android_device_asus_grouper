@@ -12,11 +12,15 @@
   <path name="speaker">
     <ctl name="Speaker Playback Switch" value="1" />
     <ctl name="Int Spk Switch" value="1" />
+    <ctl name="DAC IF1 SWITCH" value="swap" />
   </path>
 
   <path name="headphone">
     <ctl name="HP Playback Switch" value="1" />
     <ctl name="Headphone Jack Switch" value="1" />
+    <!-- Even though the default is "Normal", this is used
+         to override the speaker setting -->
+    <ctl name="DAC IF1 SWITCH" value="Normal" />
   </path>
 
   <path name="main-mic-top">
