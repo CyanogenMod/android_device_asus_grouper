@@ -160,10 +160,10 @@ static void select_devices(struct audio_device *adev)
 
     reset_mixer_state(adev->ar);
 
-    if (headphone_on)
-        audio_route_apply_path(adev->ar, "headphone");
     if (speaker_on)
         audio_route_apply_path(adev->ar, "speaker");
+    if (headphone_on)
+        audio_route_apply_path(adev->ar, "headphone");
     if (main_mic_on) {
         if (adev->orientation == ORIENTATION_LANDSCAPE)
             audio_route_apply_path(adev->ar, "main-mic-left");
