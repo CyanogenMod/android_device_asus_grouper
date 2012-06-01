@@ -77,8 +77,6 @@ BOARD_USES_GENERIC_INVENSENSE := false
 BOARD_HAVE_BLUETOOTH := true
 BOARD_HAVE_BLUETOOTH_BCM := true
 
-BOARD_HAVE_GPS := true
-
 USE_OPENGL_RENDERER := true
 BOARD_EGL_CFG := device/asus/grouper/egl.cfg
 
