@@ -77,8 +77,96 @@ on boot
     chown system system /sys/module/cpu_tegra/parameters/cpu_user_cap
 
 # Sensor
-    insmod /system/lib/modules/mpu6050b1.ko
-    insmod /system/lib/modules/inv_mpu_ak89xx.ko
+# iio
+    chown system system /dev/iio:device0
+    chown system system /sys/bus/iio/devices/trigger0/name
+    chown system system /sys/bus/iio/devices/iio:device0/accl_enable
+    chown system system /sys/bus/iio/devices/iio:device0/accl_matrix
+    chown system system /sys/bus/iio/devices/iio:device0/buffer/length
+    chown system system /sys/bus/iio/devices/iio:device0/buffer/enable
+    chown system system /sys/bus/iio/devices/iio:device0/compass_enable
+    chown system system /sys/bus/iio/devices/iio:device0/compass_matrix
+    chown system system /sys/bus/iio/devices/iio:device0/dmp_on
+    chown system system /sys/bus/iio/devices/iio:device0/dmp_int_on
+    chown system system /sys/bus/iio/devices/iio:device0/gyro_enable
+    chown system system /sys/bus/iio/devices/iio:device0/gyro_matrix
+    chown system system /sys/bus/iio/devices/iio:device0/in_accel_scale
+    chown system system /sys/bus/iio/devices/iio:device0/in_anglvel_scale
+    chown system system /sys/bus/iio/devices/iio:device0/in_magn_scale
+    chown system system /sys/bus/iio/devices/iio:device0/key
+    chown system system /sys/bus/iio/devices/iio:device0/power_state
+    chown system system /sys/bus/iio/devices/iio:device0/sampling_frequency
+    chown system system /sys/bus/iio/devices/iio:device0/scan_elements/in_accel_x_en
+    chown system system /sys/bus/iio/devices/iio:device0/scan_elements/in_accel_y_en
+    chown system system /sys/bus/iio/devices/iio:device0/scan_elements/in_accel_z_en
+    chown system system /sys/bus/iio/devices/iio:device0/scan_elements/in_anglvel_x_en
+    chown system system /sys/bus/iio/devices/iio:device0/scan_elements/in_anglvel_y_en
+    chown system system /sys/bus/iio/devices/iio:device0/scan_elements/in_anglvel_z_en
+    chown system system /sys/bus/iio/devices/iio:device0/scan_elements/in_magn_x_en
+    chown system system /sys/bus/iio/devices/iio:device0/scan_elements/in_magn_y_en
+    chown system system /sys/bus/iio/devices/iio:device0/scan_elements/in_magn_z_en
+    chown system system /sys/bus/iio/devices/iio:device0/scan_elements/in_timestamp_en
+    chown system system /sys/bus/iio/devices/iio:device0/temperature
+    chown system system /sys/bus/iio/devices/iio:device0/trigger/current_trigger
+    chown system system /dev/iio:device1
+    chown system system /sys/bus/iio/devices/trigger1/name
+    chown system system /sys/bus/iio/devices/iio:device1/buffer/length
+    chown system system /sys/bus/iio/devices/iio:device1/buffer/enable
+    chown system system /sys/bus/iio/devices/iio:device1/compass_enable
+    chown system system /sys/bus/iio/devices/iio:device1/compass_matrix
+    chown system system /sys/bus/iio/devices/iio:device1/in_magn_scale
+    chown system system /sys/bus/iio/devices/iio:device1/power_state
+    chown system system /sys/bus/iio/devices/iio:device1/sampling_frequency
+    chown system system /sys/bus/iio/devices/iio:device1/scan_elements/in_magn_x_en
+    chown system system /sys/bus/iio/devices/iio:device1/scan_elements/in_magn_y_en
+    chown system system /sys/bus/iio/devices/iio:device1/scan_elements/in_magn_z_en
+    chown system system /sys/bus/iio/devices/iio:device1/scan_elements/in_timestamp_en
+    chown system system /sys/bus/iio/devices/iio:device1/trigger/current_trigger
+
+    chmod 600 /dev/iio:device0
+    chmod 600 /sys/bus/iio/devices/trigger0/name
+    chmod 600 /sys/bus/iio/devices/iio:device0/accl_enable
+    chmod 600 /sys/bus/iio/devices/iio:device0/accl_matrix
+    chmod 600 /sys/bus/iio/devices/iio:device0/buffer/length
+    chmod 600 /sys/bus/iio/devices/iio:device0/buffer/enable
+    chmod 600 /sys/bus/iio/devices/iio:device0/compass_enable
+    chmod 600 /sys/bus/iio/devices/iio:device0/compass_matrix
+    chmod 600 /sys/bus/iio/devices/iio:device0/dmp_on
+    chmod 600 /sys/bus/iio/devices/iio:device0/dmp_int_on
+    chmod 600 /sys/bus/iio/devices/iio:device0/gyro_enable
+    chmod 600 /sys/bus/iio/devices/iio:device0/gyro_matrix
+    chmod 600 /sys/bus/iio/devices/iio:device0/in_accel_scale
+    chmod 600 /sys/bus/iio/devices/iio:device0/in_anglvel_scale
+    chmod 600 /sys/bus/iio/devices/iio:device0/in_magn_scale
+    chmod 600 /sys/bus/iio/devices/iio:device0/key
+    chmod 600 /sys/bus/iio/devices/iio:device0/power_state
+    chmod 600 /sys/bus/iio/devices/iio:device0/sampling_frequency
+    chmod 600 /sys/bus/iio/devices/iio:device0/scan_elements/in_accel_x_en
+    chmod 600 /sys/bus/iio/devices/iio:device0/scan_elements/in_accel_y_en
+    chmod 600 /sys/bus/iio/devices/iio:device0/scan_elements/in_accel_z_en
+    chmod 600 /sys/bus/iio/devices/iio:device0/scan_elements/in_anglvel_x_en
+    chmod 600 /sys/bus/iio/devices/iio:device0/scan_elements/in_anglvel_y_en
+    chmod 600 /sys/bus/iio/devices/iio:device0/scan_elements/in_anglvel_z_en
+    chmod 600 /sys/bus/iio/devices/iio:device0/scan_elements/in_magn_x_en
+    chmod 600 /sys/bus/iio/devices/iio:device0/scan_elements/in_magn_y_en
+    chmod 600 /sys/bus/iio/devices/iio:device0/scan_elements/in_magn_z_en
+    chmod 600 /sys/bus/iio/devices/iio:device0/scan_elements/in_timestamp_en
+    chmod 600 /sys/bus/iio/devices/iio:device0/temperature
+    chmod 600 /sys/bus/iio/devices/iio:device0/trigger/current_trigger
+    chmod 600 /dev/iio:device1
+    chmod 600 /sys/bus/iio/devices/trigger1/name
+    chmod 600 /sys/bus/iio/devices/iio:device1/buffer/length
+    chmod 600 /sys/bus/iio/devices/iio:device1/buffer/enable
+    chmod 600 /sys/bus/iio/devices/iio:device1/compass_enable
+    chmod 600 /sys/bus/iio/devices/iio:device1/compass_matrix
+    chmod 600 /sys/bus/iio/devices/iio:device1/in_magn_scale
+    chmod 600 /sys/bus/iio/devices/iio:device1/power_state
+    chmod 600 /sys/bus/iio/devices/iio:device1/sampling_frequency
+    chmod 600 /sys/bus/iio/devices/iio:device1/scan_elements/in_magn_x_en
+    chmod 600 /sys/bus/iio/devices/iio:device1/scan_elements/in_magn_y_en
+    chmod 600 /sys/bus/iio/devices/iio:device1/scan_elements/in_magn_z_en
+    chmod 600 /sys/bus/iio/devices/iio:device1/scan_elements/in_timestamp_en
+    chmod 600 /sys/bus/iio/devices/iio:device1/trigger/current_trigger
 
 # Power management settings
     write /sys/module/cpu_tegra3/parameters/no_lp 0
