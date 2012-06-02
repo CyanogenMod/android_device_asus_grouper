@@ -22,7 +22,6 @@
 # A few more packages that aren't quite used on all builds
 PRODUCT_PACKAGES := \
   HoloSpiralWallpaper \
-  VisualizationWallpapers \
   Camera
 
 # Inherit from those products. Most specific first.
