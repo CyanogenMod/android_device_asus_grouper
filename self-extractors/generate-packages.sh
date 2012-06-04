@@ -16,12 +16,13 @@
 
 # start jellybean
 # 368864 = JRN61B
+# 371028 = JRN65
 # end jellybean
 BRANCH=jellybean
 if test $BRANCH=jellybean
 then
-  ZIP=nakasi-ota-368864.zip
-  BUILD=jrn61b
+  ZIP=nakasi-ota-371028.zip
+  BUILD=jrn65
 fi # jellybean
 ROOTDEVICE=grouper
 DEVICE=grouper
