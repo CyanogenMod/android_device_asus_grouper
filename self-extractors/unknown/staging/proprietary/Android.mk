@@ -96,24 +96,6 @@ LOCAL_MODULE_TAGS := optional
 include $(BUILD_PREBUILT)
 
 include $(CLEAR_VARS)
-LOCAL_MODULE := libami
-LOCAL_SRC_FILES := libami.so
-LOCAL_MODULE_SUFFIX := .so
-LOCAL_MODULE_CLASS := SHARED_LIBRARIES
-LOCAL_MODULE_PATH := $(TARGET_OUT)/lib
-LOCAL_MODULE_TAGS := optional
-include $(BUILD_PREBUILT)
-
-include $(CLEAR_VARS)
-LOCAL_MODULE := libami_sensor_mw
-LOCAL_SRC_FILES := libami_sensor_mw.so
-LOCAL_MODULE_SUFFIX := .so
-LOCAL_MODULE_CLASS := SHARED_LIBRARIES
-LOCAL_MODULE_PATH := $(TARGET_OUT)/lib
-LOCAL_MODULE_TAGS := optional
-include $(BUILD_PREBUILT)
-
-include $(CLEAR_VARS)
 LOCAL_MODULE := libardrv_dynamic
 LOCAL_SRC_FILES := libardrv_dynamic.so
 LOCAL_MODULE_SUFFIX := .so
@@ -177,8 +159,8 @@ LOCAL_MODULE_TAGS := optional
 include $(BUILD_PREBUILT)
 
 include $(CLEAR_VARS)
-LOCAL_MODULE := libmllite
-LOCAL_SRC_FILES := libmllite.so
+LOCAL_MODULE := libinvensense_hal
+LOCAL_SRC_FILES := libinvensense_hal.so
 LOCAL_MODULE_SUFFIX := .so
 LOCAL_MODULE_CLASS := SHARED_LIBRARIES
 LOCAL_MODULE_PATH := $(TARGET_OUT)/lib
@@ -186,8 +168,8 @@ LOCAL_MODULE_TAGS := optional
 include $(BUILD_PREBUILT)
 
 include $(CLEAR_VARS)
-LOCAL_MODULE := libmlplatform
-LOCAL_SRC_FILES := libmlplatform.so
+LOCAL_MODULE := libmllite
+LOCAL_SRC_FILES := libmllite.so
 LOCAL_MODULE_SUFFIX := .so
 LOCAL_MODULE_CLASS := SHARED_LIBRARIES
 LOCAL_MODULE_PATH := $(TARGET_OUT)/lib
@@ -573,26 +555,8 @@ LOCAL_MODULE_TAGS := optional
 include $(BUILD_PREBUILT)
 
 include $(CLEAR_VARS)
-LOCAL_MODULE := libsensors.base
-LOCAL_SRC_FILES := libsensors.base.so
-LOCAL_MODULE_SUFFIX := .so
-LOCAL_MODULE_CLASS := SHARED_LIBRARIES
-LOCAL_MODULE_PATH := $(TARGET_OUT)/lib
-LOCAL_MODULE_TAGS := optional
-include $(BUILD_PREBUILT)
-
-include $(CLEAR_VARS)
 LOCAL_MODULE := libsensors.lightsensor
 LOCAL_SRC_FILES := libsensors.lightsensor.so
-LOCAL_MODULE_SUFFIX := .so
-LOCAL_MODULE_CLASS := SHARED_LIBRARIES
-LOCAL_MODULE_PATH := $(TARGET_OUT)/lib
-LOCAL_MODULE_TAGS := optional
-include $(BUILD_PREBUILT)
-
-include $(CLEAR_VARS)
-LOCAL_MODULE := libsensors.mpl
-LOCAL_SRC_FILES := libsensors.mpl.so
 LOCAL_MODULE_SUFFIX := .so
 LOCAL_MODULE_CLASS := SHARED_LIBRARIES
 LOCAL_MODULE_PATH := $(TARGET_OUT)/lib
@@ -704,14 +668,6 @@ LOCAL_SRC_FILES := nvram.txt
 LOCAL_MODULE_SUFFIX := .txt
 LOCAL_MODULE_CLASS := ETC
 LOCAL_MODULE_PATH := $(TARGET_OUT_ETC)
-LOCAL_MODULE_TAGS := optional
-include $(BUILD_PREBUILT)
-
-include $(CLEAR_VARS)
-LOCAL_MODULE := sensors-config
-LOCAL_SRC_FILES := sensors-config
-LOCAL_MODULE_CLASS := EXECUTABLES
-LOCAL_MODULE_PATH := $(TARGET_OUT)/bin
 LOCAL_MODULE_TAGS := optional
 include $(BUILD_PREBUILT)
 

@@ -39,8 +39,6 @@ do
     TO_EXTRACT="\
             system/bin/btmacreader \
             system/bin/glgps \
-            system/bin/sensors-config \
-            system/bin/setup_fs \
             system/bin/tf_daemon \
             system/etc/asound.conf \
             system/etc/firmware/bcm4330.hcd \
@@ -61,13 +59,11 @@ do
             system/lib/hw/gralloc.tegra3.so \
             system/lib/hw/hwcomposer.tegra3.so \
             system/lib/hw/sensors.grouper.so \
-            system/lib/libami.so \
-            system/lib/libami_sensor_mw.so \
             system/lib/libardrv_dynamic.so \
             system/lib/libcgdrv.so \
             system/lib/libdrmdecrypt.so \
+            system/lib/libinvensense_hal.so \
             system/lib/libmllite.so \
-            system/lib/libmlplatform.so \
             system/lib/libmplmpu.so \
             system/lib/libnvapputil.so \
             system/lib/libnvasfparserhal.so \
@@ -109,9 +105,7 @@ do
             system/lib/libnvtvmr.so \
             system/lib/libnvwinsys.so \
             system/lib/libnvwsi.so \
-            system/lib/libsensors.base.so \
             system/lib/libsensors.lightsensor.so \
-            system/lib/libsensors.mpl.so \
             system/lib/libstagefrighthw.so \
             system/lib/libtf_crypto_sst.so \
             system/vendor/firmware/libpn544_fw.so \

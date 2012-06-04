@@ -15,8 +15,6 @@
 # blob(s) necessary for Grouper hardware
 PRODUCT_PACKAGES := \
     asound \
-    baseband_usb_chr \
-    baseband-xmm-power2 \
     bcm4330 \
     btmacreader \
     camera.tegra3 \
@@ -25,8 +23,6 @@ PRODUCT_PACKAGES := \
     gpsconfig \
     gralloc.tegra3 \
     hwcomposer.tegra3 \
-    libami \
-    libami_sensor_mw \
     libardrv_dynamic \
     libcgdrv \
     libdrmdecrypt \
@@ -34,8 +30,8 @@ PRODUCT_PACKAGES := \
     libEGL_tegra \
     libGLESv1_CM_tegra \
     libGLESv2_tegra \
+    libinvensense_hal \
     libmllite \
-    libmlplatform \
     libmplmpu \
     libnvapputil \
     libnvasfparserhal \
@@ -77,17 +73,13 @@ PRODUCT_PACKAGES := \
     libnvtvmr \
     libnvwinsys \
     libnvwsi \
-    libpkip \
     libpn544_fw \
-    libsensors.base \
     libsensors.lightsensor \
-    libsensors.mpl \
     libstagefrighthw \
     libtf_crypto_sst \
     libwvdrm_L1 \
     libwvm \
     libWVStreamControlAPI_L1 \
-    nfc.tegra3 \
     nvavp_os_00001000 \
     nvavp_os_0ff00000 \
     nvavp_os_e0000000 \
@@ -95,11 +87,7 @@ PRODUCT_PACKAGES := \
     nvavp_vid_ucode_alt \
     nvcamera \
     nvram \
-    raw_ip_net \
-    scsi_wait_scan \
     sensors.grouper \
-    setup_fs \
-    tcrypt \
     tf_daemon \
     touch_fw
 
