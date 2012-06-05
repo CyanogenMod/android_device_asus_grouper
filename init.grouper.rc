@@ -199,12 +199,12 @@ on boot
     write /sys/class/gpio/export 162
     write /sys/class/gpio/gpio162/value 0
     write /sys/class/gpio/gpio162/direction out
-    chown gps gps /sys/class/gpio/gpio162/value
+    chown gps system /sys/class/gpio/gpio162/value
     chmod 0664 /sys/class/gpio/gpio162/value
     mkdir /data/gps
-    chown gps gps /data/gps
+    chown gps system /data/gps
     chmod 770 /data/gps
-    chown gps gps /dev/ttyHS1
+    chown gps system /dev/ttyHS1
     chmod 0660 /dev/ttyHS1
 
 
@@ -312,9 +312,8 @@ service hciattach /system/bin/brcm_patchram_plus --enable_hci --scopcm=0,2,0,0,0
 # Start GPS daemon
   on boot
   service gps-daemon /system/bin/glgps -c /system/etc/gps/gpsconfig.xml
-  socket gps seqpacket 0666 gps gps
   user gps
-  group gps
+  group system
   class late_start
 
 # Recovery daemon: configure MSC partition
