@@ -33,7 +33,11 @@ static uint8_t pn544_eedata_settings[][4] = {
     ,{0x00,0x9B,0xDD,0x1C} // GSP setting for this threshold
     ,{0x00,0x9B,0x84,0x13} // ANACM2 setting
     ,{0x00,0x99,0x81,0x7F} // ANAVMID setting PCD
+    ,{0x00,0x99,0x7A,0x04} // ANATXMODGSPON
+    ,{0x00,0x99,0x77,0x40} // ANATXCWGSPON
     ,{0x00,0x99,0x31,0x70} // ANAVMID setting PICC
+    ,{0x00,0x99,0x2A,0xF5} // ANATXMODGSN-TYPEB
+    ,{0x00,0x99,0x29,0xF5} // ANATXMODGSN-TYPEA
     // For tegra we don't override load modulation settings.
 
     // Enable PBTF
@@ -46,7 +50,7 @@ static uint8_t pn544_eedata_settings[][4] = {
     ,{0x00,0x99,0x23,0x00} // Default Value is 0x01
 
     // Low-power polling
-    ,{0x00,0x9E,0x74,0x00} // Default Value is 0x00, bits 0->2: sensitivity (0==max,  6==min),
+    ,{0x00,0x9E,0x74,0xB0} // Default Value is 0x00, bits 0->2: sensitivity (0==max,  6==min),
                            // bit 3: RFU,
                            // bits 4,5 hybrid low-power: # of low-power polls per regular poll
                            // bit 6: RFU
