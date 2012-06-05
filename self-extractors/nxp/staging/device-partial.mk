@@ -12,13 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-LOCAL_STEM := grouper/BoardConfigPartial.mk
-
--include vendor/asus/$(LOCAL_STEM)
--include vendor/broadcom/$(LOCAL_STEM)
--include vendor/elan/$(LOCAL_STEM)
--include vendor/invensense/$(LOCAL_STEM)
--include vendor/nvidia/$(LOCAL_STEM)
--include vendor/nxp/$(LOCAL_STEM)
--include vendor/widevine/$(LOCAL_STEM)
--include vendor/unknown/$(LOCAL_STEM)
+# NXP blob(s) necessary for Grouper hardware
+PRODUCT_PACKAGES := \
+    libpn544_fw

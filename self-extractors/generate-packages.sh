@@ -28,7 +28,7 @@ ROOTDEVICE=grouper
 DEVICE=grouper
 MANUFACTURER=asus
 
-for COMPANY in unknown
+for COMPANY in asus broadcom elan invensense nvidia nxp widevine unknown
 do
   echo Processing files from $COMPANY
   rm -rf tmp
@@ -36,36 +36,44 @@ do
   mkdir -p $FILEDIR
   mkdir -p tmp/vendor/$MANUFACTURER/$ROOTDEVICE
   case $COMPANY in
-  unknown)
+  asus)
     TO_EXTRACT="\
             system/bin/btmacreader \
-            system/bin/glgps \
-            system/bin/tf_daemon \
-            system/etc/asound.conf \
+            system/lib/hw/camera.tegra3.so \
+            system/lib/libsensors.lightsensor.so \
+            "
+    ;;
+  broadcom)
+    TO_EXTRACT="\
             system/etc/firmware/bcm4330.hcd \
+            "
+    ;;
+  elan)
+    TO_EXTRACT="\
+            system/etc/firmware/touch_fw.ekt \
+            "
+    ;;
+  invensense)
+    TO_EXTRACT="\
+            system/lib/libinvensense_hal.so \
+            system/lib/libmllite.so \
+            system/lib/libmplmpu.so \
+            "
+    ;;
+  nvidia)
+    TO_EXTRACT="\
             system/etc/firmware/nvavp_os_00001000.bin \
             system/etc/firmware/nvavp_os_0ff00000.bin \
             system/etc/firmware/nvavp_os_e0000000.bin \
             system/etc/firmware/nvavp_os_eff00000.bin \
             system/etc/firmware/nvavp_vid_ucode_alt.bin \
-            system/etc/firmware/touch_fw.ekt \
-            system/etc/gps/gpsconfig.xml \
             system/etc/nvcamera.conf \
             system/etc/nvram.txt \
             system/lib/egl/libEGL_tegra.so \
             system/lib/egl/libGLESv1_CM_tegra.so \
             system/lib/egl/libGLESv2_tegra.so \
-            system/lib/hw/camera.tegra3.so \
-            system/lib/hw/gps.tegra3.so \
             system/lib/hw/gralloc.tegra3.so \
             system/lib/hw/hwcomposer.tegra3.so \
-            system/lib/hw/sensors.grouper.so \
-            system/lib/libardrv_dynamic.so \
-            system/lib/libcgdrv.so \
-            system/lib/libdrmdecrypt.so \
-            system/lib/libinvensense_hal.so \
-            system/lib/libmllite.so \
-            system/lib/libmplmpu.so \
             system/lib/libnvapputil.so \
             system/lib/libnvasfparserhal.so \
             system/lib/libnvaviparserhal.so \
@@ -106,14 +114,34 @@ do
             system/lib/libnvtvmr.so \
             system/lib/libnvwinsys.so \
             system/lib/libnvwsi.so \
-            system/lib/libsensors.lightsensor.so \
             system/lib/libstagefrighthw.so \
             system/lib/libtf_crypto_sst.so \
+            "
+    ;;
+  nxp)
+    TO_EXTRACT="\
             system/vendor/firmware/libpn544_fw.so \
+            "
+    ;;
+  widevine)
+    TO_EXTRACT="\
             system/vendor/lib/drm/libdrmwvmplugin.so \
             system/vendor/lib/libwvdrm_L1.so \
             system/vendor/lib/libwvm.so \
             system/vendor/lib/libWVStreamControlAPI_L1.so
+            "
+    ;;
+  unknown)
+    TO_EXTRACT="\
+            system/bin/glgps \
+            system/bin/tf_daemon \
+            system/etc/asound.conf \
+            system/etc/gps/gpsconfig.xml \
+            system/lib/hw/gps.tegra3.so \
+            system/lib/hw/sensors.grouper.so \
+            system/lib/libardrv_dynamic.so \
+            system/lib/libcgdrv.so \
+            system/lib/libdrmdecrypt.so \
             "
     ;;
   esac

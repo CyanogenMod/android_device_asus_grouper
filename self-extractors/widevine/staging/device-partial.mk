@@ -12,13 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-LOCAL_STEM := grouper/BoardConfigPartial.mk
+# Widevine blob(s) necessary for Grouper hardware
+PRODUCT_PACKAGES := \
+    libdrmwvmplugin \
+    libwvdrm_L1 \
+    libwvm \
+    libWVStreamControlAPI_L1
 
--include vendor/asus/$(LOCAL_STEM)
--include vendor/broadcom/$(LOCAL_STEM)
--include vendor/elan/$(LOCAL_STEM)
--include vendor/invensense/$(LOCAL_STEM)
--include vendor/nvidia/$(LOCAL_STEM)
--include vendor/nxp/$(LOCAL_STEM)
--include vendor/widevine/$(LOCAL_STEM)
--include vendor/unknown/$(LOCAL_STEM)
