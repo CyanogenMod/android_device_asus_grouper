@@ -37,7 +37,7 @@ PRODUCT_PROPERTY_OVERRIDES := \
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
 	persist.sys.usb.config=mtp
 
-include frameworks/native/build/tablet-dalvik-heap.mk
+include frameworks/native/build/tablet-7in-hdpi-1024-dalvik-heap.mk
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_KERNEL):kernel \
