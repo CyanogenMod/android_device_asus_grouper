@@ -1,4 +1,4 @@
-# Copyright (C) 2010 The Android Open Source Project
+# Copyright (C) 2011 The Android Open Source Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,13 +12,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-LOCAL_STEM := grouper/BoardConfigPartial.mk
+LOCAL_PATH := $(call my-dir)
 
--include vendor/asus/$(LOCAL_STEM)
--include vendor/broadcom/$(LOCAL_STEM)
--include vendor/elan/$(LOCAL_STEM)
--include vendor/invensense/$(LOCAL_STEM)
--include vendor/nvidia/$(LOCAL_STEM)
--include vendor/nxp/$(LOCAL_STEM)
--include vendor/widevine/$(LOCAL_STEM)
--include vendor/unknown/$(LOCAL_STEM)
+ifeq ($(TARGET_DEVICE),grouper)
+
+include $(CLEAR_VARS)
+LOCAL_MODULE := libpn544_fw
+LOCAL_SRC_FILES := libpn544_fw.so
+LOCAL_MODULE_SUFFIX := .so
+LOCAL_MODULE_CLASS := SHARED_LIBRARIES
+LOCAL_MODULE_PATH := $(TARGET_OUT_VENDOR)/firmware
+LOCAL_MODULE_TAGS := optional
+LOCAL_MODULE_OWNER := nxp
+include $(BUILD_PREBUILT)
+
+endif

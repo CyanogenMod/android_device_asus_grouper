@@ -15,79 +15,12 @@
 # blob(s) necessary for Grouper hardware
 PRODUCT_PACKAGES := \
     asound \
-    bcm4330 \
-    btmacreader \
-    camera.tegra3 \
     glgps \
     gps.tegra3 \
     gpsconfig \
-    gralloc.tegra3 \
-    hwcomposer.tegra3 \
     libardrv_dynamic \
     libcgdrv \
     libdrmdecrypt \
-    libdrmwvmplugin \
-    libEGL_tegra \
-    libGLESv1_CM_tegra \
-    libGLESv2_tegra \
-    libinvensense_hal \
-    libmllite \
-    libmplmpu \
-    libnvapputil \
-    libnvasfparserhal \
-    libnvaviparserhal \
-    libnvavp \
-    libnvcamerahdr \
-    libnvddk_2d \
-    libnvddk_2d_v2 \
-    libnvdispmgr_d \
-    libnvmm \
-    libnvmmlite \
-    libnvmmlite_audio \
-    libnvmmlite_image \
-    libnvmmlite_utils \
-    libnvmmlite_video \
-    libnvmm_audio \
-    libnvmm_camera \
-    libnvmm_contentpipe \
-    libnvmm_image \
-    libnvmm_manager \
-    libnvmm_misc \
-    libnvmm_parser \
-    libnvmm_service \
-    libnvmm_utils \
-    libnvmm_video \
-    libnvmm_writer \
-    libnvodm_dtvtuner \
-    libnvodm_hdmi \
-    libnvodm_imager \
-    libnvodm_misc \
-    libnvodm_query \
-    libnvomx \
-    libnvomxilclient \
-    libnvos \
-    libnvparser \
-    libnvrm \
-    libnvrm_graphics \
-    libnvsm \
-    libnvtvmr \
-    libnvwinsys \
-    libnvwsi \
-    libpn544_fw \
-    libsensors.lightsensor \
-    libstagefrighthw \
-    libtf_crypto_sst \
-    libwvdrm_L1 \
-    libwvm \
-    libWVStreamControlAPI_L1 \
-    nvavp_os_00001000 \
-    nvavp_os_0ff00000 \
-    nvavp_os_e0000000 \
-    nvavp_os_eff00000 \
-    nvavp_vid_ucode_alt \
-    nvcamera \
-    nvram \
     sensors.grouper \
-    tf_daemon \
-    touch_fw
+    tf_daemon
 
