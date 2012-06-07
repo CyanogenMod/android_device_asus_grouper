@@ -43,33 +43,51 @@
 #define PCM_DEVICE_SCO 2
 
 #define OUT_PERIOD_SIZE 880
-#define OUT_PERIOD_COUNT 2
+#define OUT_SHORT_PERIOD_COUNT 2
+#define OUT_LONG_PERIOD_COUNT 8
+#define OUT_SAMPLING_RATE 44100
+
+#define IN_PERIOD_SIZE 1024
+#define IN_PERIOD_COUNT 4
+#define IN_SAMPLING_RATE 44100
+
+#define SCO_PERIOD_SIZE 256
+#define SCO_PERIOD_COUNT 4
+#define SCO_SAMPLING_RATE 8000
+
+/* minimum sleep time in out_write() when write threshold is not reached */
+#define MIN_WRITE_SLEEP_US 2000
+
+enum {
+    OUT_BUFFER_TYPE_UNKNOWN,
+    OUT_BUFFER_TYPE_SHORT,
+    OUT_BUFFER_TYPE_LONG,
+};
 
 struct pcm_config pcm_config_out = {
     .channels = 2,
-    .rate = 44100,
+    .rate = OUT_SAMPLING_RATE,
     .period_size = OUT_PERIOD_SIZE,
-    .period_count = OUT_PERIOD_COUNT,
+    .period_count = OUT_LONG_PERIOD_COUNT,
     .format = PCM_FORMAT_S16_LE,
-    .start_threshold = OUT_PERIOD_SIZE * OUT_PERIOD_COUNT - 1,
-    .stop_threshold = OUT_PERIOD_SIZE * OUT_PERIOD_COUNT,
+    .start_threshold = OUT_PERIOD_SIZE * OUT_SHORT_PERIOD_COUNT,
 };
 
 struct pcm_config pcm_config_in = {
     .channels = 2,
-    .rate = 44100,
-    .period_size = 1024,
-    .period_count = 4,
+    .rate = IN_SAMPLING_RATE,
+    .period_size = IN_PERIOD_SIZE,
+    .period_count = IN_PERIOD_COUNT,
     .format = PCM_FORMAT_S16_LE,
     .start_threshold = 1,
-    .stop_threshold = 4096,
+    .stop_threshold = (IN_PERIOD_SIZE * IN_PERIOD_COUNT),
 };
 
 struct pcm_config pcm_config_sco = {
     .channels = 1,
-    .rate = 8000,
-    .period_size = 256,
-    .period_count = 4,
+    .rate = SCO_SAMPLING_RATE,
+    .period_size = SCO_PERIOD_SIZE,
+    .period_count = SCO_PERIOD_COUNT,
     .format = PCM_FORMAT_S16_LE,
 };
 
@@ -82,6 +100,7 @@ struct audio_device {
     bool mic_mute;
     struct audio_route *ar;
     int orientation;
+    bool screen_off;
 
     struct stream_out *active_out;
     struct stream_in *active_in;
@@ -97,7 +116,11 @@ struct stream_out {
 
     struct resampler_itfe *resampler;
     int16_t *buffer;
-    size_t buffer_size;
+    size_t buffer_frames;
+
+    int write_threshold;
+    int cur_write_threshold;
+    int buffer_type;
 
     struct audio_device *dev;
 };
@@ -238,6 +261,7 @@ static int start_output_stream(struct stream_out *out)
     } else {
         device = PCM_DEVICE;
         out->pcm_config = &pcm_config_out;
+        out->buffer_type = OUT_BUFFER_TYPE_UNKNOWN;
     }
 
     /*
@@ -276,14 +300,10 @@ static int start_output_stream(struct stream_out *out)
                                RESAMPLER_QUALITY_DEFAULT,
                                NULL,
                                &out->resampler);
-        /*
-         * Determine the maximum number of frames that will be output
-         * from the resampler, and allocate a buffer large enough.
-         */
-        out->buffer_size = pcm_frames_to_bytes(out->pcm,
-                (pcm_config_out.period_size * out->pcm_config->rate) /
-                out_get_sample_rate(&out->stream.common) + 1);
-        out->buffer = malloc(out->buffer_size);
+        out->buffer_frames = (pcm_config_out.period_size * out->pcm_config->rate) /
+                out_get_sample_rate(&out->stream.common) + 1;
+
+        out->buffer = malloc(pcm_frames_to_bytes(out->pcm, out->buffer_frames));
     }
 
     adev->active_out = out;
@@ -575,6 +595,9 @@ static ssize_t out_write(struct audio_stream_out *stream, const void* buffer,
     int16_t *in_buffer = (int16_t *)buffer;
     size_t in_frames = bytes / frame_size;
     size_t out_frames;
+    int buffer_type;
+    int kernel_frames;
+    bool sco_on;
 
     /*
      * acquiring hw device mutex systematically is useful if a low
@@ -592,7 +615,27 @@ static ssize_t out_write(struct audio_stream_out *stream, const void* buffer,
         }
         out->standby = false;
     }
+    buffer_type = (adev->screen_off && !adev->active_in) ?
+            OUT_BUFFER_TYPE_LONG : OUT_BUFFER_TYPE_SHORT;
+    sco_on = (adev->devices & AUDIO_DEVICE_OUT_ALL_SCO);
     pthread_mutex_unlock(&adev->lock);
+
+    /* detect changes in screen ON/OFF state and adapt buffer size
+     * if needed. Do not change buffer size when routed to SCO device. */
+    if (!sco_on && (buffer_type != out->buffer_type)) {
+        size_t period_count;
+
+        if (buffer_type == OUT_BUFFER_TYPE_LONG)
+            period_count = OUT_LONG_PERIOD_COUNT;
+        else
+            period_count = OUT_SHORT_PERIOD_COUNT;
+
+        out->write_threshold = out->pcm_config->period_size * period_count;
+        /* reset current threshold if exiting standby */
+        if (out->buffer_type == OUT_BUFFER_TYPE_UNKNOWN)
+            out->cur_write_threshold = out->write_threshold;
+        out->buffer_type = buffer_type;
+    }
 
     /* Reduce number of channels, if necessary */
     if (popcount(out_get_channels(&stream->common)) >
@@ -609,13 +652,51 @@ static ssize_t out_write(struct audio_stream_out *stream, const void* buffer,
 
     /* Change sample rate, if necessary */
     if (out_get_sample_rate(&stream->common) != out->pcm_config->rate) {
-        out_frames = out->buffer_size / frame_size;
+        out_frames = out->buffer_frames;
         out->resampler->resample_from_input(out->resampler,
                                             in_buffer, &in_frames,
                                             out->buffer, &out_frames);
         in_buffer = out->buffer;
     } else {
         out_frames = in_frames;
+    }
+
+    if (!sco_on) {
+        /* do not allow more than out->cur_write_threshold frames in kernel
+         * pcm driver buffer */
+        do {
+            struct timespec time_stamp;
+
+            if (pcm_get_htimestamp(out->pcm,
+                                   (unsigned int *)&kernel_frames,
+                                   &time_stamp) < 0)
+                break;
+            kernel_frames = pcm_get_buffer_size(out->pcm) - kernel_frames;
+
+            if (kernel_frames > out->cur_write_threshold) {
+                int sleep_time_us =
+                    (int)(((int64_t)(kernel_frames - out->cur_write_threshold)
+                                    * 1000000) / out->pcm_config->rate);
+                if (sleep_time_us < MIN_WRITE_SLEEP_US)
+                    break;
+                usleep(sleep_time_us);
+            }
+        } while (kernel_frames > out->cur_write_threshold);
+
+        /* do not allow abrupt changes on buffer size. Increasing/decreasing
+         * the threshold by steps of 1/4th of the buffer size keeps the write
+         * time within a reasonable range during transitions. */
+        if (out->cur_write_threshold > out->write_threshold) {
+            out->cur_write_threshold -= out->pcm_config->period_size / 4;
+            if (out->cur_write_threshold < out->write_threshold) {
+                out->cur_write_threshold = out->write_threshold;
+            }
+        } else if (out->cur_write_threshold < out->write_threshold) {
+            out->cur_write_threshold += out->pcm_config->period_size / 4;
+            if (out->cur_write_threshold > out->write_threshold) {
+                out->cur_write_threshold = out->write_threshold;
+            }
+        }
     }
 
     ret = pcm_write(out->pcm, in_buffer, out_frames * frame_size);
@@ -947,6 +1028,14 @@ static int adev_set_parameters(struct audio_hw_device *dev, const char *kvpairs)
             select_devices(adev);
         }
         pthread_mutex_unlock(&adev->lock);
+    }
+
+    ret = str_parms_get_str(parms, "screen_state", value, sizeof(value));
+    if (ret >= 0) {
+        if (strcmp(value, AUDIO_PARAMETER_VALUE_ON) == 0)
+            adev->screen_off = false;
+        else
+            adev->screen_off = true;
     }
 
     str_parms_destroy(parms);
