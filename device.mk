@@ -96,8 +96,7 @@ PRODUCT_PACKAGES := \
     hcitool \
     bttest \
     com.android.future.usb.accessory \
-    whisperd \
-    keystore.grouper
+    whisperd
 
 # for bugmailer
 PRODUCT_PACKAGES += send_bug
