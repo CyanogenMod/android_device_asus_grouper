@@ -17,18 +17,19 @@
 # start jellybean
 # 368864 = JRN61B
 # 371028 = JRN65
+# 382301 = JRN75
 # end jellybean
 BRANCH=jellybean
 if test $BRANCH=jellybean
 then
-  ZIP=nakasi-ota-371028.zip
-  BUILD=jrn65
+  ZIP=nakasi-ota-382301.zip
+  BUILD=jrn75
 fi # jellybean
 ROOTDEVICE=grouper
 DEVICE=grouper
 MANUFACTURER=asus
 
-for COMPANY in asus broadcom elan invensense nvidia nxp widevine unknown
+for COMPANY in asus broadcom elan google invensense nvidia nxp tl widevine unknown
 do
   echo Processing files from $COMPANY
   rm -rf tmp
@@ -51,6 +52,10 @@ do
   elan)
     TO_EXTRACT="\
             system/etc/firmware/touch_fw.ekt \
+            "
+    ;;
+  google)
+    TO_EXTRACT="\
             "
     ;;
   invensense)
@@ -121,6 +126,10 @@ do
   nxp)
     TO_EXTRACT="\
             system/vendor/firmware/libpn544_fw.so \
+            "
+    ;;
+  tl)
+    TO_EXTRACT="\
             "
     ;;
   widevine)
