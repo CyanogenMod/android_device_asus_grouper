@@ -1123,9 +1123,18 @@ static int adev_get_mic_mute(const struct audio_hw_device *dev, bool *state)
 static size_t adev_get_input_buffer_size(const struct audio_hw_device *dev,
                                          const struct audio_config *config)
 {
-    return pcm_config_in.period_size *
-           popcount(config->channel_mask) *
-           audio_bytes_per_sample(config->format);
+    size_t size;
+
+    /*
+     * take resampling into account and return the closest majoring
+     * multiple of 16 frames, as audioflinger expects audio buffers to
+     * be a multiple of 16 frames
+     */
+    size = (pcm_config_in.period_size * config->sample_rate) / pcm_config_in.rate;
+    size = ((size + 15) / 16) * 16;
+
+    return (size * popcount(config->channel_mask) *
+                audio_bytes_per_sample(config->format));
 }
 
 static int adev_open_input_stream(struct audio_hw_device *dev,
