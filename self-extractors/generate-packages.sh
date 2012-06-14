@@ -29,7 +29,7 @@ ROOTDEVICE=grouper
 DEVICE=grouper
 MANUFACTURER=asus
 
-for COMPANY in asus broadcom elan google invensense nvidia nxp tl widevine unknown
+for COMPANY in asus broadcom elan google invensense nvidia nxp trustedlogic widevine unknown
 do
   echo Processing files from $COMPANY
   rm -rf tmp
@@ -128,7 +128,7 @@ do
             system/vendor/firmware/libpn544_fw.so \
             "
     ;;
-  tl)
+  trustedlogic)
     TO_EXTRACT="\
             "
     ;;
