@@ -57,6 +57,8 @@
 
 /* minimum sleep time in out_write() when write threshold is not reached */
 #define MIN_WRITE_SLEEP_US 2000
+#define MAX_WRITE_SLEEP_US ((OUT_PERIOD_SIZE * OUT_SHORT_PERIOD_COUNT * 1000000) \
+                                / OUT_SAMPLING_RATE)
 
 enum {
     OUT_BUFFER_TYPE_UNKNOWN,
@@ -575,8 +577,20 @@ static char * out_get_parameters(const struct audio_stream *stream, const char *
 
 static uint32_t out_get_latency(const struct audio_stream_out *stream)
 {
-    return (pcm_config_out.period_size * pcm_config_out.period_count * 1000) /
-            pcm_config_out.rate;
+    struct stream_out *out = (struct stream_out *)stream;
+    struct audio_device *adev = out->dev;
+    size_t period_count;
+
+    pthread_mutex_lock(&adev->lock);
+
+    if (adev->screen_off && !adev->active_in && !(adev->devices & AUDIO_DEVICE_OUT_ALL_SCO))
+        period_count = OUT_LONG_PERIOD_COUNT;
+    else
+        period_count = OUT_SHORT_PERIOD_COUNT;
+
+    pthread_mutex_unlock(&adev->lock);
+
+    return (pcm_config_out.period_size * period_count * 1000) / pcm_config_out.rate;
 }
 
 static int out_set_volume(struct audio_stream_out *stream, float left,
@@ -662,11 +676,13 @@ static ssize_t out_write(struct audio_stream_out *stream, const void* buffer,
     }
 
     if (!sco_on) {
+        int total_sleep_time_us = 0;
+        size_t period_size = out->pcm_config->period_size;
+
         /* do not allow more than out->cur_write_threshold frames in kernel
          * pcm driver buffer */
         do {
             struct timespec time_stamp;
-
             if (pcm_get_htimestamp(out->pcm,
                                    (unsigned int *)&kernel_frames,
                                    &time_stamp) < 0)
@@ -679,23 +695,41 @@ static ssize_t out_write(struct audio_stream_out *stream, const void* buffer,
                                     * 1000000) / out->pcm_config->rate);
                 if (sleep_time_us < MIN_WRITE_SLEEP_US)
                     break;
+                total_sleep_time_us += sleep_time_us;
+                if (total_sleep_time_us > MAX_WRITE_SLEEP_US) {
+                    ALOGW("out_write() limiting sleep time %d to %d",
+                          total_sleep_time_us, MAX_WRITE_SLEEP_US);
+                    sleep_time_us = MAX_WRITE_SLEEP_US -
+                                        (total_sleep_time_us - sleep_time_us);
+                }
                 usleep(sleep_time_us);
             }
-        } while (kernel_frames > out->cur_write_threshold);
+
+        } while ((kernel_frames > out->cur_write_threshold) &&
+                (total_sleep_time_us <= MAX_WRITE_SLEEP_US));
 
         /* do not allow abrupt changes on buffer size. Increasing/decreasing
          * the threshold by steps of 1/4th of the buffer size keeps the write
-         * time within a reasonable range during transitions. */
+         * time within a reasonable range during transitions.
+         * Also reset current threshold just above current filling status when
+         * kernel buffer is really depleted to allow for smooth catching up with
+         * target threshold.
+         */
         if (out->cur_write_threshold > out->write_threshold) {
-            out->cur_write_threshold -= out->pcm_config->period_size / 4;
+            out->cur_write_threshold -= period_size / 4;
             if (out->cur_write_threshold < out->write_threshold) {
                 out->cur_write_threshold = out->write_threshold;
             }
         } else if (out->cur_write_threshold < out->write_threshold) {
-            out->cur_write_threshold += out->pcm_config->period_size / 4;
+            out->cur_write_threshold += period_size / 4;
             if (out->cur_write_threshold > out->write_threshold) {
                 out->cur_write_threshold = out->write_threshold;
             }
+        } else if ((kernel_frames < out->write_threshold) &&
+            ((out->write_threshold - kernel_frames) >
+                (int)(period_size * OUT_SHORT_PERIOD_COUNT))) {
+            out->cur_write_threshold = (kernel_frames / period_size + 1) * period_size;
+            out->cur_write_threshold += period_size / 4;
         }
     }
 
