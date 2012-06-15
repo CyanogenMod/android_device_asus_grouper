@@ -33,7 +33,7 @@
       -->
   <item name="wifi.on">2.9</item>
   <item name="wifi.active">31.0</item>
-  <item name="wifi.scan">6.5</item>
+  <item name="wifi.scan">100</item>
   <item name="dsp.audio">14.1</item>
   <item name="dsp.video">54.0</item>
   <item name="gps.on">29.7</item>
