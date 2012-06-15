@@ -16,6 +16,7 @@
 
 /system/bin/btmacreader
 /system/bin/glgps
+/system/bin/sensors-config
 /system/bin/tf_daemon
 /system/etc/asound.conf
 /system/etc/firmware/bcm4330.hcd
