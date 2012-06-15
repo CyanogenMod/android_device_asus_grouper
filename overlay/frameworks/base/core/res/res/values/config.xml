@@ -134,7 +134,7 @@
          This must be overridden in platform specific overlays -->
     <integer-array name="config_autoBrightnessLcdBacklightValues">
         <item>5</item>    <!-- 0-5 -->
-        <item>15</item>   <!-- 5-15 -->
+        <item>20</item>   <!-- 5-15 -->
         <item>30</item>   <!-- 15-50 -->
         <item>40</item>   <!-- 50-100 -->
         <item>50</item>   <!-- 100-200 -->
