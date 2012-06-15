@@ -16,6 +16,7 @@
 
 /system/bin/btmacreader
 /system/bin/glgps
+/system/bin/sensors-config
 /system/bin/tf_daemon
 /system/etc/asound.conf
 /system/etc/firmware/bcm4330.hcd
@@ -35,6 +36,7 @@
 /system/lib/hw/gps.tegra3.so
 /system/lib/hw/gralloc.tegra3.so
 /system/lib/hw/hwcomposer.tegra3.so
+/system/lib/hw/keystore.grouper.so
 /system/lib/hw/sensors.grouper.so
 /system/lib/libardrv_dynamic.so
 /system/lib/libcgdrv.so
