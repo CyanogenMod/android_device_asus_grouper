@@ -16,4 +16,13 @@ LOCAL_PATH := $(call my-dir)
 
 ifeq ($(TARGET_DEVICE),grouper)
 
+include $(CLEAR_VARS)
+LOCAL_MODULE := tf_daemon
+LOCAL_SRC_FILES := tf_daemon
+LOCAL_MODULE_CLASS := EXECUTABLES
+LOCAL_MODULE_PATH := $(TARGET_OUT)/bin
+LOCAL_MODULE_TAGS := optional
+LOCAL_MODULE_OWNER := trusted_logic
+include $(BUILD_PREBUILT)
+
 endif

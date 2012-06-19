@@ -14,5 +14,5 @@
 
 # Broadcom blob(s) necessary for Grouper hardware
 PRODUCT_PACKAGES := \
+    glgps \
     bcm4330
-

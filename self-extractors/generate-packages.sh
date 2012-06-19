@@ -18,18 +18,19 @@
 # 368864 = JRN61B
 # 371028 = JRN65
 # 382301 = JRN75
+# 386704 = JRN80
 # end jellybean
 BRANCH=jellybean
 if test $BRANCH=jellybean
 then
-  ZIP=nakasi-ota-382301.zip
-  BUILD=jrn75
+  ZIP=nakasi-ota-386704.zip
+  BUILD=jrn80
 fi # jellybean
 ROOTDEVICE=grouper
 DEVICE=grouper
 MANUFACTURER=asus
 
-for COMPANY in asus broadcom elan google invensense nvidia nxp trustedlogic widevine unknown
+for COMPANY in asus broadcom elan invensense nvidia nxp trusted_logic widevine unknown
 do
   echo Processing files from $COMPANY
   rm -rf tmp
@@ -42,20 +43,19 @@ do
             system/bin/btmacreader \
             system/lib/hw/camera.tegra3.so \
             system/lib/libsensors.lightsensor.so \
+            system/vendor/lib/drm/libdrmwvmplugin.so \
+            system/vendor/lib/libwvm.so \
             "
     ;;
   broadcom)
     TO_EXTRACT="\
+            system/bin/glgps \
             system/etc/firmware/bcm4330.hcd \
             "
     ;;
   elan)
     TO_EXTRACT="\
             system/etc/firmware/touch_fw.ekt \
-            "
-    ;;
-  google)
-    TO_EXTRACT="\
             "
     ;;
   invensense)
@@ -79,6 +79,8 @@ do
             system/lib/egl/libGLESv2_tegra.so \
             system/lib/hw/gralloc.tegra3.so \
             system/lib/hw/hwcomposer.tegra3.so \
+            system/lib/libardrv_dynamic.so \
+            system/lib/libcgdrv.so \
             system/lib/libnvapputil.so \
             system/lib/libnvasfparserhal.so \
             system/lib/libnvaviparserhal.so \
@@ -128,29 +130,26 @@ do
             system/vendor/firmware/libpn544_fw.so \
             "
     ;;
-  trustedlogic)
+  trusted_logic)
     TO_EXTRACT="\
+            system/bin/tf_daemon \
             "
     ;;
   widevine)
     TO_EXTRACT="\
-            system/vendor/lib/drm/libdrmwvmplugin.so \
+            system/lib/libdrmdecrypt.so \
             system/vendor/lib/libwvdrm_L1.so \
-            system/vendor/lib/libwvm.so \
             system/vendor/lib/libWVStreamControlAPI_L1.so
             "
     ;;
   unknown)
     TO_EXTRACT="\
-            system/bin/glgps \
-            system/bin/tf_daemon \
+            system/bin/sensors-config \
             system/etc/asound.conf \
             system/etc/gps/gpsconfig.xml \
             system/lib/hw/gps.tegra3.so \
+            system/lib/hw/keystore.grouper.so \
             system/lib/hw/sensors.grouper.so \
-            system/lib/libardrv_dynamic.so \
-            system/lib/libcgdrv.so \
-            system/lib/libdrmdecrypt.so \
             "
     ;;
   esac

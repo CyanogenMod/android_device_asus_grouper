@@ -15,4 +15,3 @@
 # Elan blob(s) necessary for Grouper hardware
 PRODUCT_PACKAGES := \
     touch_fw
-
