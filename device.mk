@@ -82,8 +82,6 @@ PRODUCT_COPY_FILES += \
 
 PRODUCT_PACKAGES := \
     camera.grouper \
-    sensors.grouper \
-    sensors-config \
     lights.grouper \
     audio.primary.grouper \
     power.grouper \
