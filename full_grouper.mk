@@ -19,11 +19,6 @@
 # product configuration (apps).
 #
 
-# A few more packages that aren't quite used on all builds
-PRODUCT_PACKAGES := \
-  HoloSpiralWallpaper \
-  Camera
-
 # Inherit from those products. Most specific first.
 $(call inherit-product, device/asus/grouper/device.mk)
 # This is where we'd set a backup provider if we had one
