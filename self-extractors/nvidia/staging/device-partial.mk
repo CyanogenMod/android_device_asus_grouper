@@ -12,27 +12,30 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# blob(s) necessary for Grouper hardware
+# NVIDIA blob(s) necessary for Grouper hardware
 PRODUCT_PACKAGES := \
-    gralloc.tegra3 \
-    hwcomposer.tegra3 \
+    nvavp_os_00001000 \
+    nvavp_os_0ff00000 \
+    nvavp_os_e0000000 \
+    nvavp_os_eff00000 \
+    nvavp_vid_ucode_alt \
+    nvcamera \
+    nvram \
     libEGL_tegra \
     libGLESv1_CM_tegra \
     libGLESv2_tegra \
+    gralloc.tegra3 \
+    hwcomposer.tegra3 \
+    libardrv_dynamic \
+    libcgdrv \
     libnvapputil \
     libnvasfparserhal \
     libnvaviparserhal \
     libnvavp \
     libnvcamerahdr \
-    libnvddk_2d \
     libnvddk_2d_v2 \
+    libnvddk_2d \
     libnvdispmgr_d \
-    libnvmm \
-    libnvmmlite \
-    libnvmmlite_audio \
-    libnvmmlite_image \
-    libnvmmlite_utils \
-    libnvmmlite_video \
     libnvmm_audio \
     libnvmm_camera \
     libnvmm_contentpipe \
@@ -44,6 +47,12 @@ PRODUCT_PACKAGES := \
     libnvmm_utils \
     libnvmm_video \
     libnvmm_writer \
+    libnvmm \
+    libnvmmlite \
+    libnvmmlite_audio \
+    libnvmmlite_image \
+    libnvmmlite_utils \
+    libnvmmlite_video \
     libnvodm_dtvtuner \
     libnvodm_hdmi \
     libnvodm_imager \
@@ -53,19 +62,11 @@ PRODUCT_PACKAGES := \
     libnvomxilclient \
     libnvos \
     libnvparser \
-    libnvrm \
     libnvrm_graphics \
+    libnvrm \
     libnvsm \
     libnvtvmr \
     libnvwinsys \
     libnvwsi \
     libstagefrighthw \
-    libtf_crypto_sst \
-    nvavp_os_00001000 \
-    nvavp_os_0ff00000 \
-    nvavp_os_e0000000 \
-    nvavp_os_eff00000 \
-    nvavp_vid_ucode_alt \
-    nvcamera \
-    nvram
-
+    libtf_crypto_sst

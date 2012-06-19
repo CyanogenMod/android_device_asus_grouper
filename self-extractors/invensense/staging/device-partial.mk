@@ -17,4 +17,3 @@ PRODUCT_PACKAGES := \
     libinvensense_hal \
     libmllite \
     libmplmpu
-

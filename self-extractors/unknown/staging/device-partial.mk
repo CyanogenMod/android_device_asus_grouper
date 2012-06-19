@@ -14,13 +14,9 @@
 
 # blob(s) necessary for Grouper hardware
 PRODUCT_PACKAGES := \
+    sensors-config \
     asound \
-    glgps \
     gps.tegra3 \
     gpsconfig \
-    libardrv_dynamic \
-    libcgdrv \
-    libdrmdecrypt \
-    sensors.grouper \
-    tf_daemon
-
+    keystore.grouper \
+    sensors.grouper

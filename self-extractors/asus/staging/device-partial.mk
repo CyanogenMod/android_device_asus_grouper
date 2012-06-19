@@ -16,4 +16,6 @@
 PRODUCT_PACKAGES := \
     btmacreader \
     camera.tegra3 \
-    libsensors.lightsensor
+    libsensors.lightsensor \
+    libdrmwvmplugin \
+    libwvm
