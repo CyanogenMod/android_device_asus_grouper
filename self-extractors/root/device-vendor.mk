@@ -17,12 +17,12 @@ LOCAL_STEM := grouper/device-partial.mk
 $(call inherit-product-if-exists, vendor/asus/$(LOCAL_STEM))
 $(call inherit-product-if-exists, vendor/broadcom/$(LOCAL_STEM))
 $(call inherit-product-if-exists, vendor/elan/$(LOCAL_STEM))
-$(call inherit-product-if-exists, vendor/google/$(LOCAL_STEM))
 $(call inherit-product-if-exists, vendor/invensense/$(LOCAL_STEM))
 $(call inherit-product-if-exists, vendor/nvidia/$(LOCAL_STEM))
 $(call inherit-product-if-exists, vendor/nxp/$(LOCAL_STEM))
-$(call inherit-product-if-exists, vendor/trustedlogic/$(LOCAL_STEM))
+$(call inherit-product-if-exists, vendor/trusted_logic/$(LOCAL_STEM))
 $(call inherit-product-if-exists, vendor/widevine/$(LOCAL_STEM))
+
 $(call inherit-product-if-exists, vendor/unknown/$(LOCAL_STEM))
 
 PRODUCT_RESTRICT_VENDOR_FILES := owner
