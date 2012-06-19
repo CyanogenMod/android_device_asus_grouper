@@ -81,7 +81,6 @@ PRODUCT_COPY_FILES += \
     device/asus/grouper/tegra-kbc.kl:system/usr/keylayout/tegra-kbc.kl
 
 PRODUCT_PACKAGES := \
-    camera.grouper \
     lights.grouper \
     audio.primary.grouper \
     power.grouper \
