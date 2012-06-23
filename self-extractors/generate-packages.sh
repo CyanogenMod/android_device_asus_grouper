@@ -14,18 +14,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# start jellybean
+# start jb-dev
 # 368864 = JRN61B
 # 371028 = JRN65
 # 382301 = JRN75
 # 386704 = JRN80
-# end jellybean
-BRANCH=jellybean
-if test $BRANCH=jellybean
+# 391496 = JRN83D
+# end jb-dev
+BRANCH=jb-dev
+if test $BRANCH=jb-dev
 then
-  ZIP=nakasi-ota-386704.zip
-  BUILD=jrn80
-fi # jellybean
+  ZIP=nakasi-ota-391496.zip
+  BUILD=jrn83d
+fi # jb-dev
 ROOTDEVICE=grouper
 DEVICE=grouper
 MANUFACTURER=asus
@@ -161,14 +162,6 @@ do
     if test $ONE_FILE = system/vendor/bin/gpsd -o $ONE_FILE = system/vendor/bin/pvrsrvinit -o $ONE_FILE = system/bin/fRom
     then
       chmod a+x $FILEDIR/$(basename $ONE_FILE) || echo \ \ \ \ Error chmoding $ONE_FILE
-    fi
-    if test $(echo $ONE_FILE | grep \\.apk\$ | wc -l) = 1
-    then
-      echo \ \ \ \ Splitting $ONE_FILE
-      mkdir -p $FILEDIR/$(basename $ONE_FILE).parts || echo \ \ \ \ Error making parts dir for $ONE_FILE
-      unzip $FILEDIR/$(basename $ONE_FILE) -d $FILEDIR/$(basename $ONE_FILE).parts > /dev/null || echo \ \ \ \ Error unzipping $ONE_FILE
-      rm $FILEDIR/$(basename $ONE_FILE) || echo \ \ \ \ Error removing original $ONE_FILE
-      rm -rf $FILEDIR/$(basename $ONE_FILE).parts/META-INF || echo \ \ \ \ Error removing META-INF for $ONE_FILE
     fi
   done
   echo \ \ Setting up $COMPANY-specific makefiles
