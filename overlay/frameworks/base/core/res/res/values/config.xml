@@ -81,6 +81,10 @@
     <!-- Boolean indicating whether the wifi chipset has background scan support -->
     <bool translatable="false" name="config_wifi_background_scan_support">true</bool>
 
+    <!-- Device type information conforming to Annex B format in WiFi Direct specification.
+    The default represents a dual-mode smartphone -->
+    <string translatable="false" name="config_wifi_p2p_device_type">1-0050F204-1</string>
+
     <!-- Package name providing network location support. -->
     <string name="config_networkLocationProviderPackageName" translatable="false">com.google.android.location</string>
 
