@@ -20,14 +20,17 @@
 # 367578 = JRN60B
 # 386704 = JRN80
 # 391496 = JRN83D
+# 392829 = JRN84D
 # end jb-dev
 
 source ../../../common/clear-factory-images-variables.sh
-BUILD=391496
+BUILD=392829
 DEVICE=grouper
 PRODUCT=nakasi
-VERSION=jrn83d
+VERSION=jrn84d
+SRCPREFIX=signed-
 BOOTLOADERFILE=bootloader.bin
 BOOTLOADER=3.34
 SLEEPDURATION=10
+ERASEALL=true
 source ../../../common/generate-factory-images-common.sh
