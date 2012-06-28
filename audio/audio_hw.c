@@ -59,7 +59,6 @@
 #define MIN_WRITE_SLEEP_US 2000
 #define MAX_WRITE_SLEEP_US ((OUT_PERIOD_SIZE * OUT_SHORT_PERIOD_COUNT * 1000000) \
                                 / OUT_SAMPLING_RATE)
-#define MAX_SLEEP_LIMIT 100
 
 enum {
     OUT_BUFFER_TYPE_UNKNOWN,
@@ -124,7 +123,6 @@ struct stream_out {
     int write_threshold;
     int cur_write_threshold;
     int buffer_type;
-    int sleep_limit_count;
 
     struct audio_device *dev;
 };
@@ -266,10 +264,6 @@ static int start_output_stream(struct stream_out *out)
         device = PCM_DEVICE;
         out->pcm_config = &pcm_config_out;
         out->buffer_type = OUT_BUFFER_TYPE_UNKNOWN;
-        //FIXME: debug log for start failure issue
-        ALOGE_IF(out->pcm_config->start_threshold != OUT_PERIOD_SIZE * OUT_SHORT_PERIOD_COUNT,
-                 "start_output_stream(): corrupted start_threshold %d",
-                 out->pcm_config->start_threshold);
     }
 
     /*
@@ -313,8 +307,6 @@ static int start_output_stream(struct stream_out *out)
 
         out->buffer = malloc(pcm_frames_to_bytes(out->pcm, out->buffer_frames));
     }
-
-    out->sleep_limit_count = 0;
 
     adev->active_out = out;
 
@@ -618,7 +610,7 @@ static ssize_t out_write(struct audio_stream_out *stream, const void* buffer,
     size_t in_frames = bytes / frame_size;
     size_t out_frames;
     int buffer_type;
-    unsigned int kernel_frames;
+    int kernel_frames;
     bool sco_on;
 
     /*
@@ -692,17 +684,12 @@ static ssize_t out_write(struct audio_stream_out *stream, const void* buffer,
         do {
             struct timespec time_stamp;
             if (pcm_get_htimestamp(out->pcm,
-                                   &kernel_frames,
+                                   (unsigned int *)&kernel_frames,
                                    &time_stamp) < 0)
                 break;
-
-            if (kernel_frames > pcm_get_buffer_size(out->pcm)) {
-                ALOGW("out_write() invalid kernel frame count: %d", kernel_frames);
-                break;
-            }
             kernel_frames = pcm_get_buffer_size(out->pcm) - kernel_frames;
 
-            if ((int)kernel_frames > out->cur_write_threshold) {
+            if (kernel_frames > out->cur_write_threshold) {
                 int sleep_time_us =
                     (int)(((int64_t)(kernel_frames - out->cur_write_threshold)
                                     * 1000000) / out->pcm_config->rate);
@@ -710,25 +697,15 @@ static ssize_t out_write(struct audio_stream_out *stream, const void* buffer,
                     break;
                 total_sleep_time_us += sleep_time_us;
                 if (total_sleep_time_us > MAX_WRITE_SLEEP_US) {
-                    ALOGW_IF(out->sleep_limit_count == 0,
-                             "out_write() limiting total sleep time %d to %d, cur sleep time us %d",
-                          total_sleep_time_us, MAX_WRITE_SLEEP_US,
-                          sleep_time_us);
+                    ALOGW("out_write() limiting sleep time %d to %d",
+                          total_sleep_time_us, MAX_WRITE_SLEEP_US);
                     sleep_time_us = MAX_WRITE_SLEEP_US -
                                         (total_sleep_time_us - sleep_time_us);
-                    LOG_ALWAYS_FATAL_IF(out->sleep_limit_count++ >= MAX_SLEEP_LIMIT,
-                                        "out_write() limit sleep max count exceeded, "
-                                        "kernel frames %d, cur_write_threshold %d, "
-                                        "total_sleep_time_us %d, sleep_time_us %d",
-                                        kernel_frames, out->cur_write_threshold,
-                                        total_sleep_time_us, sleep_time_us);
-                } else {
-                    out->sleep_limit_count = 0;
                 }
                 usleep(sleep_time_us);
             }
 
-        } while (((int)kernel_frames > out->cur_write_threshold) &&
+        } while ((kernel_frames > out->cur_write_threshold) &&
                 (total_sleep_time_us <= MAX_WRITE_SLEEP_US));
 
         /* do not allow abrupt changes on buffer size. Increasing/decreasing
@@ -748,8 +725,8 @@ static ssize_t out_write(struct audio_stream_out *stream, const void* buffer,
             if (out->cur_write_threshold > out->write_threshold) {
                 out->cur_write_threshold = out->write_threshold;
             }
-        } else if (((int)kernel_frames < out->write_threshold) &&
-            ((out->write_threshold - (int)kernel_frames) >
+        } else if ((kernel_frames < out->write_threshold) &&
+            ((out->write_threshold - kernel_frames) >
                 (int)(period_size * OUT_SHORT_PERIOD_COUNT))) {
             out->cur_write_threshold = (kernel_frames / period_size + 1) * period_size;
             out->cur_write_threshold += period_size / 4;
@@ -760,7 +737,6 @@ static ssize_t out_write(struct audio_stream_out *stream, const void* buffer,
     if (ret == -EPIPE) {
         /* In case of underrun, don't sleep since we want to catch up asap */
         pthread_mutex_unlock(&out->lock);
-        ALOGE("out_write() error EPIPE");
         return ret;
     }
 
@@ -768,7 +744,6 @@ exit:
     pthread_mutex_unlock(&out->lock);
 
     if (ret != 0) {
-        ALOGE("out_write() error %s", pcm_get_error(out->pcm));
         usleep(bytes * 1000000 / audio_stream_frame_size(&stream->common) /
                out_get_sample_rate(&stream->common));
     }
