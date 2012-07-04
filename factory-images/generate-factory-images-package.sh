@@ -24,10 +24,10 @@
 # end jb-dev
 
 source ../../../common/clear-factory-images-variables.sh
-BUILD=392829
+BUILD=397360
 DEVICE=grouper
 PRODUCT=nakasi
-VERSION=jrn84d
+VERSION=jro02c
 SRCPREFIX=signed-
 BOOTLOADERFILE=bootloader.bin
 BOOTLOADER=3.34
