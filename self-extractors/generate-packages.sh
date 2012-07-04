@@ -48,9 +48,13 @@ do
             system/vendor/lib/libwvm.so \
             "
     ;;
-  broadcom)
+  broadcom_gps)
     TO_EXTRACT="\
             system/bin/glgps \
+            "
+    ;;
+  broadcom)
+    TO_EXTRACT="\
             system/etc/firmware/bcm4330.hcd \
             "
     ;;
