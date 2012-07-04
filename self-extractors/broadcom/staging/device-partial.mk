@@ -16,3 +16,5 @@
 PRODUCT_PACKAGES := \
     glgps \
     bcm4330
+PRODUCT_PACKAGES := \
+    bcm4330
