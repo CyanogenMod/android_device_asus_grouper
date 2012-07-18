@@ -69,6 +69,8 @@ WIFI_DRIVER_FW_PATH_P2P     := "/vendor/firmware/fw_bcmdhd_p2p.bin"
 TARGET_BOOTLOADER_BOARD_NAME := grouper
 TARGET_BOARD_INFO_FILE := device/asus/grouper/board-info.txt
 
+TARGET_NO_BOOTLOADER := true
+
 BOARD_USES_GENERIC_AUDIO := false
 BOARD_USES_ALSA_AUDIO := false
 
@@ -89,5 +91,6 @@ endif
 # Avoid the generation of ldrcc instructions
 NEED_WORKAROUND_CORTEX_A9_745320 := true
 
+BOARD_HAS_NO_SELECT_BUTTON := true
 TARGET_RECOVERY_UI_LIB := librecovery_ui_grouper
 TARGET_RELEASETOOLS_EXTENSIONS := device/asus/grouper
