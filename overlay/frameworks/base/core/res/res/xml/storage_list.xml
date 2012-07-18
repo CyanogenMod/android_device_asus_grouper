@@ -21,8 +21,14 @@
 
 <StorageList xmlns:android="http://schemas.android.com/apk/res/android">
     <!-- internal emulated storage -->
-    <storage
-        android:storageDescription="@string/storage_internal"
-        android:emulated="true"
-        android:mtpReserve="100" />
+    <storage android:mountPoint="/storage/sdcard0"
+            android:storageDescription="@string/storage_internal"
+            android:primary="true"
+            android:emulated="true"
+            android:mtpReserve="100" />
+    <!-- external USB OTG storage -->
+    <storage android:mountPoint="/storage/usbdisk"
+            android:storageDescription="@string/storage_usb"
+            android:primary="false"
+            android:removable="true" />
 </StorageList>
