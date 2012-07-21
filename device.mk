@@ -136,7 +136,7 @@ PRODUCT_COPY_FILES += \
     device/asus/grouper/audio_policy.conf:system/etc/audio_policy.conf
 
 # inherit from the non-open-source side, if present
-$(call inherit-product-if-exists, vendor/asus/grouper/device-vendor.mk)
+$(call inherit-product-if-exists, vendor/asus/grouper/grouper-vendor.mk)
 
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/com.nxp.mifare.xml:system/etc/permissions/com.nxp.mifare.xml \

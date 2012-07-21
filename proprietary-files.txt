@@ -1,0 +1,95 @@
+# Copyright (C) 2011 The Android Open Source Project
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# This file was generated with sed 's|/system/||' < proprietary-blobs.txt > proprietary-files.txt
+# edits may have occurred since then
+
+bin/btmacreader
+bin/glgps
+bin/sensors-config
+bin/tf_daemon
+etc/asound.conf
+etc/firmware/bcm4330.hcd
+etc/firmware/nvavp_os_00001000.bin
+etc/firmware/nvavp_os_0ff00000.bin
+etc/firmware/nvavp_os_e0000000.bin
+etc/firmware/nvavp_os_eff00000.bin
+etc/firmware/nvavp_vid_ucode_alt.bin
+etc/firmware/touch_fw.ekt
+etc/gps/gpsconfig.xml
+etc/nvcamera.conf
+etc/nvram.txt
+lib/egl/libEGL_tegra.so
+lib/egl/libGLESv1_CM_tegra.so
+lib/egl/libGLESv2_tegra.so
+lib/hw/camera.tegra3.so
+lib/hw/gps.tegra3.so
+lib/hw/gralloc.tegra3.so
+lib/hw/hwcomposer.tegra3.so
+lib/hw/keystore.grouper.so
+lib/hw/sensors.grouper.so
+lib/libardrv_dynamic.so
+lib/libcgdrv.so
+lib/libdrmdecrypt.so
+lib/libinvensense_hal.so
+lib/libmllite.so
+lib/libmplmpu.so
+lib/libnvapputil.so
+lib/libnvasfparserhal.so
+lib/libnvaviparserhal.so
+lib/libnvavp.so
+lib/libnvcamerahdr.so
+lib/libnvddk_2d.so
+lib/libnvddk_2d_v2.so
+lib/libnvdispmgr_d.so
+lib/libnvmm.so
+lib/libnvmmlite.so
+lib/libnvmmlite_audio.so
+lib/libnvmmlite_image.so
+lib/libnvmmlite_utils.so
+lib/libnvmmlite_video.so
+lib/libnvmm_audio.so
+lib/libnvmm_camera.so
+lib/libnvmm_contentpipe.so
+lib/libnvmm_image.so
+lib/libnvmm_manager.so
+lib/libnvmm_misc.so
+lib/libnvmm_parser.so
+lib/libnvmm_service.so
+lib/libnvmm_utils.so
+lib/libnvmm_video.so
+lib/libnvmm_writer.so
+lib/libnvodm_dtvtuner.so
+lib/libnvodm_hdmi.so
+lib/libnvodm_imager.so
+lib/libnvodm_misc.so
+lib/libnvodm_query.so
+lib/libnvomx.so
+lib/libnvomxilclient.so
+lib/libnvos.so
+lib/libnvparser.so
+lib/libnvrm.so
+lib/libnvrm_graphics.so
+lib/libnvsm.so
+lib/libnvtvmr.so
+lib/libnvwinsys.so
+lib/libnvwsi.so
+lib/libsensors.lightsensor.so
+lib/libstagefrighthw.so
+lib/libtf_crypto_sst.so
+vendor/firmware/libpn544_fw.so
+vendor/lib/drm/libdrmwvmplugin.so
+vendor/lib/libwvdrm_L1.so
+vendor/lib/libwvm.so
+vendor/lib/libWVStreamControlAPI_L1.so
