@@ -94,3 +94,6 @@ NEED_WORKAROUND_CORTEX_A9_745320 := true
 BOARD_HAS_NO_SELECT_BUTTON := true
 TARGET_RECOVERY_UI_LIB := librecovery_ui_grouper
 TARGET_RELEASETOOLS_EXTENSIONS := device/asus/grouper
+
+TARGET_KERNEL_SOURCE := kernel/asus/grouper
+TARGET_KERNEL_CONFIG := cyanogenmod_grouper_defconfig
