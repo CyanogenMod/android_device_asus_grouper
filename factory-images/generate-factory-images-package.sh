@@ -23,13 +23,14 @@
 # 392829 = JRN84D
 # 397360 = JRO02C
 # 398337 = JRO03C
+# 402395 = JRO03D
 # end jb-dev
 
 source ../../../common/clear-factory-images-variables.sh
-BUILD=398337
+BUILD=402395
 DEVICE=grouper
 PRODUCT=nakasi
-VERSION=jro03c
+VERSION=jro03d
 SRCPREFIX=signed-
 BOOTLOADERFILE=bootloader.bin
 BOOTLOADER=3.34
