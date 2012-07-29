@@ -25,9 +25,15 @@
 #include <hardware/hardware.h>
 #include <hardware/power.h>
 
+#define SCALINGMAXFREQ_PATH "/sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq"
+#define MAX_BUF_SZ      20
+
 #define BOOST_PATH      "/sys/devices/system/cpu/cpufreq/interactive/boost"
 static int boost_fd = -1;
 static int boost_warned;
+
+/* initialize to something safe */
+static char scaling_max_freq[MAX_BUF_SZ] = "1300000";
 
 static void sysfs_write(char *path, char *s)
 {
@@ -48,6 +54,28 @@ static void sysfs_write(char *path, char *s)
     }
 
     close(fd);
+}
+
+static int sysfs_read(char *path, char *s, size_t size)
+{
+    char buf[80];
+    int len;
+    int fd = open(path, O_RDONLY);
+
+    if (fd < 0) {
+        strerror_r(errno, buf, sizeof(buf));
+        ALOGE("Error opening %s: %s\n", path, buf);
+        return -1;
+    }
+
+    len = read(fd, s, size);
+    if (len < 0) {
+        strerror_r(errno, buf, sizeof(buf));
+        ALOGE("Error reading from %s: %s\n", path, buf);
+    }
+
+    close(fd);
+    return len;
 }
 
 static void grouper_power_init(struct power_module *module)
@@ -71,13 +99,27 @@ static void grouper_power_init(struct power_module *module)
 
 static void grouper_power_set_interactive(struct power_module *module, int on)
 {
+    int len;
+    char buf[MAX_BUF_SZ];
+
     /*
      * Lower maximum frequency when screen is off.  CPU 0 and 1 share a
      * cpufreq policy.
      */
 
-    sysfs_write("/sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq",
-                on ? "1300000" : "700000");
+    if (!on) {
+        /* read the current scaling max freq and save it before updating */
+        len = sysfs_read(SCALINGMAXFREQ_PATH, buf, sizeof(buf));
+
+        if (len != -1)
+            memcpy(scaling_max_freq, buf, sizeof(buf));
+
+        sysfs_write("/sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq",
+                    on ? scaling_max_freq : "700000");
+    } else {
+        sysfs_write("/sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq",
+                    on ? scaling_max_freq : "700000");
+    }
 
     sysfs_write("/sys/devices/system/cpu/cpufreq/interactive/input_boost",
                 on ? "1" : "0");
