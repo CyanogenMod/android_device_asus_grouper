@@ -25,9 +25,34 @@
 #include <hardware/hardware.h>
 #include <hardware/power.h>
 
+#define SCALINGMAXFREQ_PATH "/sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq"
+#define SCREENOFFMAXFREQ_PATH "/sys/devices/system/cpu/cpu0/cpufreq/screen_off_max_freq"
 #define BOOST_PATH      "/sys/devices/system/cpu/cpufreq/interactive/boost"
 static int boost_fd = -1;
 static int boost_warned;
+
+#define MAX_BUF_SZ	10
+
+/* initialize to something safe */
+static char screen_off_max_freq[MAX_BUF_SZ] = "700000";
+static char scaling_max_freq[MAX_BUF_SZ] = "1300000";
+
+int sysfs_read(const char *path, char *buf, size_t size)
+{
+	int fd, len;
+
+	fd = open(path, O_RDONLY);
+	if (fd < 0)
+		return -1;
+
+	do {
+		len = read(fd, buf, size);
+	} while (len < 0 && errno == EINTR);
+
+	close(fd);
+
+	return len;
+}
 
 static void sysfs_write(char *path, char *s)
 {
@@ -71,13 +96,27 @@ static void grouper_power_init(struct power_module *module)
 
 static void grouper_power_set_interactive(struct power_module *module, int on)
 {
+    int len;
+    char buf[MAX_BUF_SZ];
+
     /*
      * Lower maximum frequency when screen is off.  CPU 0 and 1 share a
      * cpufreq policy.
      */
 
-    sysfs_write("/sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq",
-                on ? "1300000" : "700000");
+    if (!on) {
+        /* read the current scaling max freq and save it before updating */
+        len = sysfs_read(SCALINGMAXFREQ_PATH, buf, sizeof(buf));
+
+        if (len != -1)
+            memcpy(scaling_max_freq, buf, sizeof(buf));
+
+        sysfs_write("/sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq",
+                    on ? scaling_max_freq : screen_off_max_freq);
+    } else {
+        sysfs_write("/sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq",
+                    on ? scaling_max_freq : screen_off_max_freq);
+    }
 
     sysfs_write("/sys/devices/system/cpu/cpufreq/interactive/input_boost",
                 on ? "1" : "0");
