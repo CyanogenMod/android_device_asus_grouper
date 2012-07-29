@@ -29,6 +29,11 @@
 static int boost_fd = -1;
 static int boost_warned;
 
+#define MAX_BUF_SZ      20
+/* initialize to something safe */
+static char scaling_max_freq[MAX_BUF_SZ] = "1300000";
+static char screenoff_max_freq[MAX_BUF_SZ] = "700000";
+
 static void sysfs_write(char *path, char *s)
 {
     char buf[80];
@@ -48,6 +53,28 @@ static void sysfs_write(char *path, char *s)
     }
 
     close(fd);
+}
+
+static int sysfs_read(char *path, char *s, size_t size)
+{
+    char buf[80];
+    int len;
+    int fd = open(path, O_RDONLY);
+
+    if (fd < 0) {
+        strerror_r(errno, buf, sizeof(buf));
+        ALOGE("Error opening %s: %s\n", path, buf);
+        return -1;
+    }
+
+    len = read(fd, s, size);
+    if (len < 0) {
+        strerror_r(errno, buf, sizeof(buf));
+        ALOGE("Error reading from %s: %s\n", path, buf);
+    }
+
+    close(fd);
+    return len;
 }
 
 static void grouper_power_init(struct power_module *module)
@@ -76,8 +103,20 @@ static void grouper_power_set_interactive(struct power_module *module, int on)
      * cpufreq policy.
      */
 
-    sysfs_write("/sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq",
-                on ? "1300000" : "700000");
+    if (!on) {
+        int len;
+        char buf[MAX_BUF_SZ];
+        /* read the current scaling max freq and save it before updating */
+        len = sysfs_read("/sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq", buf, sizeof(buf));
+
+        if (len != -1)
+            memcpy(scaling_max_freq, buf, sizeof(buf));
+        sysfs_write("/sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq",
+                    on ? scaling_max_freq : screenoff_max_freq);
+    } else {
+        sysfs_write("/sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq",
+                    on ? scaling_max_freq : screenoff_max_freq);
+    }
 
     sysfs_write("/sys/devices/system/cpu/cpufreq/interactive/input_boost",
                 on ? "1" : "0");
