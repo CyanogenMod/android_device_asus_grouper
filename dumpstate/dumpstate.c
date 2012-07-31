@@ -30,6 +30,7 @@ void dumpstate_board()
 	dump_file("emmc capacity",
 		"/sys/devices/platform/sdhci-tegra.3/mmc_host/mmc0/mmc0:0001/"
 		"sec_count");
+	dump_file("wlan", "/sys/module/bcmdhd/parameters/info_string");
 	dump_file("touch panel vendor and firmware version",
 		"/sys/class/switch/touch/name");
 };
