@@ -156,7 +156,6 @@ do
             system/etc/asound.conf \
             system/etc/gps/gpsconfig.xml \
             system/lib/hw/gps.tegra3.so \
-            system/lib/hw/keystore.grouper.so \
             system/lib/hw/sensors.grouper.so \
             "
     ;;
