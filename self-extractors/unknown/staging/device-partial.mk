@@ -18,5 +18,4 @@ PRODUCT_PACKAGES := \
     asound \
     gps.tegra3 \
     gpsconfig \
-    keystore.grouper \
     sensors.grouper
