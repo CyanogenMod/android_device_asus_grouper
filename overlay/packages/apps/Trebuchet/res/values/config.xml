@@ -1,0 +1,5 @@
+<resources>
+    <bool name="config_largeHeap">true</bool>
+    <bool name="config_cyanogenmod">true</bool>
+    <bool name="is_large_screen">true</bool>
+</resources>
