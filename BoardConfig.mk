@@ -31,5 +31,9 @@
 USE_CAMERA_STUB := true
 USE_PROPRIETARY_AUDIO_EXTENSIONS := false
 
+BOARD_LIB_DUMPSTATE := libdumpstate.grouper
+
+TARGET_RECOVERY_UI_LIB := librecovery_ui_grouper
+
 -include vendor/asus/grouper/BoardConfigVendor.mk
 include device/asus/grouper/BoardConfigCommon.mk

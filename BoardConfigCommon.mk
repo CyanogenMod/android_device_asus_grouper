@@ -66,8 +66,6 @@ BOARD_USES_GENERIC_INVENSENSE := false
 BOARD_HAVE_BLUETOOTH := true
 BOARD_HAVE_BLUETOOTH_BCM := true
 
-BOARD_LIB_DUMPSTATE := libdumpstate.grouper
-
 USE_OPENGL_RENDERER := true
 BOARD_EGL_CFG := device/asus/grouper/egl.cfg
 
@@ -81,7 +79,6 @@ endif
 NEED_WORKAROUND_CORTEX_A9_745320 := true
 
 BOARD_HAS_NO_SELECT_BUTTON := true
-TARGET_RECOVERY_UI_LIB := librecovery_ui_grouper
 TARGET_RELEASETOOLS_EXTENSIONS := device/asus/grouper
 
 TARGET_KERNEL_SOURCE := kernel/asus/grouper
