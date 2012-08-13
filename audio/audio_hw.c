@@ -22,6 +22,9 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include <sys/time.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 
 #include <cutils/log.h>
 #include <cutils/properties.h>
@@ -59,6 +62,7 @@
 #define MIN_WRITE_SLEEP_US 2000
 #define MAX_WRITE_SLEEP_US ((OUT_PERIOD_SIZE * OUT_SHORT_PERIOD_COUNT * 1000000) \
                                 / OUT_SAMPLING_RATE)
+#define DOCK_IN_STATUS_PATH "/sys/bus/i2c/devices/4-001c/dock_status"
 
 enum {
     OUT_BUFFER_TYPE_UNKNOWN,
@@ -163,6 +167,7 @@ static int get_next_buffer(struct resampler_buffer_provider *buffer_provider,
                                    struct resampler_buffer* buffer);
 static void release_buffer(struct resampler_buffer_provider *buffer_provider,
                                   struct resampler_buffer* buffer);
+static bool is_dock_in(void);
 
 /*
  * NOTE: when multiple mutexes have to be acquired, always take the
@@ -185,8 +190,10 @@ static void select_devices(struct audio_device *adev)
 
     reset_mixer_state(adev->ar);
 
-    if (speaker_on)
+    if (speaker_on && !is_dock_in())
         audio_route_apply_path(adev->ar, "speaker");
+    else
+        audio_route_apply_path(adev->ar, "dock");
     if (headphone_on)
         audio_route_apply_path(adev->ar, "headphone");
     if (main_mic_on) {
@@ -440,6 +447,42 @@ static void release_buffer(struct resampler_buffer_provider *buffer_provider,
                                    offsetof(struct stream_in, buf_provider));
 
     in->frames_in -= buffer->frame_count;
+}
+
+static bool is_dock_in(void)
+{
+    int fd = -1;
+    int ret = 0;
+    static char buf[16];
+
+    memset(buf, 0, sizeof(buf));
+
+    fd = open(DOCK_IN_STATUS_PATH, O_RDONLY);
+
+    if(fd < 0){
+        ALOGE("open dock state file fail");
+        goto exit_file_fail;
+    }
+    else
+        ret = read(fd, buf, sizeof(buf));
+
+    if(ret < 0){
+        ALOGE("read dock state fail");
+    }
+    else
+        strcpy(strchr(buf,'\n'), "");
+
+    if(!strcmp(buf,"1")){
+        ALOGD("dock in");
+        return true;
+    }
+    else{
+        ALOGD("no dock");
+        return false;
+    }
+
+exit_file_fail:
+    return false;
 }
 
 /* read_frames() reads frames from kernel driver, down samples to capture rate
