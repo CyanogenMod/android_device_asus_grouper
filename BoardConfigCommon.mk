@@ -23,6 +23,9 @@
 # inherit from the proprietary version
 # needed for BP-flashing updater extensions
 
+# Default value, if not overridden else where.
+BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR ?= device/asus/grouper/bluetooth
+
 TARGET_BOARD_PLATFORM := tegra3
 TARGET_TEGRA_VERSION := t30
 
