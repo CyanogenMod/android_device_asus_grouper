@@ -32,7 +32,7 @@ PRODUCT_PROPERTY_OVERRIDES := \
 
 # Set default USB interface
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
-	persist.sys.usb.config=mtp
+    persist.sys.usb.config=mtp
 
 include frameworks/native/build/tablet-7in-hdpi-1024-dalvik-heap.mk
 
