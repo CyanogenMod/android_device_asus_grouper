@@ -29,6 +29,10 @@
 static int boost_fd = -1;
 static int boost_warned;
 
+/* Stored values, so we don't overwrite them when switching the screen
+    on and off */
+static char max_freq_on[20];
+
 static void sysfs_write(char *path, char *s)
 {
     char buf[80];
@@ -48,6 +52,19 @@ static void sysfs_write(char *path, char *s)
     }
 
     close(fd);
+}
+
+static int sysfs_read(char *path, char *s, int len)
+{
+    char buf[80];
+    int fd = open(path, O_RDONLY);
+
+    if (fd < 0) {
+        strerror_r(errno, buf, sizeof(buf));
+        ALOGE("Error opening %s: %s\n", path, buf);
+        return -1;
+    }
+    return read(fd, s, len);
 }
 
 static void grouper_power_init(struct power_module *module)
@@ -71,13 +88,18 @@ static void grouper_power_init(struct power_module *module)
 
 static void grouper_power_set_interactive(struct power_module *module, int on)
 {
+    if (!on) { // Store the display on frequency before we overwrite it
+        sysfs_read("/sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq",
+                max_freq_on, sizeof(max_freq_on));
+    }
+
     /*
      * Lower maximum frequency when screen is off.  CPU 0 and 1 share a
      * cpufreq policy.
      */
 
     sysfs_write("/sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq",
-                on ? "1300000" : "700000");
+                on ? max_freq_on : "700000");
 
     sysfs_write("/sys/devices/system/cpu/cpufreq/interactive/input_boost",
                 on ? "1" : "0");
