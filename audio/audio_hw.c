@@ -383,6 +383,7 @@ static int start_input_stream(struct stream_in *in)
     in->buffer_size = pcm_frames_to_bytes(in->pcm,
                                           in->pcm_config->period_size);
     in->buffer = malloc(in->buffer_size);
+    in->frames_in = 0;
 
     adev->active_in = in;
 
