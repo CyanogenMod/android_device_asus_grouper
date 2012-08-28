@@ -2,7 +2,8 @@
 PRODUCT_RELEASE_NAME := Nexus7
 
 # Boot animation
-TARGET_BOOTANIMATION_NAME := vertical-800x1280
+TARGET_SCREEN_HEIGHT := 1280
+TARGET_SCREEN_WIDTH := 800
 
 # Inherit some common CM stuff.
 $(call inherit-product, vendor/cm/config/common_full_tablet_wifionly.mk)
