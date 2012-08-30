@@ -281,13 +281,14 @@ static int start_output_stream(struct stream_out *out)
      * the most common rate, but group 2 is required for SCO.
      */
     if (adev->active_in) {
-        pthread_mutex_lock(&adev->active_in->lock);
+        struct stream_in *in = adev->active_in;
+        pthread_mutex_lock(&in->lock);
         if (((out->pcm_config->rate % 8000 == 0) &&
-                 (adev->active_in->pcm_config->rate % 8000) != 0) ||
+                 (in->pcm_config->rate % 8000) != 0) ||
                  ((out->pcm_config->rate % 11025 == 0) &&
-                 (adev->active_in->pcm_config->rate % 11025) != 0))
-            do_in_standby(adev->active_in);
-        pthread_mutex_unlock(&adev->active_in->lock);
+                 (in->pcm_config->rate % 11025) != 0))
+            do_in_standby(in);
+        pthread_mutex_unlock(&in->lock);
     }
 
     out->pcm = pcm_open(PCM_CARD, device, PCM_OUT | PCM_NORESTART, out->pcm_config);
@@ -348,13 +349,14 @@ static int start_input_stream(struct stream_in *in)
      * the most common rate, but group 2 is required for SCO.
      */
     if (adev->active_out) {
-        pthread_mutex_lock(&adev->active_out->lock);
+        struct stream_out *out = adev->active_out;
+        pthread_mutex_lock(&out->lock);
         if (((in->pcm_config->rate % 8000 == 0) &&
-                 (adev->active_out->pcm_config->rate % 8000) != 0) ||
+                 (out->pcm_config->rate % 8000) != 0) ||
                  ((in->pcm_config->rate % 11025 == 0) &&
-                 (adev->active_out->pcm_config->rate % 11025) != 0))
-            do_out_standby(adev->active_out);
-        pthread_mutex_unlock(&adev->active_out->lock);
+                 (out->pcm_config->rate % 11025) != 0))
+            do_out_standby(out);
+        pthread_mutex_unlock(&out->lock);
     }
 
     in->pcm = pcm_open(PCM_CARD, device, PCM_IN, in->pcm_config);
