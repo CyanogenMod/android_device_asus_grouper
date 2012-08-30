@@ -78,7 +78,6 @@ PRODUCT_PACKAGES := \
     audio.a2dp.default \
     audio.usb.default \
     librs_jni \
-    make_ext4fs \
     setup_fs \
     l2ping \
     hcitool \
