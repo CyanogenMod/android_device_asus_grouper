@@ -300,7 +300,7 @@ service bugreport /system/bin/bugmailer.sh -b /system/media/audio/ui/Dock.ogg -e
     class main
     disabled
     oneshot
-    keycodes 115 114
+    keycodes 115 114 116
 
 #BCM
 service hciattach /system/bin/brcm_patchram_plus --enable_hci --scopcm=0,2,0,0,0,0,0,0,0,0 \
