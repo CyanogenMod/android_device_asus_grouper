@@ -18,10 +18,7 @@ on init
     # Support legacy paths
     symlink /storage/emulated_legacy /sdcard
     symlink /storage/emulated_legacy /mnt/sdcard
-
-    # Save bugreports as owner
-    export BUGREPORT_WRITE_PATH /mnt/shell/emulated/0
-    export BUGREPORT_READ_PATH /storage/emulated
+    symlink /storage/emulated_legacy /storage/sdcard0
 
 on early-boot
     write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor interactive
