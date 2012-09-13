@@ -21,4 +21,8 @@
     <integer name="def_screen_off_timeout">120000</integer>
     <!-- Set the automatic brightness mode on by default -->
     <bool name="def_screen_brightness_automatic_mode">true</bool>
+    <!-- No haptic feedback on this device -->
+    <bool name="def_haptic_feedback">false</bool>
+    <!-- Default for Settings.System.VIBRATE_IN_SILENT -->
+    <bool name="def_vibrate_in_silent">false</bool>
 </resources>
