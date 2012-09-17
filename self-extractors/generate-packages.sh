@@ -23,18 +23,19 @@
 # 397816 = JRO03B
 # 398337 = JRO03C
 # 405518 = JRO03H
+# 463694 = JZO54G
 # end jb-dev
 BRANCH=jb-dev
 if test $BRANCH=jb-dev
 then
-  ZIP=nakasi-ota-405518.zip
-  BUILD=jro03h
+  ZIP=nakasi-ota-463694.zip
+  BUILD=jzo54g
 fi # jb-dev
 ROOTDEVICE=grouper
 DEVICE=grouper
 MANUFACTURER=asus
 
-for COMPANY in asus broadcom elan invensense nvidia nxp trusted_logic widevine unknown
+for COMPANY in asus broadcom elan invensense nvidia nxp trusted_logic widevine
 do
   echo Processing files from $COMPANY
   rm -rf tmp
@@ -45,20 +46,20 @@ do
   asus)
     TO_EXTRACT="\
             system/bin/btmacreader \
+            system/bin/sensors-config \
             system/lib/hw/camera.tegra3.so \
+            system/lib/hw/sensors.grouper.so \
             system/lib/libsensors.lightsensor.so \
             system/vendor/lib/drm/libdrmwvmplugin.so \
             system/vendor/lib/libwvm.so \
             "
     ;;
-  broadcom_gps)
-    TO_EXTRACT="\
-            system/bin/glgps \
-            "
-    ;;
   broadcom)
     TO_EXTRACT="\
+            system/bin/glgps \
             system/etc/firmware/bcm4330.hcd \
+            system/etc/gps/gpsconfig.xml \
+            system/lib/hw/gps.tegra3.so \
             "
     ;;
   elan)
@@ -148,15 +149,6 @@ do
             system/lib/libdrmdecrypt.so \
             system/vendor/lib/libwvdrm_L1.so \
             system/vendor/lib/libWVStreamControlAPI_L1.so
-            "
-    ;;
-  unknown)
-    TO_EXTRACT="\
-            system/bin/sensors-config \
-            system/etc/asound.conf \
-            system/etc/gps/gpsconfig.xml \
-            system/lib/hw/gps.tegra3.so \
-            system/lib/hw/sensors.grouper.so \
             "
     ;;
   esac
