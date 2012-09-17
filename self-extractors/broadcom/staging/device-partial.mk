@@ -15,6 +15,6 @@
 # Broadcom blob(s) necessary for Grouper hardware
 PRODUCT_PACKAGES := \
     glgps \
-    bcm4330
-PRODUCT_PACKAGES := \
+    gps.tegra3 \
+    gpsconfig \
     bcm4330
