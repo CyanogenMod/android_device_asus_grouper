@@ -21,8 +21,6 @@
 /system/bin/glgps
 /system/bin/sensors-config
 /system/bin/tf_daemon
-/system/bin/whisperd
-/system/etc/asound.conf
 /system/etc/bluetooth/auto_pair_devlist.conf
 /system/etc/bluetooth/bt_did.conf
 /system/etc/bluetooth/bt_stack.conf
