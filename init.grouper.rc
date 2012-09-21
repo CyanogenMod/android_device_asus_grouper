@@ -303,14 +303,6 @@ service bugreport /system/bin/bugmailer.sh -b /system/media/audio/ui/Dock.ogg -e
     oneshot
     keycodes 115 114
 
-#BCM
-service hciattach /system/bin/brcm_patchram_plus --enable_hci --scopcm=0,2,0,0,0,0,0,0,0,0 \
-    --baudrate 3000000 --use_baudrate_for_download --patchram /etc/firmware/bcm4330.hcd --no2bytes --enable_lpm --tosleep=50000 /dev/ttyHS2
-    class main
-    user bluetooth
-    group bluetooth net_bt_admin
-    disabled
-
 # Start GPS daemon
   on boot
   service gps-daemon /system/bin/glgps -c /system/etc/gps/gpsconfig.xml
