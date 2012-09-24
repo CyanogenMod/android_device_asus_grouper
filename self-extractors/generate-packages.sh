@@ -23,13 +23,14 @@
 # 397816 = JRO03B
 # 398337 = JRO03C
 # 405518 = JRO03H
+# 438695 = JRO03R
 # 463694 = JZO54G
 # end jb-dev
 BRANCH=jb-dev
 if test $BRANCH=jb-dev
 then
-  ZIP=nakasi-ota-463694.zip
-  BUILD=jzo54g
+  ZIP=nakasi-ota-438695.zip
+  BUILD=jro03r
 fi # jb-dev
 ROOTDEVICE=grouper
 DEVICE=grouper
