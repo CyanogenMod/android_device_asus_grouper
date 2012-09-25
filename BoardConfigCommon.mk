@@ -78,6 +78,4 @@ endif
 # Avoid the generation of ldrcc instructions
 NEED_WORKAROUND_CORTEX_A9_745320 := true
 
-TARGET_RELEASETOOLS_EXTENSIONS := device/asus/grouper
-
 BOARD_USES_GROUPER_MODULES := true
