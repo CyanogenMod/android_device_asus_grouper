@@ -5,6 +5,6 @@
 
 
 /dev/block/platform/sdhci-tegra.3/by-name/APP           /system             ext4      ro                                                                                  wait
-/dev/block/platform/sdhci-tegra.3/by-name/CAC           /cache              ext4      noatime,nosuid,nodev,nomblk_io_submit,errors=panic    wait
-/dev/block/platform/sdhci-tegra.3/by-name/UDA           /data               ext4      noatime,nosuid,nodev,nomblk_io_submit,errors=panic    wait,encryptable=/dev/block/platform/sdhci-tegra.3/by-name/MDA
+/dev/block/platform/sdhci-tegra.3/by-name/CAC           /cache              ext4      discard,noatime,nosuid,nodev,nomblk_io_submit,errors=panic    wait
+/dev/block/platform/sdhci-tegra.3/by-name/UDA           /data               ext4      discard,noatime,nosuid,nodev,nomblk_io_submit,errors=panic    wait,encryptable=/dev/block/platform/sdhci-tegra.3/by-name/MDA
 
