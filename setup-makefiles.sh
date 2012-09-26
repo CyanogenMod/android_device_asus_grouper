@@ -116,9 +116,6 @@ PRODUCT_PACKAGES := \\
     asound \\
     btmacreader \\
     camera.tegra3 \\
-    glgps \\
-    gps.tegra3 \\
-    gpsconfig \\
     keystore.grouper \\
     libdrmwvmplugin \\
     libpn544_fw \\
@@ -126,8 +123,7 @@ PRODUCT_PACKAGES := \\
     libwvm \\
     sensors.grouper \\
     sensors-config \\
-    tf_daemon \\
-    touch_fw
+    tf_daemon
 EOF
 
 
@@ -181,35 +177,6 @@ LOCAL_MODULE_TAGS := optional
 LOCAL_MODULE_SUFFIX := .so
 LOCAL_MODULE_CLASS := SHARED_LIBRARIES
 LOCAL_MODULE_PATH := \$(TARGET_OUT)/lib/hw
-include \$(BUILD_PREBUILT)
-
-include \$(CLEAR_VARS)
-LOCAL_MODULE := glgps
-LOCAL_MODULE_OWNER := broadcom
-LOCAL_SRC_FILES := glgps
-LOCAL_MODULE_TAGS := optional
-LOCAL_MODULE_CLASS := EXECUTABLES
-LOCAL_MODULE_PATH := \$(TARGET_OUT)/bin
-include \$(BUILD_PREBUILT)
-
-include \$(CLEAR_VARS)
-LOCAL_MODULE := gps.tegra3
-LOCAL_MODULE_OWNER := nvidia
-LOCAL_SRC_FILES := gps.tegra3.so
-LOCAL_MODULE_TAGS := optional
-LOCAL_MODULE_SUFFIX := .so
-LOCAL_MODULE_CLASS := SHARED_LIBRARIES
-LOCAL_MODULE_PATH := \$(TARGET_OUT)/lib/hw
-include \$(BUILD_PREBUILT)
-
-include \$(CLEAR_VARS)
-LOCAL_MODULE := gpsconfig
-LOCAL_MODULE_OWNER := nvidia
-LOCAL_SRC_FILES := gpsconfig.xml
-LOCAL_MODULE_TAGS := optional
-LOCAL_MODULE_SUFFIX := .xml
-LOCAL_MODULE_CLASS := ETC
-LOCAL_MODULE_PATH := \$(TARGET_OUT)/etc/gps
 include \$(BUILD_PREBUILT)
 
 include \$(CLEAR_VARS)
@@ -290,16 +257,6 @@ LOCAL_MODULE_CLASS := EXECUTABLES
 LOCAL_MODULE_PATH := \$(TARGET_OUT)/bin
 include \$(BUILD_PREBUILT)
 
-include \$(CLEAR_VARS)
-LOCAL_MODULE := touch_fw   
-LOCAL_MODULE_OWNER := asus
-LOCAL_SRC_FILES := touch_fw.ekt
-LOCAL_MODULE_TAGS := optional
-LOCAL_MODULE_SUFFIX := .ekt
-LOCAL_MODULE_CLASS := ETC
-LOCAL_MODULE_PATH := \$(TARGET_OUT)/etc/firmware
-include \$(BUILD_PREBUILT)
-
 endif
 EOF
 
@@ -337,7 +294,7 @@ LOCAL_MODULE_CLASS := EXECUTABLES
 LOCAL_MODULE_PATH := \$(TARGET_OUT_EXECUTABLES)
 LOCAL_MODULE_TAGS := optional
 LOCAL_MODULE_OWNER := broadcom
-#include \$(BUILD_PREBUILT)
+include \$(BUILD_PREBUILT)
 
 include \$(CLEAR_VARS)
 LOCAL_MODULE := bcm4330
@@ -345,6 +302,26 @@ LOCAL_SRC_FILES := bcm4330.hcd
 LOCAL_MODULE_SUFFIX := .hcd
 LOCAL_MODULE_CLASS := ETC
 LOCAL_MODULE_PATH := \$(TARGET_OUT_ETC)/firmware
+LOCAL_MODULE_TAGS := optional
+LOCAL_MODULE_OWNER := broadcom
+include \$(BUILD_PREBUILT)
+
+include \$(CLEAR_VARS)
+LOCAL_MODULE := gpsconfig
+LOCAL_SRC_FILES := gpsconfig.xml
+LOCAL_MODULE_SUFFIX := .xml
+LOCAL_MODULE_CLASS := ETC
+LOCAL_MODULE_PATH := \$(TARGET_OUT_ETC)/gps
+LOCAL_MODULE_TAGS := optional
+LOCAL_MODULE_OWNER := broadcom
+include \$(BUILD_PREBUILT)
+
+include \$(CLEAR_VARS)
+LOCAL_MODULE := gps.tegra3
+LOCAL_SRC_FILES := gps.tegra3.so
+LOCAL_MODULE_SUFFIX := .so
+LOCAL_MODULE_CLASS := SHARED_LIBRARIES
+LOCAL_MODULE_PATH := \$(TARGET_OUT_SHARED_LIBRARIES)/hw
 LOCAL_MODULE_TAGS := optional
 LOCAL_MODULE_OWNER := broadcom
 include \$(BUILD_PREBUILT)
@@ -374,8 +351,8 @@ MAKEFILE=../../../$OUTDIR/device-partial.mk
 # Broadcom blob(s) necessary for Grouper hardware
 PRODUCT_PACKAGES := \\
     glgps \\
-    bcm4330
-PRODUCT_PACKAGES := \\
+    gps.tegra3 \\
+    gpsconfig \\
     bcm4330
 EOF
 
@@ -1007,7 +984,6 @@ MAKEFILE=../../../$OUTDIR/device-partial.mk
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-
 # NVIDIA blob(s) necessary for Grouper hardware
 PRODUCT_PACKAGES := \\
     nvavp_os_00001000 \\
@@ -1169,7 +1145,6 @@ MAKEFILE=../../../$OUTDIR/device-partial.mk
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-
 # Widevine blob(s) necessary for Grouper hardware
 PRODUCT_PACKAGES := \\
     libdrmdecrypt \\
@@ -1300,6 +1275,88 @@ MAKEFILE=../../../$OUTDIR/BoardConfigPartial.mk
 # limitations under the License.
 EOF
 
+#--------------------------------------------------------------
+#  ELAN
+#--------------------------------------------------------------
+
+OUTDIR=$OUTVENDOR/elan/$DEVICE
+mkdir -p ../../../$OUTDIR/proprietary
+MAKEFILE=../../../$OUTDIR/proprietary/Android.mk
+
+(cat << EOF) > $MAKEFILE
+# Copyright (C) 2011 The Android Open Source Project
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+LOCAL_PATH := \$(call my-dir)
+
+ifeq (\$(TARGET_DEVICE),grouper)
+
+include \$(CLEAR_VARS)
+LOCAL_MODULE := touch_fw
+LOCAL_SRC_FILES := touch_fw.ekt
+LOCAL_MODULE_SUFFIX := .ekt
+LOCAL_MODULE_CLASS := ETC
+LOCAL_MODULE_PATH := \$(TARGET_OUT_ETC)/firmware
+LOCAL_MODULE_TAGS := optional
+LOCAL_MODULE_OWNER := elan
+include \$(BUILD_PREBUILT)
+
+endif
+EOF
+
+#-------------------------------------------------------------------------
+
+MAKEFILE=../../../$OUTDIR/device-partial.mk
+
+(cat << EOF) > $MAKEFILE
+# Copyright (C) 2010 The Android Open Source Project
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# Elan blob(s) necessary for Grouper hardware
+PRODUCT_PACKAGES := \\
+    touch_fw
+EOF
+
+MAKEFILE=../../../$OUTDIR/BoardConfigPartial.mk
+
+(cat << EOF) > $MAKEFILE
+# Copyright (C) 2010 The Android Open Source Project
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+EOF
+
 
 #-------------------------------------------------------------------------
 # MOVE FILES TO RIGHT PLACE
@@ -1310,6 +1367,9 @@ ASUSDIR=../../../$OUTVENDOR/$MANUFACTURER/$DEVICE/proprietary
 # BROADCOM
 TARGET=../../../$OUTVENDOR/broadcom/$DEVICE/proprietary
 mv $ASUSDIR/bcm4330.hcd $TARGET
+mv $ASUSDIR/glgps $TARGET
+mv $ASUSDIR/gps.tegra3.so $TARGET
+mv $ASUSDIR/gpsconfig.xml $TARGET
 # NVIDIA
 TARGET=../../../$OUTVENDOR/nvidia/$DEVICE/proprietary
 mv $ASUSDIR/gralloc.tegra3.so $TARGET
@@ -1378,3 +1438,6 @@ TARGET=../../../$OUTVENDOR/invensense/$DEVICE/proprietary
 mv $ASUSDIR/libinvensense_hal.so $TARGET
 mv $ASUSDIR/libmllite.so $TARGET
 mv $ASUSDIR/libmplmpu.so $TARGET
+#ELAN
+TARGET=../../../$OUTVENDOR/elan/$DEVICE/proprietary
+mv $ASUSDIR/touch_fw.ekt $TARGET
