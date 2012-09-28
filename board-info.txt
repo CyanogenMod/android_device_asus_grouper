@@ -1,2 +1,2 @@
 require board=grouper
-require version-bootloader=3.34
+require version-bootloader=3.41
