@@ -27,13 +27,14 @@
 # 447484 = JZO54
 # 477516 = JZO54I
 # 481723 = JZO54J
+# 485486 = JZO54K
 # end jb-dev
 
 source ../../../common/clear-factory-images-variables.sh
-BUILD=481723
+BUILD=485486
 DEVICE=grouper
 PRODUCT=nakasi
-VERSION=jzo54j
+VERSION=jzo54k
 SRCPREFIX=signed-
 BOOTLOADERFILE=bootloader.bin
 BOOTLOADER=3.41
