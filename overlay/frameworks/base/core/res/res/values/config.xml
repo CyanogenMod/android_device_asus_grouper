@@ -85,6 +85,10 @@
     The default represents a dual-mode smartphone -->
     <string translatable="false" name="config_wifi_p2p_device_type">1-0050F204-1</string>
 
+    <string-array name="config_overlay_locationProviderPackageNames" translatable="false">
+        <item>com.google.android.location</item>
+    </string-array>
+
     <!-- List of file paths for USB host busses to exclude from USB host support.
          For example, if the first USB bus on the device is used to communicate
          with the modem or some other restricted hardware, add "/dev/bus/usb/001/"
