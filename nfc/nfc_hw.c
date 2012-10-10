@@ -37,7 +37,11 @@ static uint8_t pn544_eedata_settings[][4] = {
     ,{0x00,0x99,0x77,0xFF} // ANATXCWGSPON
     ,{0x00,0x99,0x31,0x70} // ANAVMID setting PICC
     ,{0x00,0x99,0x2A,0xF5} // ANATXMODGSN-TYPEB
+#ifdef grouper
     ,{0x00,0x99,0x29,0xF5} // ANATXMODGSN-TYPEA
+#else
+    ,{0x00,0x99,0x29,0xFF} // ANATXMODGSN-TYPEA
+#endif
     // For tegra we don't override load modulation settings.
 
     // Enable PBTF
