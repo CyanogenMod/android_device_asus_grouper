@@ -116,7 +116,6 @@ PRODUCT_PACKAGES := \\
     asound \\
     btmacreader \\
     camera.tegra3 \\
-    keystore.grouper \\
     libdrmwvmplugin \\
     libpn544_fw \\
     libsensors.lightsensor \\
@@ -173,16 +172,6 @@ include \$(CLEAR_VARS)
 LOCAL_MODULE := camera.tegra3
 LOCAL_MODULE_OWNER := nvidia
 LOCAL_SRC_FILES := camera.tegra3.so
-LOCAL_MODULE_TAGS := optional
-LOCAL_MODULE_SUFFIX := .so
-LOCAL_MODULE_CLASS := SHARED_LIBRARIES
-LOCAL_MODULE_PATH := \$(TARGET_OUT)/lib/hw
-include \$(BUILD_PREBUILT)
-
-include \$(CLEAR_VARS)
-LOCAL_MODULE := keystore.grouper
-LOCAL_MODULE_OWNER := asus
-LOCAL_SRC_FILES := keystore.grouper.so
 LOCAL_MODULE_TAGS := optional
 LOCAL_MODULE_SUFFIX := .so
 LOCAL_MODULE_CLASS := SHARED_LIBRARIES
