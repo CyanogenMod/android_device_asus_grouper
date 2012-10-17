@@ -45,32 +45,41 @@
       <!-- Different CPU speeds as reported in
        /sys/devices/system/cpu/cpu0/cpufreq/stats/time_in_state -->
   <array name="cpu.speeds">
-      <value>216000</value>  <!-- 216 MHz -->
-      <value>312000</value>  <!-- 312 MHz -->
-      <value>456000</value>  <!-- 456 MHz -->
-      <value>608000</value>  <!-- 608 MHz -->
+      <value>51000</value>  <!--  51 MHz -->
+      <value>102000</value>  <!-- 102 MHz -->
+      <value>204000</value>  <!-- 204 MHz -->
+      <value>340000</value>  <!-- 340 MHz -->
+      <value>475000</value>  <!-- 475 MHz -->
       <value>760000</value>  <!-- 760 MHz -->
-      <value>816000</value>  <!-- 816 MHz -->
-      <value>912000</value>  <!-- 912 MHz -->
+      <value>880000</value>  <!-- 880 MHz -->
       <value>1000000</value> <!--   1 GHz -->
+      <value>1100000</value> <!-- 1.1 GHz -->
+      <value>1200000</value> <!-- 1.2 GHz -->
+      <value>1300000</value> <!-- 1.3 GHz -->
+      <value>1400000</value> <!-- 1.4 GHz -->
+      <value>1500000</value> <!-- 1.5 GHz -->
+
   </array>
   <!-- Power consumption when CPU is idle -->
   <item name="cpu.idle">3.8</item>
   <item name="cpu.awake">54.6</item>
-  <!-- Power consumption at different speeds -->
+  <!-- Power consumption at different speeds !ESTIMATES! -->
   <array name="cpu.active">
-      <value>100</value> <!-- 216 MHz -->
-      <value>107</value> <!-- 312 MHz -->
-      <value>116</value> <!-- 456 MHz -->
-      <value>123</value> <!-- 608 MHz -->
-      <value>135</value> <!-- 760 MHz -->
-      <value>138</value> <!-- 816 MHz -->
-      <value>142</value> <!-- 912 MHz -->
-      <value>148</value> <!--   1 GHz -->
+      <value>86</value>  <!--  51 MHz -->
+      <value>90</value>  <!-- 102 MHz -->
+      <value>98</value>  <!-- 204 MHz -->
+      <value>110</value>  <!-- 340 MHz -->
+      <value>118</value>  <!-- 475 MHz -->
+      <value>135</value>  <!-- 760 MHz -->
+      <value>140</value>  <!-- 880 MHz -->
+      <value>148</value>  <!--  1 GHz -->
+      <value>154</value> <!--   1.1 GHz -->
+      <value>160</value> <!--   1.2 GHz -->
+      <value>166</value> <!--   1.3 GHz -->
+      <value>172</value> <!--   1.4 GHz -->
+      <value>178</value> <!--   1.5 GHz -->
+
   </array>
   <!-- This is the battery capacity in mAh -->
-  <item name="battery.capacity">3260</item>
-      <!--
-      Battery capacity is 3260 mAH (at 7.4 Volts)
-      -->
+  <item name="battery.capacity">4325</item>
 </device>
