@@ -61,6 +61,12 @@ on boot
     chown bluetooth net_bt_stack /data/misc/bluetooth
     setprop ro.bt.bdaddr_path "/data/misc/bluetooth/bdaddr"
 
+    # bluetooth LPM
+    chmod 0220 /proc/bluetooth/sleep/lpm
+    chmod 0220 /proc/bluetooth/sleep/btwrite
+    chown bluetooth bluetooth /proc/bluetooth/sleep/lpm
+    chown bluetooth bluetooth /proc/bluetooth/sleep/btwrite
+
 # NFC
     setprop ro.nfc.port "I2C"
     chmod 0660 /dev/pn544
