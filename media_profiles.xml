@@ -197,19 +197,19 @@
       minBitRate="64000" maxBitRate="20000000"
       minFrameWidth="176" maxFrameWidth="1920"
       minFrameHeight="144" maxFrameHeight="1080"
-      minFrameRate="1" maxFrameRate="30" />
+      minFrameRate="5" maxFrameRate="30" />
 
   <VideoEncoderCap name="h263" enabled="true"
       minBitRate="64000" maxBitRate="8000000"
       minFrameWidth="176" maxFrameWidth="704"
       minFrameHeight="144" maxFrameHeight="576"
-      minFrameRate="1" maxFrameRate="30" />
+      minFrameRate="5" maxFrameRate="30" />
 
   <VideoEncoderCap name="m4v" enabled="true"
       minBitRate="64000" maxBitRate="10000000"
       minFrameWidth="176" maxFrameWidth="1280"
       minFrameHeight="144" maxFrameHeight="720"
-      minFrameRate="1" maxFrameRate="30" />
+      minFrameRate="5" maxFrameRate="30" />
 
   <AudioEncoderCap name="aac" enabled="true"
       minBitRate="758" maxBitRate="288000"
