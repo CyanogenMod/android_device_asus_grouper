@@ -397,6 +397,38 @@ void audio_route_apply_path(struct audio_route *ar, const char *name)
     path_apply(ar, path);
 }
 
+void audio_route_update_path(struct audio_route *ar, const char *name)
+{
+
+    unsigned int i;
+    unsigned int j;
+    struct mixer_path *path;
+
+    if (!ar) {
+        ALOGE("invalid audio_route");
+        return;
+    }
+
+    path = path_get_by_name(ar, name);
+    if (!path) {
+        ALOGE("unable to find path '%s'", name);
+        return;
+    }
+
+    for (i = 0; i < path->length; i++) {
+        struct mixer_ctl *ctl = path->setting[i].ctl;
+
+        /* locate the mixer ctl in the list */
+        for (j = 0; j < ar->num_mixer_ctls; j++) {
+            if (ar->mixer_state[j].ctl == ctl)
+                break;
+        }
+
+        /* update the current value */
+        ar->mixer_state[j].old_value = mixer_ctl_get_value(ar->mixer_state[j].ctl, 0);
+    }
+}
+
 struct audio_route *audio_route_init(void)
 {
     struct config_parse_state state;
