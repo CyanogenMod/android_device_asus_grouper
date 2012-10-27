@@ -17,4 +17,8 @@
 <resources>
     <!-- No powercontrol widget for tablets -->
     <bool name="has_powercontrol_widget">true</bool>
+
+    <!-- Show dock settings when docked -->
+    <bool name="has_dock_settings">true</bool>
+
 </resources>
