@@ -30,6 +30,4 @@ void reset_mixer_state(struct audio_route *ar);
 /* Updates the mixer with any changed values */
 void update_mixer_state(struct audio_route *ar);
 
-void audio_route_update_path(struct audio_route *ar, const char *name);
-
 #endif
