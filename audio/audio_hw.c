@@ -190,8 +190,6 @@ static void select_devices(struct audio_device *adev)
     main_mic_on = adev->in_device & AUDIO_DEVICE_IN_BUILTIN_MIC;
 
     reset_mixer_state(adev->ar);
-    audio_route_update_path(adev->ar, "dock");
-    audio_route_update_path(adev->ar, "speaker");
 
     if (speaker_on) {
       if(is_dock_in())
