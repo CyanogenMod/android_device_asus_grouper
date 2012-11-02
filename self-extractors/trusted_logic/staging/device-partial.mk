@@ -14,4 +14,5 @@
 
 # Trusted Logic blob(s) necessary for Grouper hardware
 PRODUCT_PACKAGES := \
-    tf_daemon
+    tf_daemon \
+    keystore.grouper
