@@ -23,6 +23,7 @@ on early-boot
     write /sys/devices/system/cpu/cpu1/cpufreq/scaling_governor interactive
     write /sys/devices/system/cpu/cpu2/cpufreq/scaling_governor interactive
     write /sys/devices/system/cpu/cpu3/cpufreq/scaling_governor interactive
+    restorecon /sys/devices/system/cpu
 
 on fs
     setprop ro.crypto.umount_sd false
@@ -38,6 +39,15 @@ on post-fs-data
 
     # change back to bluetooth from system
     chown bluetooth net_bt_stack /data/misc/bluetooth
+
+    # sensors-config
+    mkdir /data/sensors 751 system system
+    mkdir /data/lightsensor 751 system system
+    mkdir /data/calibration
+    mkdir /data/amit
+
+    # btmacreader
+    mkdir /data/mac
 
     # Set indication (checked by vold) that we have finished this action
     setprop vold.post_fs_data_done 1
@@ -224,6 +234,7 @@ on boot
 # Touch
     chown system system /dev/elan-iap
     chown system system /proc/ektf_dbg  
+    restorecon /sys/bus/i2c/drivers/elan-ktf3k/1-0010/update_fw
     start touch_fw_update
  
 # Write BT BD_ADDR
@@ -329,7 +340,7 @@ on property:sys.shutdown.requested=1recovery
 service tf_daemon /system/bin/tf_daemon -storageDir /data/tf -d
     class main
     user root
-    group shell	
+    group shell
 
 # may restart due to /data/tf not existing yet
 on property:init.svc.tf_daemon=restarting
