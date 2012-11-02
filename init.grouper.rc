@@ -67,6 +67,9 @@ on post-fs-data
     mkdir /data/calibration
     mkdir /data/amit
 
+    # btmacreader
+    mkdir /data/mac
+
     # Set indication (checked by vold) that we have finished this action
     setprop vold.post_fs_data_done 1
 
