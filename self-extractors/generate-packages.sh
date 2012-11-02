@@ -27,12 +27,20 @@
 # 463694 = JZO54G
 # 485486 = JZO54K
 # end jb-dev
-BRANCH=jb-dev
+# start jb-mr1-dev
+# 521994 = JOP32B
+# end jb-mr1-dev
+BRANCH=jb-mr1-dev
 if test $BRANCH=jb-dev
 then
   ZIP=nakasi-ota-485486.zip
   BUILD=jzo54k
 fi # jb-dev
+if test $BRANCH=jb-mr1-dev
+then
+  ZIP=nakasi-ota-521994.zip
+  BUILD=jop32b
+fi # jb-mr1-dev
 ROOTDEVICE=grouper
 DEVICE=grouper
 MANUFACTURER=asus
@@ -144,6 +152,7 @@ do
   trusted_logic)
     TO_EXTRACT="\
             system/bin/tf_daemon \
+            system/lib/hw/keystore.grouper.so \
             "
     ;;
   widevine)
