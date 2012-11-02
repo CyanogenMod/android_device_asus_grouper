@@ -25,4 +25,14 @@ LOCAL_MODULE_TAGS := optional
 LOCAL_MODULE_OWNER := trusted_logic
 include $(BUILD_PREBUILT)
 
+include $(CLEAR_VARS)
+LOCAL_MODULE := keystore.grouper
+LOCAL_SRC_FILES := keystore.grouper.so
+LOCAL_MODULE_SUFFIX := .so
+LOCAL_MODULE_CLASS := SHARED_LIBRARIES
+LOCAL_MODULE_PATH := $(TARGET_OUT_SHARED_LIBRARIES)/hw
+LOCAL_MODULE_TAGS := optional
+LOCAL_MODULE_OWNER := trusted_logic
+include $(BUILD_PREBUILT)
+
 endif
