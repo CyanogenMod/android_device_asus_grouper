@@ -1,0 +1,11 @@
+##########
+# sensors_config: load calibration files.
+##########
+type sensors_config, domain;
+type sensors_config_exec, exec_type, file_type;
+type sensors_data_file, file_type, data_file_type;
+init_daemon_domain(sensors_config)
+allow sensors_config self:capability { dac_override chown fowner fsetid };
+allow sensors_config sensors_data_file:dir { create_dir_perms mounton };
+allow sensors_config sensors_data_file:file create_file_perms;
+allow sensors_config shell_exec:file rx_file_perms;

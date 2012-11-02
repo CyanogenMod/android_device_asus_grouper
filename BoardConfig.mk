@@ -37,3 +37,17 @@ TARGET_RECOVERY_UI_LIB := librecovery_ui_grouper
 
 -include vendor/asus/grouper/BoardConfigVendor.mk
 include device/asus/grouper/BoardConfigCommon.mk
+
+BOARD_SEPOLICY_DIRS := \
+        device/asus/grouper/sepolicy
+
+BOARD_SEPOLICY_UNION := \
+        file_contexts \
+        btmacreader.te \
+        device.te \
+        drmserver.te \
+        file.te \
+        sensors_config.te \
+        shell.te \
+        surfaceflinger.te \
+        system.te
