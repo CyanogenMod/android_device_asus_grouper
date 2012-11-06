@@ -29,6 +29,7 @@
 # end jb-dev
 # start jb-mr1-dev
 # 521994 = JOP32B
+# 524024 = JOP36
 # end jb-mr1-dev
 BRANCH=jb-mr1-dev
 if test $BRANCH=jb-dev
@@ -38,8 +39,8 @@ then
 fi # jb-dev
 if test $BRANCH=jb-mr1-dev
 then
-  ZIP=nakasi-ota-521994.zip
-  BUILD=jop32b
+  ZIP=nakasi-ota-524024.zip
+  BUILD=jop36
 fi # jb-mr1-dev
 ROOTDEVICE=grouper
 DEVICE=grouper
