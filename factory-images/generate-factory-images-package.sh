@@ -28,14 +28,17 @@
 # 477516 = JZO54I
 # 481723 = JZO54J
 # 485486 = JZO54K
-# 526897 = JOP39B
 # end jb-dev
+# start jb-mr1-dev
+# 526897 = JOP39B
+# 527221 = JOP40
+# end jb-mr1-dev
 
 source ../../../common/clear-factory-images-variables.sh
-BUILD=526897
+BUILD=527221
 DEVICE=grouper
 PRODUCT=nakasi
-VERSION=jop39b
+VERSION=jop40
 SRCPREFIX=signed-
 BOOTLOADERFILE=bootloader.bin
 BOOTLOADER=4.13
