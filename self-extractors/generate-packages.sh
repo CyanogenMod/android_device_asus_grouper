@@ -30,6 +30,7 @@
 # start jb-mr1-dev
 # 521994 = JOP32B
 # 524024 = JOP36
+# 527221 = JOP40
 # end jb-mr1-dev
 BRANCH=jb-mr1-dev
 if test $BRANCH=jb-dev
@@ -39,14 +40,14 @@ then
 fi # jb-dev
 if test $BRANCH=jb-mr1-dev
 then
-  ZIP=nakasi-ota-524024.zip
-  BUILD=jop36
+  ZIP=nakasi-ota-527221.zip
+  BUILD=jop40
 fi # jb-mr1-dev
 ROOTDEVICE=grouper
 DEVICE=grouper
 MANUFACTURER=asus
 
-for COMPANY in asus broadcom elan invensense nvidia nxp trusted_logic widevine
+for COMPANY in broadcom elan invensense nvidia nxp widevine # asus trusted_logic
 do
   echo Processing files from $COMPANY
   rm -rf tmp
