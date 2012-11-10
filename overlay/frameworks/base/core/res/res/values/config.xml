@@ -75,6 +75,9 @@
     <string-array translatable="false" name="config_tether_bluetooth_regexs">
     </string-array>
 
+    <!-- Regex of wired ethernet ifaces -->
+    <string translatable="false" name="config_ethernet_iface_regex">eth\\d|usb\\d</string>
+
     <!-- Boolean indicating whether the wifi chipset has dual frequency band support -->
     <bool translatable="false" name="config_wifi_dual_band_support">false</bool>
 

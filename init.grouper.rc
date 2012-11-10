@@ -262,6 +262,11 @@ service dhcpcd_eth0 /system/bin/dhcpcd -ABKL -f/system/etc/dhcpcd/dhcpcd.conf
     disabled
     oneshot
 
+service dhcpcd_usb0 /system/bin/dhcpcd -ABKL -f/system/etc/dhcpcd/dhcpcd.conf
+    class main
+    disabled
+    oneshot
+
 service dhcpcd_bnep0 /system/bin/dhcpcd -ABKL
     class main
     disabled
@@ -278,6 +283,11 @@ service iprenew_p2p /system/bin/dhcpcd -n
     oneshot
 
 service iprenew_eth0 /system/bin/dhcpcd -n
+    class main
+    disabled
+    oneshot
+
+service iprenew_usb0 /system/bin/dhcpcd -n
     class main
     disabled
     oneshot
