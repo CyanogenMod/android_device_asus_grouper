@@ -32,13 +32,14 @@
 # start jb-mr1-dev
 # 526897 = JOP39B
 # 527221 = JOP40
+# 527662 = JOP40C
 # end jb-mr1-dev
 
 source ../../../common/clear-factory-images-variables.sh
-BUILD=527221
+BUILD=527662
 DEVICE=grouper
 PRODUCT=nakasi
-VERSION=jop40
+VERSION=jop40c
 SRCPREFIX=signed-
 BOOTLOADERFILE=bootloader.bin
 BOOTLOADER=4.13
