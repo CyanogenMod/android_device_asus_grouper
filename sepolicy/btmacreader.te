@@ -1,0 +1,7 @@
+type btmacreader, domain;
+type btmacreader_exec, exec_type, file_type;
+type mac_data_file, file_type, data_file_type;
+init_daemon_domain(btmacreader)
+allow btmacreader self:capability dac_override;
+allow btmacreader mac_data_file:dir { mounton rmdir };
+allow btmacreader shell_exec:file rx_file_perms;
