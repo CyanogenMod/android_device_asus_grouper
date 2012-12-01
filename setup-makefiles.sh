@@ -113,7 +113,6 @@ MAKEFILE=../../../$OUTDIR/device-partial.mk
 
 # Asus blob(s) necessary for Grouper hardware
 PRODUCT_PACKAGES := \\
-    asound \\
     btmacreader \\
     camera.tegra3 \\
     libdrmwvmplugin \\
@@ -147,16 +146,6 @@ MAKEFILE=../../../$OUTDIR/proprietary/Android.mk
 LOCAL_PATH := \$(call my-dir)
 
 ifeq (\$(TARGET_DEVICE),grouper)
-
-include \$(CLEAR_VARS)
-LOCAL_MODULE := asound
-LOCAL_MODULE_OWNER := nvidia
-LOCAL_SRC_FILES := asound.conf
-LOCAL_MODULE_TAGS := optional
-LOCAL_MODULE_SUFFIX := .conf
-LOCAL_MODULE_CLASS := ETC
-LOCAL_MODULE_PATH := \$(TARGET_OUT)/etc
-include \$(BUILD_PREBUILT)
 
 include \$(CLEAR_VARS)
 LOCAL_MODULE := btmacreader   
