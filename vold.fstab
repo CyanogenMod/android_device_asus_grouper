@@ -11,3 +11,4 @@
 ######################
 
 # Mounts the first usable partition of the specified device
+dev_mount usbdisk0 /storage/usbdisk0 auto /devices/platform/tegra-ehci

@@ -7,6 +7,7 @@ on init
     # See storage config details at http://source.android.com/tech/storage/
     mkdir /mnt/shell/emulated 0700 shell shell
     mkdir /storage/emulated 0555 root root
+    mkdir /storage/usbdisk0 0775 system system
 
     export EXTERNAL_STORAGE /storage/emulated/legacy
     export EMULATED_STORAGE_SOURCE /mnt/shell/emulated
@@ -17,6 +18,8 @@ on init
     symlink /storage/emulated/legacy /mnt/sdcard
     symlink /storage/emulated/legacy /storage/sdcard0
     symlink /mnt/shell/emulated/0 /storage/emulated/legacy
+    symlink /storage/usbdisk0 /usbdisk0
+    symlink /storage/usbdisk0 /mnt/usbdisk0
 
 on early-boot
     write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor interactive
