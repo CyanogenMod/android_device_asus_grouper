@@ -32,23 +32,33 @@
 # 524024 = JOP36
 # 527221 = JOP40
 # 527662 = JOP40C
+# 561924 = JOP40G
 # end jb-mr1-dev
-BRANCH=jb-mr1-dev
-if test $BRANCH=jb-dev
+# start jb-mr1.1-dev
+# 551245 = JDP82
+# 573038 = JDQ39
+# end jb-mr1.1-dev
+BRANCH=jb-mr1.1-dev
+if test $BRANCH = jb-dev
 then
   ZIP=nakasi-ota-485486.zip
   BUILD=jzo54k
 fi # jb-dev
-if test $BRANCH=jb-mr1-dev
+if test $BRANCH = jb-mr1-dev
 then
-  ZIP=nakasi-ota-527662.zip
-  BUILD=jop40c
+  ZIP=nakasi-ota-561924.zip
+  BUILD=jop40g
 fi # jb-mr1-dev
+if test $BRANCH = jb-mr1.1-dev
+then
+  ZIP=nakasi-ota-573038.zip
+  BUILD=jdq39
+fi # jb-mr1.1-dev
 ROOTDEVICE=grouper
 DEVICE=grouper
 MANUFACTURER=asus
 
-for COMPANY in broadcom elan invensense nvidia nxp widevine # asus trusted_logic
+for COMPANY in asus broadcom elan invensense nvidia nxp widevine
 do
   echo Processing files from $COMPANY
   rm -rf tmp
@@ -88,6 +98,7 @@ do
     ;;
   nvidia)
     TO_EXTRACT="\
+            system/bin/tf_daemon \
             system/etc/firmware/nvavp_os_00001000.bin \
             system/etc/firmware/nvavp_os_0ff00000.bin \
             system/etc/firmware/nvavp_os_e0000000.bin \
@@ -149,12 +160,6 @@ do
   nxp)
     TO_EXTRACT="\
             system/vendor/firmware/libpn544_fw.so \
-            "
-    ;;
-  trusted_logic)
-    TO_EXTRACT="\
-            system/bin/tf_daemon \
-            system/lib/hw/keystore.grouper.so \
             "
     ;;
   widevine)
