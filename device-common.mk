@@ -75,6 +75,9 @@ PRODUCT_PACKAGES := \
     bttest \
     com.android.future.usb.accessory
 
+PRODUCT_PACKAGES += \
+    keystore.grouper
+
 # for bugmailer
 PRODUCT_PACKAGES += send_bug
 PRODUCT_COPY_FILES += \
