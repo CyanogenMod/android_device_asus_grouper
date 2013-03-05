@@ -51,9 +51,6 @@ on post-fs-data
     mkdir /data/calibration
     mkdir /data/amit
 
-    # btmacreader
-    mkdir /data/mac
-
     # Set indication (checked by vold) that we have finished this action
     setprop vold.post_fs_data_done 1
 
@@ -241,11 +238,6 @@ on boot
     chown system system /proc/ektf_dbg  
     restorecon /sys/bus/i2c/drivers/elan-ktf3k/1-0010/update_fw
     start touch_fw_update
- 
-# Write BT BD_ADDR
-service btmacreader /system/bin/btmacreader
-    class main
-    oneshot
 
 service wpa_supplicant /system/bin/wpa_supplicant \
     -iwlan0 -Dnl80211 -c/data/misc/wifi/wpa_supplicant.conf -e/data/misc/wifi/entropy.bin

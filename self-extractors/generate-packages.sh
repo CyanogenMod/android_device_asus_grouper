@@ -58,7 +58,6 @@ do
   case $COMPANY in
   asus)
     TO_EXTRACT="\
-            system/bin/btmacreader \
             system/bin/sensors-config \
             system/lib/hw/camera.tegra3.so \
             system/lib/hw/sensors.grouper.so \

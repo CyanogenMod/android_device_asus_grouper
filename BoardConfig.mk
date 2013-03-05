@@ -47,7 +47,6 @@ BOARD_SEPOLICY_DIRS := \
 
 BOARD_SEPOLICY_UNION := \
         file_contexts \
-        btmacreader.te \
         device.te \
         drmserver.te \
         file.te \
