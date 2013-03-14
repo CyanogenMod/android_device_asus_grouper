@@ -78,12 +78,6 @@ PRODUCT_PACKAGES := \
 PRODUCT_PACKAGES += \
     keystore.grouper
 
-# for bugmailer
-PRODUCT_PACKAGES += send_bug
-PRODUCT_COPY_FILES += \
-    system/extras/bugmailer/bugmailer.sh:system/bin/bugmailer.sh \
-    system/extras/bugmailer/send_bug:system/bin/send_bug
-
 # NFC packages
 PRODUCT_PACKAGES += \
     nfc.grouper \
