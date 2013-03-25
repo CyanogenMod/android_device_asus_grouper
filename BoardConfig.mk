@@ -47,6 +47,8 @@ BOARD_SEPOLICY_DIRS := \
 
 BOARD_SEPOLICY_UNION := \
         file_contexts \
+        genfs_contexts \
+        app.te \
         btmacreader.te \
         device.te \
         drmserver.te \
@@ -54,5 +56,5 @@ BOARD_SEPOLICY_UNION := \
         sensors_config.te \
         shell.te \
         surfaceflinger.te \
-        system.te
->>>>>>> 8231c3e... SELinux policy additions.
+        system.te \
+        zygote.te
