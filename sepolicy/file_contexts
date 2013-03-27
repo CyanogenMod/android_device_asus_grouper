@@ -1,4 +1,7 @@
+/dev/block/platform/sdhci-tegra.3/by-name/PER     u:object_r:sensors_block_device:s0
+/dev/elan-iap                     u:object_r:elan_ip_device:s0
 /dev/knvmap                       u:object_r:knv_device:s0
+/dev/lightsensor                  u:object_r:sensors_device:s0
 /dev/mi1040                       u:object_r:camera_device:s0
 /dev/ttyHS1                       u:object_r:gps_device:s0
 /dev/ttyHS2                       u:object_r:hci_attach_dev:s0
@@ -15,3 +18,7 @@
 
 /sys/bus/i2c/drivers/elan-ktf3k/1-0010/update_fw  --  u:object_r:sysfs_firmware_writable:s0
 /sys/devices/system/cpu(/.*)?                     u:object_r:sysfs_devices_system_cpu:s0
+/sys/devices/tegradc\.0(/.*)?                u:object_r:sysfs_devices_tegradc:s0
+/sys/devices/tegradc\.1(/.*)?                u:object_r:sysfs_devices_tegradc:s0
+/sys/devices/platform/bcm4330_rfkill/rfkill/rfkill0/state   --  u:object_r:sysfs_bluetooth_writable:s0
+/sys/devices/platform/bcm4330_rfkill/rfkill/rfkill0/type    --  u:object_r:sysfs_bluetooth_writable:s0

@@ -1,0 +1,18 @@
+type btmacreader, domain;
+type btmacreader_exec, exec_type, file_type;
+type mac_data_file, file_type, data_file_type;
+init_daemon_domain(btmacreader)
+allow btmacreader self:capability dac_override;
+allow btmacreader mac_data_file:dir { mounton rmdir };
+allow btmacreader shell_exec:file rx_file_perms;
+file_type_auto_trans(btmacreader, system_data_file, mac_data_file)
+
+# Execute toolbox commands
+allow btmacreader system_file:file execute_no_trans;
+
+# Read from per device partition
+allow btmacreader sensors_block_device:lnk_file read;
+allow btmacreader sdcard_external:filesystem { mount unmount };
+allow btmacreader tty_device:chr_file rw_file_perms;
+allow btmacreader self:capability sys_admin;
+allow btmacreader bluetooth_data_file:dir search;
