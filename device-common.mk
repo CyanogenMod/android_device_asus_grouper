@@ -56,7 +56,6 @@ PRODUCT_COPY_FILES += \
 
 
 PRODUCT_COPY_FILES += \
-    device/asus/grouper/vold.fstab:system/etc/vold.fstab \
     device/asus/grouper/elan-touchscreen.idc:system/usr/idc/elan-touchscreen.idc \
     device/asus/grouper/raydium_ts.idc:system/usr/idc/raydium_ts.idc \
     device/asus/grouper/sensor00fn11.idc:system/usr/idc/sensor00fn11.idc \
