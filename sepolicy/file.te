@@ -1,2 +1,1 @@
 type sysfs_firmware_writable, fs_type, sysfs_type;
-type sysfs_devices_system_cpu, fs_type, sysfs_type;
