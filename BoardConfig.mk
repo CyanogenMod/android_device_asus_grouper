@@ -53,6 +53,7 @@ BOARD_SEPOLICY_UNION := \
         device.te \
         drmserver.te \
         file.te \
+        rild.te \
         sensors_config.te \
         shell.te \
         surfaceflinger.te \
