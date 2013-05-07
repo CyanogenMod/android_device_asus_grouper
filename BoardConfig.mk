@@ -52,6 +52,7 @@ BOARD_SEPOLICY_UNION := \
         btmacreader.te \
         device.te \
         drmserver.te \
+        init_shell.te \
         file.te \
         rild.te \
         sensors_config.te \

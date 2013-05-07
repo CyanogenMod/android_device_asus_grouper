@@ -10,6 +10,7 @@ allow sensors_config sensors_data_file:dir { create_dir_perms mounton };
 allow sensors_config sensors_data_file:file create_file_perms;
 allow sensors_config shell_exec:file rx_file_perms;
 file_type_auto_trans(sensors_config, system_data_file, sensors_data_file)
+allow sensors_config system_data_file:dir { remove_name };
 
 # Execute toolbox commands
 allow sensors_config system_file:file execute_no_trans;
