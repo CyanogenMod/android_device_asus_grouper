@@ -1,4 +1,5 @@
 type btmacreader, domain;
+permissive btmacreader;
 type btmacreader_exec, exec_type, file_type;
 type mac_data_file, file_type, data_file_type;
 init_daemon_domain(btmacreader)
