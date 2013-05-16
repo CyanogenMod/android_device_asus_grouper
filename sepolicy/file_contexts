@@ -3,6 +3,11 @@
 /dev/knvmap                       u:object_r:knv_device:s0
 /dev/lightsensor                  u:object_r:sensors_device:s0
 /dev/mi1040                       u:object_r:camera_device:s0
+/dev/nvhost-.*                    u:object_r:nv_device:s0
+/dev/nvmap                        u:object_r:nv_device:s0
+/dev/pn544                        u:object_r:nfc_device:s0
+/dev/spdif.*                      u:object_r:audio_device:s0
+/dev/tegra.*                      u:object_r:video_device:s0
 /dev/ttyHS1                       u:object_r:gps_device:s0
 /dev/ttyHS2                       u:object_r:hci_attach_dev:s0
 
