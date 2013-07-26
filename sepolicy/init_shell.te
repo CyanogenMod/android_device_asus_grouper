@@ -1,1 +1,0 @@
-allow init_shell sysfs_firmware_writable:file w_file_perms;
