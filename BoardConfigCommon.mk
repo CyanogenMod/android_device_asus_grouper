@@ -34,8 +34,7 @@ TARGET_CPU_ABI2 := armeabi
 TARGET_CPU_SMP := true
 TARGET_ARCH := arm
 TARGET_ARCH_VARIANT := armv7-a-neon
-ARCH_ARM_HAVE_TLS_REGISTER := true
-ARCH_ARM_USE_NON_NEON_MEMCPY := true
+TARGET_CPU_VARIANT := cortex-a9
 
 TARGET_USERIMAGES_USE_EXT4 := true
 
@@ -54,7 +53,13 @@ BOARD_WLAN_DEVICE           := bcmdhd
 WIFI_DRIVER_FW_PATH_PARAM   := "/sys/module/bcmdhd/parameters/firmware_path"
 WIFI_DRIVER_FW_PATH_STA     := "/vendor/firmware/fw_bcmdhd.bin"
 WIFI_DRIVER_FW_PATH_AP      := "/vendor/firmware/fw_bcmdhd_apsta.bin"
-WIFI_DRIVER_FW_PATH_P2P     := "/vendor/firmware/fw_bcmdhd_p2p.bin"
+
+#XPERIENCE
+ARCH_ARM_HIGH_OPTIMIZATION := true 
+
+## Odex by xperience
+WITH_DEXPREOPT := true 
+
 
 TARGET_BOOTLOADER_BOARD_NAME := grouper
 TARGET_NO_BOOTLOADER := true
