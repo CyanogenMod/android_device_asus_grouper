@@ -15,6 +15,7 @@ file_type_auto_trans(sensors_config, system_data_file, sensors_data_file)
 allow sensors_config system_file:file execute_no_trans;
 
 # Read from per device partition
+allow sensors_config block_device:dir search;
 allow sensors_config sensors_block_device:lnk_file read;
 allow sensors_config sdcard_external:filesystem { mount unmount };
 allow sensors_config sdcard_external:file r_file_perms;
