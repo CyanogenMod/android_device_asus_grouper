@@ -1,0 +1,7 @@
+type knv_device, dev_type;
+type nv_device, dev_type, mlstrustedobject;
+type nvhost_device, dev_type;
+type nvhost_writable_device, dev_type, mlstrustedobject;
+type elan_ip_device, dev_type;
+type sensors_block_device, dev_type;
+type diag_device, dev_type;

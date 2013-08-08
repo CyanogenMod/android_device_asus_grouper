@@ -18,6 +18,7 @@ PRODUCT_PROPERTY_OVERRIDES := \
     ro.carrier=wifi-only
 
 PRODUCT_COPY_FILES := \
+    device/asus/grouper/fstab.grouper:root/fstab.grouper \
     device/asus/grouper/init.grouper.rc:root/init.grouper.rc
 
 # the actual meat of the device-specific product definition

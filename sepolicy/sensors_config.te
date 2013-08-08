@@ -1,0 +1,23 @@
+##########
+# sensors_config: load calibration files.
+##########
+type sensors_config, domain;
+type sensors_config_exec, exec_type, file_type;
+type sensors_data_file, file_type, data_file_type;
+init_daemon_domain(sensors_config)
+allow sensors_config self:capability { dac_override chown fowner fsetid };
+allow sensors_config sensors_data_file:dir { create_dir_perms mounton };
+allow sensors_config sensors_data_file:file create_file_perms;
+allow sensors_config shell_exec:file rx_file_perms;
+file_type_auto_trans(sensors_config, system_data_file, sensors_data_file)
+
+# Execute toolbox commands
+allow sensors_config system_file:file execute_no_trans;
+
+# Read from per device partition
+allow sensors_config block_device:dir search;
+allow sensors_config sensors_block_device:lnk_file read;
+allow sensors_config sdcard_external:filesystem { mount unmount };
+allow sensors_config sdcard_external:file r_file_perms;
+allow sensors_config tty_device:chr_file rw_file_perms;
+allow sensors_config self:capability sys_admin;

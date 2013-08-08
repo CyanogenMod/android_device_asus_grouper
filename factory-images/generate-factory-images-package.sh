@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# Copyright (C) 2011 The Android Open Source Project
+# Copyright 2011 The Android Open Source Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -25,16 +25,38 @@
 # 398337 = JRO03C
 # 402395 = JRO03D
 # 447484 = JZO54
+# 477516 = JZO54I
+# 481723 = JZO54J
+# 485486 = JZO54K
 # end jb-dev
+# start jb-mr1-dev
+# 526897 = JOP39B
+# 527221 = JOP40
+# 527662 = JOP40C
+# 533553 = JOP40D
+# end jb-mr1-dev
+# start jb-mr1.1-dev
+# 551245 = JDP82
+# 573038 = JDQ39
+# end jb-mr1.1-dev
+# start jb-mr2-dev
+# 683083 = JWR51
+# 689345 = JWR58
+# 690834 = JWR59
+# 704243 = JWR66G
+# 711294 = JWR66N
+# 737497 = JWR66V
+# end jb-mr2-dev
 
 source ../../../common/clear-factory-images-variables.sh
-BUILD=447484
+BUILD=737497
 DEVICE=grouper
 PRODUCT=nakasi
-VERSION=jzo54
+VERSION=jwr66v
 SRCPREFIX=signed-
 BOOTLOADERFILE=bootloader.bin
-BOOTLOADER=3.37
+BOOTLOADER=4.23
 SLEEPDURATION=10
+UNLOCKBOOTLOADER=true
 ERASEALL=true
 source ../../../common/generate-factory-images-common.sh

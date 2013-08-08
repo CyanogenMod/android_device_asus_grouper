@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# Copyright (C) 2010 The Android Open Source Project
+# Copyright 2010 The Android Open Source Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -25,18 +25,62 @@
 # 405518 = JRO03H
 # 438695 = JRO03R
 # 463694 = JZO54G
+# 485486 = JZO54K
 # end jb-dev
-BRANCH=jb-dev
-if test $BRANCH=jb-dev
+# start jb-mr1-dev
+# 521994 = JOP32B
+# 524024 = JOP36
+# 527221 = JOP40
+# 527662 = JOP40C
+# 561924 = JOP40G
+# end jb-mr1-dev
+# start jb-mr1.1-dev
+# 551245 = JDP82
+# 573038 = JDQ39
+# end jb-mr1.1-dev
+# start jb-mr2-dev
+# 638589 = JWR11D
+# 681336 = JWR50
+# 683083 = JWR51
+# 684634 = JWR52
+# 686185 = JWR53
+# 689345 = JWR58
+# 690834 = JWR59
+# 692263 = JWR60
+# 695489 = JWR64
+# 699533 = JWR66
+# 701448 = JWR66C
+# 704243 = JWR66G
+# 711294 = JWR66N
+# 736095 = JWR66U
+# 737497 = JWR66V
+# end jb-mr2-dev
+BRANCH=jb-mr2-dev
+if test $BRANCH = jb-dev
 then
-  ZIP=nakasi-ota-438695.zip
-  BUILD=jro03r
+  ZIP=nakasi-ota-485486.zip
+  BUILD=jzo54k
 fi # jb-dev
+if test $BRANCH = jb-mr1-dev
+then
+  ZIP=nakasi-ota-561924.zip
+  BUILD=jop40g
+fi # jb-mr1-dev
+if test $BRANCH = jb-mr1.1-dev
+then
+  ZIP=nakasi-ota-573038.zip
+  BUILD=jdq39
+fi # jb-mr1.1-dev
+if test $BRANCH = jb-mr2-dev
+then
+  ZIP=nakasi-ota-737497
+  BUILD=jwr66v
+fi # jb-mr2-dev
 ROOTDEVICE=grouper
 DEVICE=grouper
 MANUFACTURER=asus
 
-for COMPANY in asus broadcom elan invensense nvidia nxp trusted_logic widevine
+for COMPANY in asus broadcom elan invensense nvidia nxp widevine
 do
   echo Processing files from $COMPANY
   rm -rf tmp
@@ -46,7 +90,6 @@ do
   case $COMPANY in
   asus)
     TO_EXTRACT="\
-            system/bin/btmacreader \
             system/bin/sensors-config \
             system/lib/hw/camera.tegra3.so \
             system/lib/hw/sensors.grouper.so \
@@ -77,6 +120,7 @@ do
     ;;
   nvidia)
     TO_EXTRACT="\
+            system/bin/tf_daemon \
             system/etc/firmware/nvavp_os_00001000.bin \
             system/etc/firmware/nvavp_os_0ff00000.bin \
             system/etc/firmware/nvavp_os_e0000000.bin \
@@ -138,11 +182,6 @@ do
   nxp)
     TO_EXTRACT="\
             system/vendor/firmware/libpn544_fw.so \
-            "
-    ;;
-  trusted_logic)
-    TO_EXTRACT="\
-            system/bin/tf_daemon \
             "
     ;;
   widevine)

@@ -1,0 +1,42 @@
+/dev/block/platform/sdhci-tegra.3/by-name/PER     u:object_r:sensors_block_device:s0
+/dev/diag                         u:object_r:diag_device:s0
+/dev/elan-iap                     u:object_r:elan_ip_device:s0
+/dev/knvmap                       u:object_r:knv_device:s0
+/dev/nvmap                        u:object_r:nv_device:s0
+/dev/lightsensor                  u:object_r:sensors_device:s0
+/dev/mi1040                       u:object_r:camera_device:s0
+/dev/ov2710                       u:object_r:camera_device:s0
+/dev/tegra_camera                 u:object_r:camera_device:s0
+/dev/camera.*                     u:object_r:camera_device:s0
+/dev/focuser.*                    u:object_r:camera_device:s0
+/dev/torch.*                      u:object_r:camera_device:s0
+/dev/video0                       u:object_r:camera_device:s0
+/dev/video1                       u:object_r:camera_device:s0
+/dev/nvhost.*                     u:object_r:nvhost_device:s0
+/dev/nvhost-ctrl                  u:object_r:nvhost_writable_device:s0
+/dev/nvhost-gr2d                  u:object_r:nvhost_writable_device:s0
+/dev/nvhost-gr3d                  u:object_r:nvhost_writable_device:s0
+/dev/pn544                        u:object_r:nfc_device:s0
+/dev/spdif.*                      u:object_r:audio_device:s0
+/dev/tegra.*                      u:object_r:video_device:s0
+/dev/ttyHS1                       u:object_r:gps_device:s0
+/dev/ttyHS2                       u:object_r:hci_attach_dev:s0
+
+/data/amit(/.*)?                  u:object_r:sensors_data_file:s0
+/data/calibration(/.*)?           u:object_r:sensors_data_file:s0
+/data/lightsensor(/.*)?           u:object_r:sensors_data_file:s0
+/data/mac(/.*)?                   u:object_r:mac_data_file:s0
+/data/sensors(/.*)?               u:object_r:sensors_data_file:s0
+/data/tf(/.*)?                    u:object_r:tee_data_file:s0
+
+/system/bin/brcm_patchram_plus -- u:object_r:hci_attach_exec:s0
+/system/bin/btmacreader        -- u:object_r:btmacreader_exec:s0
+/system/bin/glgps              -- u:object_r:gpsd_exec:s0
+/system/bin/sensors-config     -- u:object_r:sensors_config_exec:s0
+
+/sys/bus/i2c/drivers/elan-ktf3k/1-0010/update_fw  --  u:object_r:sysfs_firmware_writable:s0
+/sys/devices/system/cpu(/.*)?                     u:object_r:sysfs_devices_system_cpu:s0
+/sys/devices/tegradc\.0(/.*)?                u:object_r:sysfs_devices_tegradc:s0
+/sys/devices/tegradc\.1(/.*)?                u:object_r:sysfs_devices_tegradc:s0
+/sys/devices/platform/bcm4330_rfkill/rfkill/rfkill0/state   --  u:object_r:sysfs_bluetooth_writable:s0
+/sys/devices/platform/bcm4330_rfkill/rfkill/rfkill0/type    --  u:object_r:sysfs_bluetooth_writable:s0
