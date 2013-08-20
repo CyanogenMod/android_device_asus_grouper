@@ -35,12 +35,13 @@
 #include <tinyalsa/asoundlib.h>
 
 #include <audio_utils/resampler.h>
-
-#include "audio_route.h"
+#include <audio_route/audio_route.h>
 
 #define PCM_CARD 1
 #define PCM_DEVICE 0
 #define PCM_DEVICE_SCO 2
+
+#define MIXER_CARD 1
 
 #define OUT_PERIOD_SIZE 512
 #define OUT_SHORT_PERIOD_COUNT 2
@@ -186,7 +187,7 @@ static void select_devices(struct audio_device *adev)
     docked = adev->out_device & AUDIO_DEVICE_OUT_ANLG_DOCK_HEADSET;
     main_mic_on = adev->in_device & AUDIO_DEVICE_IN_BUILTIN_MIC;
 
-    reset_mixer_state(adev->ar);
+    audio_route_reset(adev->ar);
 
     if (speaker_on)
         audio_route_apply_path(adev->ar, "speaker");
@@ -201,7 +202,7 @@ static void select_devices(struct audio_device *adev)
             audio_route_apply_path(adev->ar, "main-mic-top");
     }
 
-    update_mixer_state(adev->ar);
+    audio_route_update_mixer(adev->ar);
 
     ALOGV("hp=%c speaker=%c dock=%c main-mic=%c", headphone_on ? 'y' : 'n',
           speaker_on ? 'y' : 'n', docked ? 'y' : 'n', main_mic_on ? 'y' : 'n');
@@ -1247,7 +1248,7 @@ static int adev_open(const hw_module_t* module, const char* name,
     adev->hw_device.close_input_stream = adev_close_input_stream;
     adev->hw_device.dump = adev_dump;
 
-    adev->ar = audio_route_init();
+    adev->ar = audio_route_init(MIXER_CARD, NULL);
     adev->orientation = ORIENTATION_UNDEFINED;
     adev->out_device = AUDIO_DEVICE_OUT_SPEAKER;
     adev->in_device = AUDIO_DEVICE_IN_BUILTIN_MIC & ~AUDIO_DEVICE_BIT_IN;

@@ -12,27 +12,38 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+ifeq ($(TARGET_ARCH),arm)
+ifneq (,$(filter grouper tilapia, $(TARGET_DEVICE)))
+
+# This is a nasty hack. keystore.grouper is Open Source, but it
+# links against a non-Open library, so we can only build it
+# when that library is present.
+ifeq ($(BOARD_HAS_TF_CRYPTO_SST),true)
+
 LOCAL_PATH := $(call my-dir)
 
-ifeq ($(TARGET_DEVICE),grouper)
-
 include $(CLEAR_VARS)
-LOCAL_MODULE := tf_daemon
-LOCAL_SRC_FILES := tf_daemon
-LOCAL_MODULE_CLASS := EXECUTABLES
-LOCAL_MODULE_PATH := $(TARGET_OUT)/bin
-LOCAL_MODULE_TAGS := optional
-LOCAL_MODULE_OWNER := trusted_logic
-include $(BUILD_PREBUILT)
 
-include $(CLEAR_VARS)
 LOCAL_MODULE := keystore.grouper
-LOCAL_SRC_FILES := keystore.grouper.so
-LOCAL_MODULE_SUFFIX := .so
-LOCAL_MODULE_CLASS := SHARED_LIBRARIES
-LOCAL_MODULE_PATH := $(TARGET_OUT_SHARED_LIBRARIES)/hw
-LOCAL_MODULE_TAGS := optional
-LOCAL_MODULE_OWNER := trusted_logic
-include $(BUILD_PREBUILT)
 
+LOCAL_MODULE_PATH := $(TARGET_OUT_SHARED_LIBRARIES)/hw
+
+LOCAL_SRC_FILES := \
+	keymaster_grouper.cpp
+
+LOCAL_C_INCLUDES := \
+	libcore/include \
+	external/openssl/include \
+	$(LOCAL_PATH)/../security/tf_sdk/include
+
+LOCAL_CFLAGS := -fvisibility=hidden -Wall -Werror
+
+LOCAL_SHARED_LIBRARIES := libcutils liblog libcrypto libtf_crypto_sst
+
+LOCAL_MODULE_TAGS := optional
+
+include $(BUILD_SHARED_LIBRARY)
+
+endif
+endif
 endif

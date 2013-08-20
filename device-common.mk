@@ -14,6 +14,12 @@
 # limitations under the License.
 #
 
+ifeq ($(TARGET_PREBUILT_KERNEL),)
+  LOCAL_KERNEL := kernel/tegra/arch/arm/boot/zImage
+else
+  LOCAL_KERNEL := $(TARGET_PREBUILT_KERNEL)
+endif
+
 PRODUCT_AAPT_CONFIG := normal large tvdpi hdpi
 PRODUCT_AAPT_PREF_CONFIG := tvdpi
 
@@ -54,9 +60,7 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.usb.host.xml:system/etc/permissions/android.hardware.usb.host.xml \
     frameworks/native/data/etc/android.hardware.usb.accessory.xml:system/etc/permissions/android.hardware.usb.accessory.xml
 
-
 PRODUCT_COPY_FILES += \
-    device/asus/grouper/vold.fstab:system/etc/vold.fstab \
     device/asus/grouper/elan-touchscreen.idc:system/usr/idc/elan-touchscreen.idc \
     device/asus/grouper/raydium_ts.idc:system/usr/idc/raydium_ts.idc \
     device/asus/grouper/sensor00fn11.idc:system/usr/idc/sensor00fn11.idc \
@@ -75,17 +79,12 @@ PRODUCT_PACKAGES := \
     bttest \
     com.android.future.usb.accessory
 
-# for bugmailer
-PRODUCT_PACKAGES += send_bug
-PRODUCT_COPY_FILES += \
-    system/extras/bugmailer/bugmailer.sh:system/bin/bugmailer.sh \
-    system/extras/bugmailer/send_bug:system/bin/send_bug
+PRODUCT_PACKAGES += \
+    keystore.grouper
 
 # NFC packages
 PRODUCT_PACKAGES += \
     nfc.grouper \
-    libnfc \
-    libnfc_jni \
     Nfc \
     Tag \
     com.android.nfc_extras

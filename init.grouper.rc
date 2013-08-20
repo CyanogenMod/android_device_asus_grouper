@@ -28,10 +28,27 @@ on early-boot
     write /sys/devices/system/cpu/cpu1/cpufreq/scaling_governor interactive
     write /sys/devices/system/cpu/cpu2/cpufreq/scaling_governor interactive
     write /sys/devices/system/cpu/cpu3/cpufreq/scaling_governor interactive
+    restorecon /sys/devices/system/cpu
+    restorecon /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq
+    restorecon /sys/devices/system/cpu/cpufreq/interactive/above_hispeed_delay
+    restorecon /sys/devices/system/cpu/cpufreq/interactive/boost
+    restorecon /sys/devices/system/cpu/cpufreq/interactive/boost_factor
+    restorecon /sys/devices/system/cpu/cpufreq/interactive/go_hispeed_load
+    restorecon /sys/devices/system/cpu/cpufreq/interactive/go_maxspeed_load
+    restorecon /sys/devices/system/cpu/cpufreq/interactive/hispeed_freq
+    restorecon /sys/devices/system/cpu/cpufreq/interactive/input_boost
+    restorecon /sys/devices/system/cpu/cpufreq/interactive/io_is_busy
+    restorecon /sys/devices/system/cpu/cpufreq/interactive/max_boost
+    restorecon /sys/devices/system/cpu/cpufreq/interactive/min_sample_time
+    restorecon /sys/devices/system/cpu/cpufreq/interactive/sustain_load
+    restorecon /sys/devices/system/cpu/cpufreq/interactive/timer_rate
+    restorecon /sys/devices/tegradc.0/smartdimmer/aggressiveness
+    restorecon /sys/devices/tegradc.0/smartdimmer/enable
 
 on fs
     setprop ro.crypto.umount_sd false
     mount_all /fstab.grouper
+    restorecon /dev/block/platform/sdhci-tegra.3/by-name/PER
 
 on post-fs-data
     mkdir /data/misc/wifi 0770 wifi wifi
@@ -43,6 +60,15 @@ on post-fs-data
 
     # change back to bluetooth from system
     chown bluetooth net_bt_stack /data/misc/bluetooth
+
+    # sensors-config
+    mkdir /data/sensors 751 system system
+    mkdir /data/lightsensor 751 system system
+    mkdir /data/calibration
+    mkdir /data/amit
+
+    # btmacreader
+    mkdir /data/mac
 
     # Set indication (checked by vold) that we have finished this action
     setprop vold.post_fs_data_done 1
@@ -59,6 +85,8 @@ on boot
     chmod 0660 /sys/class/rfkill/rfkill0/type
     chown bluetooth net_bt_stack /sys/class/rfkill/rfkill0/state
     chown bluetooth net_bt_stack /sys/class/rfkill/rfkill0/type
+    restorecon /sys/devices/platform/bcm4330_rfkill/rfkill/rfkill0/state
+    restorecon /sys/devices/platform/bcm4330_rfkill/rfkill/rfkill0/type
 
     # bluetooth MAC address programming
     chown bluetooth net_bt_stack ro.bt.bdaddr_path
@@ -121,6 +149,33 @@ on boot
     chown system system /sys/bus/iio/devices/iio:device0/scan_elements/in_timestamp_en
     chown system system /sys/bus/iio/devices/iio:device0/temperature
     chown system system /sys/bus/iio/devices/iio:device0/trigger/current_trigger
+
+    # new in MA 5.1.5
+    chown system system /sys/bus/iio/devices/iio:device0/secondary_name
+    chown system system /sys/bus/iio/devices/iio:device0/dmp_firmware
+    chown system system /sys/bus/iio/devices/iio:device0/firmware_loaded
+    chown system system /sys/bus/iio/devices/iio:device0/dmp_event_int_on
+    chown system system /sys/bus/iio/devices/iio:device0/dmp_output_rate
+    chown system system /sys/bus/iio/devices/iio:device0/in_accel_x_offset
+    chown system system /sys/bus/iio/devices/iio:device0/in_accel_y_offset
+    chown system system /sys/bus/iio/devices/iio:device0/in_accel_z_offset
+    chown system system /sys/bus/iio/devices/iio:device0/gyro_fsr
+    ## LPQ
+    chown system system /sys/bus/iio/devices/iio:device0/quaternion_on
+    chown system system /sys/bus/iio/devices/iio:device0/scan_elements/in_quaternion_z_en
+    chown system system /sys/bus/iio/devices/iio:device0/scan_elements/in_quaternion_y_en
+    chown system system /sys/bus/iio/devices/iio:device0/scan_elements/in_quaternion_x_en
+    chown system system /sys/bus/iio/devices/iio:device0/scan_elements/in_quaternion_r_en
+    ## Screen orientation
+    chown system system /sys/bus/iio/devices/iio:device0/event_display_orientation
+    chown system system /sys/bus/iio/devices/iio:device0/display_orientation_on
+    ## SMD
+    chown system system /sys/bus/iio/devices/iio:device0/event_smd
+    chown system system /sys/bus/iio/devices/iio:device0/smd_enable
+    chown system system /sys/bus/iio/devices/iio:device0/smd_threshold
+    chown system system /sys/bus/iio/devices/iio:device0/smd_delay_threshold
+    chown system system /sys/bus/iio/devices/iio:device0/smd_delay_threshold2
+    ## AMI compass sensor
     chown system system /dev/iio:device1
     chown system system /sys/bus/iio/devices/trigger1/name
     chown system system /sys/bus/iio/devices/iio:device1/buffer/length
@@ -166,6 +221,32 @@ on boot
     chmod 600 /sys/bus/iio/devices/iio:device0/scan_elements/in_timestamp_en
     chmod 600 /sys/bus/iio/devices/iio:device0/temperature
     chmod 600 /sys/bus/iio/devices/iio:device0/trigger/current_trigger
+    # new in MA 5.1.5
+    chmod 600 /sys/bus/iio/devices/iio:device0/secondary_name
+    chmod 600 /sys/bus/iio/devices/iio:device0/dmp_firmware
+    chmod 600 /sys/bus/iio/devices/iio:device0/firmware_loaded
+    chmod 600 /sys/bus/iio/devices/iio:device0/dmp_event_int_on
+    chmod 600 /sys/bus/iio/devices/iio:device0/dmp_output_rate
+    chmod 600 /sys/bus/iio/devices/iio:device0/in_accel_x_offset
+    chmod 600 /sys/bus/iio/devices/iio:device0/in_accel_y_offset
+    chmod 600 /sys/bus/iio/devices/iio:device0/in_accel_z_offset
+    chmod 600 /sys/bus/iio/devices/iio:device0/gyro_fsr
+    ## LPQ
+    chmod 600 /sys/bus/iio/devices/iio:device0/quaternion_on
+    chmod 600 /sys/bus/iio/devices/iio:device0/scan_elements/in_quaternion_z_en
+    chmod 600 /sys/bus/iio/devices/iio:device0/scan_elements/in_quaternion_y_en
+    chmod 600 /sys/bus/iio/devices/iio:device0/scan_elements/in_quaternion_x_en
+    chmod 600 /sys/bus/iio/devices/iio:device0/scan_elements/in_quaternion_r_en
+    ## Screen orientation
+    chmod 600 /sys/bus/iio/devices/iio:device0/event_display_orientation
+    chmod 600 /sys/bus/iio/devices/iio:device0/display_orientation_on
+    ## SMD
+    chmod 600 /sys/bus/iio/devices/iio:device0/event_smd
+    chmod 600 /sys/bus/iio/devices/iio:device0/smd_enable
+    chmod 600 /sys/bus/iio/devices/iio:device0/smd_threshold
+    chmod 600 /sys/bus/iio/devices/iio:device0/smd_delay_threshold
+    chmod 600 /sys/bus/iio/devices/iio:device0/smd_delay_threshold2
+    ## AMI compass sensor
     chmod 600 /dev/iio:device1
     chmod 600 /sys/bus/iio/devices/trigger1/name
     chmod 600 /sys/bus/iio/devices/iio:device1/buffer/length
@@ -229,15 +310,13 @@ on boot
 # Touch
     chown system system /dev/elan-iap
     chown system system /proc/ektf_dbg  
+    restorecon /sys/bus/i2c/drivers/elan-ktf3k/1-0010/update_fw
     start touch_fw_update
- 
-# Write BT BD_ADDR
-service btmacreader /system/bin/btmacreader
-    class main
-    oneshot
 
 service wpa_supplicant /system/bin/wpa_supplicant \
-    -iwlan0 -Dnl80211 -c/data/misc/wifi/wpa_supplicant.conf -e/data/misc/wifi/entropy.bin
+    -iwlan0 -Dnl80211 -c/data/misc/wifi/wpa_supplicant.conf \
+    -I/system/etc/wifi/wpa_supplicant_overlay.conf \
+    -e/data/misc/wifi/entropy.bin
     #   we will start as root and wpa_supplicant will switch to user wifi
     #   after setting up the capabilities required for WEXT
     #   user wifi
@@ -248,8 +327,11 @@ service wpa_supplicant /system/bin/wpa_supplicant \
     oneshot
 
 service p2p_supplicant /system/bin/wpa_supplicant \
-    -iwlan0 -Dnl80211 -iwlan0 -c/data/misc/wifi/wpa_supplicant.conf -N \
-    -ip2p0 -Dnl80211 -c /data/misc/wifi/p2p_supplicant.conf -e/data/misc/wifi/entropy.bin -puse_p2p_group_interface=1
+    -iwlan0 -Dnl80211 -iwlan0 -c/data/misc/wifi/wpa_supplicant.conf \
+    -I/system/etc/wifi/wpa_supplicant_overlay.conf -N \
+    -ip2p0 -Dnl80211 -c /data/misc/wifi/p2p_supplicant.conf \
+    -I/system/etc/wifi/wpa_supplicant_overlay.conf \
+    -e/data/misc/wifi/entropy.bin -puse_p2p_group_interface=1
 #   we will start as root and wpa_supplicant will switch to user wifi
 #   after setting up the capabilities required for WEXT
 #   user wifi
@@ -274,7 +356,7 @@ service dhcpcd_eth0 /system/bin/dhcpcd -ABDKL -f/system/etc/dhcpcd/dhcpcd.conf
     disabled
     oneshot
 
-service dhcpcd_bnep0 /system/bin/dhcpcd -ABKL
+service dhcpcd_bt-pan /system/bin/dhcpcd -ABKL
     class main
     disabled
     oneshot
@@ -294,6 +376,11 @@ service iprenew_eth0 /system/bin/dhcpcd -n
     disabled
     oneshot
 
+service iprenew_bt-pan /system/bin/dhcpcd -n
+    class main
+    disabled
+    oneshot
+
 #Sensor: load calibration files.
     service sensors-config /system/bin/sensors-config
     class main
@@ -306,7 +393,9 @@ service sdcard /system/bin/sdcard /data/media /mnt/shell/emulated 1023 1023
     class late_start
 
 # bugreport is triggered by the VOLUME-DOWN and VOLUME-UP keys
-service bugreport /system/bin/bugmailer.sh -b /system/media/audio/ui/Dock.ogg -e /system/media/audio/ui/Undock.ogg
+service bugreport /system/bin/dumpstate -d -p -B \
+        -o /data/data/com.android.shell/files/bugreports/bugreport \
+        -b /system/media/audio/ui/Dock.ogg -e /system/media/audio/ui/Undock.ogg
     class main
     disabled
     oneshot
@@ -334,7 +423,7 @@ on property:sys.shutdown.requested=1recovery
 service tf_daemon /system/bin/tf_daemon -storageDir /data/tf -d
     class main
     user root
-    group shell	
+    group shell
 
 # may restart due to /data/tf not existing yet
 on property:init.svc.tf_daemon=restarting
