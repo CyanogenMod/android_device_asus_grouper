@@ -21,4 +21,6 @@
     <!-- Show dock settings when docked -->
     <bool name="has_dock_settings">true</bool>
 
+    <!-- Whether or not the USB audio settings are to be displayed for this device -->
+    <bool name="has_usb_audio_settings">true</bool>
 </resources>
