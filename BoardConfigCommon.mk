@@ -86,23 +86,4 @@ BOARD_RECOVERY_SWIPE := true
 TARGET_KERNEL_SOURCE := kernel/asus/grouper
 TARGET_KERNEL_CONFIG := cyanogenmod_grouper_defconfig
 
-BOARD_SEPOLICY_DIRS += \
-	device/asus/grouper/sepolicy
-
-BOARD_SEPOLICY_UNION += \
-	file_contexts \
-	genfs_contexts \
-	app.te \
-	btmacreader.te \
-	device.te \
-	drmserver.te \
-	file.te \
-	gpsd.te \
-	init_shell.te \
-	keystore.te \
-	mediaserver.te \
-	rild.te \
-	sensors_config.te \
-	surfaceflinger.te \
-	system.te \
-	zygote.te
+TARGET_RUNNING_WITHOUT_SYNC_FRAMEWORK := true

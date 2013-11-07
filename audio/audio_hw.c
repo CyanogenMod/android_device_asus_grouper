@@ -117,6 +117,7 @@ struct stream_out {
     struct pcm *pcm;
     struct pcm_config *pcm_config;
     bool standby;
+    uint64_t written; /* total frames written, not cleared when entering standby */
 
     struct resampler_itfe *resampler;
     int16_t *buffer;
@@ -290,7 +291,7 @@ static int start_output_stream(struct stream_out *out)
         pthread_mutex_unlock(&in->lock);
     }
 
-    out->pcm = pcm_open(PCM_CARD, device, PCM_OUT | PCM_NORESTART, out->pcm_config);
+    out->pcm = pcm_open(PCM_CARD, device, PCM_OUT | PCM_NORESTART | PCM_MONOTONIC, out->pcm_config);
 
     if (out->pcm && !pcm_is_ready(out->pcm)) {
         ALOGE("pcm_open(out) failed: %s", pcm_get_error(out->pcm));
@@ -747,6 +748,9 @@ static ssize_t out_write(struct audio_stream_out *stream, const void* buffer,
         pthread_mutex_unlock(&out->lock);
         return ret;
     }
+    if (ret == 0) {
+        out->written += out_frames;
+    }
 
 exit:
     pthread_mutex_unlock(&out->lock);
@@ -779,6 +783,31 @@ static int out_get_next_write_timestamp(const struct audio_stream_out *stream,
                                         int64_t *timestamp)
 {
     return -EINVAL;
+}
+
+static int out_get_presentation_position(const struct audio_stream_out *stream,
+                                   uint64_t *frames, struct timespec *timestamp)
+{
+    struct stream_out *out = (struct stream_out *)stream;
+    int ret = -1;
+
+    pthread_mutex_lock(&out->lock);
+
+    size_t avail;
+    if (pcm_get_htimestamp(out->pcm, &avail, timestamp) == 0) {
+        size_t kernel_buffer_size = out->pcm_config->period_size * out->pcm_config->period_count;
+        // FIXME This calculation is incorrect if there is buffering after app processor
+        int64_t signed_frames = out->written - kernel_buffer_size + avail;
+        // It would be unusual for this value to be negative, but check just in case ...
+        if (signed_frames >= 0) {
+            *frames = signed_frames;
+            ret = 0;
+        }
+    }
+
+    pthread_mutex_unlock(&out->lock);
+
+    return ret;
 }
 
 /** audio_stream_in implementation **/
@@ -1009,6 +1038,7 @@ static int adev_open_output_stream(struct audio_hw_device *dev,
     out->stream.write = out_write;
     out->stream.get_render_position = out_get_render_position;
     out->stream.get_next_write_timestamp = out_get_next_write_timestamp;
+    out->stream.get_presentation_position = out_get_presentation_position;
 
     out->dev = adev;
 
@@ -1017,6 +1047,7 @@ static int adev_open_output_stream(struct audio_hw_device *dev,
     config->sample_rate = out_get_sample_rate(&out->stream.common);
 
     out->standby = true;
+    /* out->written = 0; by calloc() */
 
     *stream_out = &out->stream;
     return 0;

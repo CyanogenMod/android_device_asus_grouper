@@ -21,4 +21,8 @@
     <integer name="def_screen_off_timeout">120000</integer>
     <!-- Set the automatic brightness mode on by default -->
     <bool name="def_screen_brightness_automatic_mode">true</bool>
+
+    <!-- Value for Settings.Global.LOW_BATTERY_SOUND_TIMEOUT:
+         Mute battery sounds on tablets after one hour with screen off -->
+    <integer name="def_low_battery_sound_timeout">3600000</integer>
 </resources>
