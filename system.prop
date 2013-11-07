@@ -11,3 +11,6 @@ debug.nfc.se=false
 
 # set default lcd density to TVDPI
 ro.sf.lcd_density=213
+
+# don't preload OpenGL in Zygote, the Tegra drivers do not like it
+ro.zygote.disable_gl_preload=true

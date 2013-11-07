@@ -20,7 +20,4 @@ LOCAL_STEM := grouper/BoardConfigPartial.mk
 -include vendor/invensense/$(LOCAL_STEM)
 -include vendor/nvidia/$(LOCAL_STEM)
 -include vendor/nxp/$(LOCAL_STEM)
--include vendor/trusted_logic/$(LOCAL_STEM)
 -include vendor/widevine/$(LOCAL_STEM)
-
--include vendor/unknown/$(LOCAL_STEM)
