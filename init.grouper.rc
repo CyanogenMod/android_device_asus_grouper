@@ -31,22 +31,6 @@ on early-boot
     write /sys/devices/system/cpu/cpu1/cpufreq/scaling_governor interactive
     write /sys/devices/system/cpu/cpu2/cpufreq/scaling_governor interactive
     write /sys/devices/system/cpu/cpu3/cpufreq/scaling_governor interactive
-    restorecon /sys/devices/system/cpu
-    restorecon /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq
-    restorecon /sys/devices/system/cpu/cpufreq/interactive/above_hispeed_delay
-    restorecon /sys/devices/system/cpu/cpufreq/interactive/boost
-    restorecon /sys/devices/system/cpu/cpufreq/interactive/boost_factor
-    restorecon /sys/devices/system/cpu/cpufreq/interactive/go_hispeed_load
-    restorecon /sys/devices/system/cpu/cpufreq/interactive/go_maxspeed_load
-    restorecon /sys/devices/system/cpu/cpufreq/interactive/hispeed_freq
-    restorecon /sys/devices/system/cpu/cpufreq/interactive/input_boost
-    restorecon /sys/devices/system/cpu/cpufreq/interactive/io_is_busy
-    restorecon /sys/devices/system/cpu/cpufreq/interactive/max_boost
-    restorecon /sys/devices/system/cpu/cpufreq/interactive/min_sample_time
-    restorecon /sys/devices/system/cpu/cpufreq/interactive/sustain_load
-    restorecon /sys/devices/system/cpu/cpufreq/interactive/timer_rate
-    restorecon /sys/devices/tegradc.0/smartdimmer/aggressiveness
-    restorecon /sys/devices/tegradc.0/smartdimmer/enable
 
 on fs
     setprop ro.crypto.umount_sd false
