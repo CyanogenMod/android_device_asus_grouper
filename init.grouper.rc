@@ -36,7 +36,6 @@ on fs
     setprop ro.crypto.umount_sd false
     setprop ro.crypto.fuse_sdcard true
     mount_all /fstab.grouper
-    restorecon /dev/block/platform/sdhci-tegra.3/by-name/PER
 
 on post-fs-data
     mkdir /data/media 0770 media_rw media_rw
