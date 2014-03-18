@@ -254,4 +254,7 @@
          config to 7. -->
     <integer name="config_deviceHardwareKeys">0</integer>
 
+    <!-- enabling WifiDisplay(Miracast Source)-->
+    <bool name="config_enableWifiDisplay">true</bool>
+
 </resources>
