@@ -18,7 +18,6 @@
 /system/bin/sensors-config     -- u:object_r:sensors_config_exec:s0
 
 /sys/bus/i2c/drivers/elan-ktf3k/1-0010/update_fw  --  u:object_r:sysfs_firmware_writable:s0
-/sys/devices/system/cpu(/.*)?                     u:object_r:sysfs_devices_system_cpu:s0
 /sys/devices/tegradc\.0(/.*)?                u:object_r:sysfs_devices_tegradc:s0
 /sys/devices/tegradc\.1(/.*)?                u:object_r:sysfs_devices_tegradc:s0
 /sys/devices/platform/bcm4330_rfkill/rfkill/rfkill0/state   --  u:object_r:sysfs_bluetooth_writable:s0
