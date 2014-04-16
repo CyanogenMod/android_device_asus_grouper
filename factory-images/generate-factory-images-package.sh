@@ -49,12 +49,12 @@
 # end jb-mr2-dev
 
 source ../../../common/clear-factory-images-variables.sh
-BUILD=737497
+BUILD=937116
 DEVICE=grouper
 PRODUCT=nakasi
-VERSION=jwr66v
+VERSION=kot49h
 SRCPREFIX=signed-
-BOOTLOADERFILE=bootloader.bin
+BOOTLOADERFILE=bootloader.img
 BOOTLOADER=4.23
 SLEEPDURATION=10
 UNLOCKBOOTLOADER=true
