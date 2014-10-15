@@ -119,4 +119,5 @@ BOARD_SEPOLICY_UNION += \
         system_app.te \
         system_server.te \
         ueventd.te \
-        vold.te
+        vold.te \
+        radio.te
