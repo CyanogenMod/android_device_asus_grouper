@@ -445,7 +445,7 @@ service setup_fs /system/bin/setup_fs \
     group root
     oneshot
 
-service touch_fw_update /system/bin/sh -c "echo /system/etc/firmware/touch_fw.ekt > /sys/bus/i2c/drivers/elan-ktf3k/1-0010/update_fw"
+service touch_fw_update /system/bin/touch_fw_update.sh
     class main
     disabled
     user root

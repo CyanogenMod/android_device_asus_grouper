@@ -23,6 +23,7 @@
 /system/bin/brcm_patchram_plus -- u:object_r:hci_attach_exec:s0
 /system/bin/glgps              -- u:object_r:gpsd_exec:s0
 /system/bin/sensors-config     -- u:object_r:sensors_config_exec:s0
+/system/bin/touch_fw_update.sh -- u:object_r:touch_fw_update_exec:s0
 
 /sys/devices/tegradc\.0(/.*)?                u:object_r:sysfs_devices_tegradc:s0
 /sys/devices/tegradc\.1(/.*)?                u:object_r:sysfs_devices_tegradc:s0
