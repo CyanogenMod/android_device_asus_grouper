@@ -104,6 +104,7 @@ BOARD_SEPOLICY_UNION += \
         keystore.te \
         lmkd.te \
         mediaserver.te \
+        recovery.te \
         rild.te \
         sensors_config.te \
         surfaceflinger.te \
