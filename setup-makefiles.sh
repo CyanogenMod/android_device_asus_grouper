@@ -113,7 +113,6 @@ MAKEFILE=../../../$OUTDIR/device-partial.mk
 
 # Asus blob(s) necessary for Grouper hardware
 PRODUCT_PACKAGES := \\
-    btmacreader \\
     camera.tegra3 \\
     libdrmwvmplugin \\
     libsensors.lightsensor \\
@@ -146,15 +145,6 @@ MAKEFILE=../../../$OUTDIR/proprietary/Android.mk
 LOCAL_PATH := \$(call my-dir)
 
 ifeq (\$(TARGET_DEVICE),grouper)
-
-include \$(CLEAR_VARS)
-LOCAL_MODULE := btmacreader   
-LOCAL_MODULE_OWNER := broadcom
-LOCAL_SRC_FILES := btmacreader
-LOCAL_MODULE_TAGS := optional
-LOCAL_MODULE_CLASS := EXECUTABLES
-LOCAL_MODULE_PATH := \$(TARGET_OUT)/bin
-include \$(BUILD_PREBUILT)
 
 include \$(CLEAR_VARS)
 LOCAL_MODULE := camera.tegra3
