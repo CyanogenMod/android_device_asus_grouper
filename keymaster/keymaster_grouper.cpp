@@ -36,7 +36,7 @@
 #include <cryptoki.h>
 #include <pkcs11.h>
 
-#include <utils/UniquePtr.h>
+#include <UniquePtr.h>
 
 
 /** The size of a key ID in bytes */
@@ -910,6 +910,7 @@ static int tee_open(const hw_module_t* module, const char* name,
     dev->common.version = 1;
     dev->common.module = (struct hw_module_t*) module;
     dev->common.close = tee_close;
+    dev->flags = 0;
 
     dev->generate_keypair = tee_generate_keypair;
     dev->import_keypair = tee_import_keypair;
@@ -969,8 +970,8 @@ struct keystore_module HAL_MODULE_INFO_SYM
 __attribute__ ((visibility ("default"))) = {
     common: {
         tag: HARDWARE_MODULE_TAG,
-        version_major: 1,
-        version_minor: 0,
+        module_api_version: KEYMASTER_MODULE_API_VERSION_0_3,
+        hal_api_version: HARDWARE_HAL_API_VERSION,
         id: KEYSTORE_HARDWARE_MODULE_ID,
         name: "Keymaster TEE HAL",
         author: "The Android Open Source Project",

@@ -55,24 +55,22 @@ on fs
     restorecon /dev/block/platform/sdhci-tegra.3/by-name/PER
 
 on post-fs-data
-    mkdir /data/misc/wifi 0770 wifi wifi
-    mkdir /data/misc/wifi/sockets 0770 wifi wifi
-    mkdir /data/misc/dhcp 0770 dhcp dhcp
-    chown dhcp dhcp /data/misc/dhcp
-
     mkdir /data/media 0770 media_rw media_rw
 
     # change back to bluetooth from system
     chown bluetooth net_bt_stack /data/misc/bluetooth
 
     # sensors-config
-    mkdir /data/sensors 751 system system
-    mkdir /data/lightsensor 751 system system
+    mkdir /data/sensors 751
+    # /data/sensors was owned by system/system earlier.
+    # Force it to root/root if it already exists.
+    chown root root /data/sensors
+    mkdir /data/lightsensor 751
+    # /data/lightsensor was owned by system/system earlier.
+    # Force it to root/root if it already exists.
+    chown root root /data/lightsensor
     mkdir /data/calibration
     mkdir /data/amit
-
-    # btmacreader
-    mkdir /data/mac
 
     # Set indication (checked by vold) that we have finished this action
     setprop vold.post_fs_data_done 1
@@ -89,8 +87,6 @@ on boot
     chmod 0660 /sys/class/rfkill/rfkill0/type
     chown bluetooth net_bt_stack /sys/class/rfkill/rfkill0/state
     chown bluetooth net_bt_stack /sys/class/rfkill/rfkill0/type
-    restorecon /sys/devices/platform/bcm4330_rfkill/rfkill/rfkill0/state
-    restorecon /sys/devices/platform/bcm4330_rfkill/rfkill/rfkill0/type
 
     # bluetooth MAC address programming
     chown bluetooth net_bt_stack ro.bt.bdaddr_path
@@ -288,6 +284,22 @@ on boot
     chmod 0660 /sys/devices/system/cpu/cpufreq/interactive/max_boost
     chown system system /sys/devices/system/cpu/cpufreq/interactive/sustain_load
     chmod 0660 /sys/devices/system/cpu/cpufreq/interactive/sustain_load
+    chown system system /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
+    chmod 0660 /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
+    chown system system /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq
+    chmod 0660 /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq
+    chown system system /sys/devices/system/cpu/cpu1/cpufreq/scaling_min_freq
+    chmod 0660 /sys/devices/system/cpu/cpu1/cpufreq/scaling_min_freq
+    chown system system /sys/devices/system/cpu/cpu1/cpufreq/scaling_max_freq
+    chmod 0660 /sys/devices/system/cpu/cpu1/cpufreq/scaling_max_freq
+    chown system system /sys/devices/system/cpu/cpu2/cpufreq/scaling_min_freq
+    chmod 0660 /sys/devices/system/cpu/cpu2/cpufreq/scaling_min_freq
+    chown system system /sys/devices/system/cpu/cpu2/cpufreq/scaling_max_freq
+    chmod 0660 /sys/devices/system/cpu/cpu2/cpufreq/scaling_max_freq
+    chown system system /sys/devices/system/cpu/cpu3/cpufreq/scaling_min_freq
+    chmod 0660 /sys/devices/system/cpu/cpu3/cpufreq/scaling_min_freq
+    chown system system /sys/devices/system/cpu/cpu3/cpufreq/scaling_max_freq
+    chmod 0660 /sys/devices/system/cpu/cpu3/cpufreq/scaling_max_freq
 
 # Default Read Ahead value for sdcards
     write /sys/block/mmcblk0/queue/read_ahead_kb 2048
@@ -314,13 +326,11 @@ on boot
 # Touch
     chown system system /dev/elan-iap
     chown system system /proc/ektf_dbg  
-    restorecon /sys/bus/i2c/drivers/elan-ktf3k/1-0010/update_fw
     start touch_fw_update
 
 service wpa_supplicant /system/bin/wpa_supplicant \
     -iwlan0 -Dnl80211 -c/data/misc/wifi/wpa_supplicant.conf \
     -I/system/etc/wifi/wpa_supplicant_overlay.conf \
-    -O/data/misc/wifi/sockets \
     -e/data/misc/wifi/entropy.bin -g@android:wpa_wlan0
     #   we will start as root and wpa_supplicant will switch to user wifi
     #   after setting up the capabilities required for WEXT
@@ -333,8 +343,7 @@ service wpa_supplicant /system/bin/wpa_supplicant \
 
 service p2p_supplicant /system/bin/wpa_supplicant \
     -iwlan0 -Dnl80211 -iwlan0 -c/data/misc/wifi/wpa_supplicant.conf \
-    -I/system/etc/wifi/wpa_supplicant_overlay.conf \
-    -O/data/misc/wifi/sockets -N \
+    -I/system/etc/wifi/wpa_supplicant_overlay.conf -N \
     -ip2p0 -Dnl80211 -c /data/misc/wifi/p2p_supplicant.conf \
     -I/system/etc/wifi/p2p_supplicant_overlay.conf \
     -puse_p2p_group_interface=1 -e/data/misc/wifi/entropy.bin \
@@ -405,8 +414,7 @@ service fuse_usbdisk /system/bin/sdcard -u 1023 -g 1023 -w 1023 -d /mnt/media_rw
 
 # bugreport is triggered by the VOLUME-DOWN and VOLUME-UP keys
 service bugreport /system/bin/dumpstate -d -p -B \
-        -o /data/data/com.android.shell/files/bugreports/bugreport \
-        -b /system/media/audio/ui/Dock.ogg -e /system/media/audio/ui/Undock.ogg
+        -o /data/data/com.android.shell/files/bugreports/bugreport
     class main
     disabled
     oneshot
@@ -439,10 +447,6 @@ service tf_daemon /system/bin/tf_daemon -storageDir /data/tf -d
 # may restart due to /data/tf not existing yet
 on property:init.svc.tf_daemon=restarting
     mkdir /data/tf
-
-#Raydium touch setting
-service rm_ts_service    /system/bin/rm_ts_server
-    class main
 
 # create filesystems if necessary
 service setup_fs /system/bin/setup_fs \
