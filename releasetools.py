@@ -25,6 +25,10 @@ def FullOTA_InstallEnd(info):
   else:
     WriteBootloader(info, bootloader_bin)
 
+def IncrementalOTA_InstallBegin(info):
+  info.script.Unmount("/system")
+  info.script.TunePartition("/system", "-O", "^has_journal")
+  info.script.Mount("/system")
 
 def IncrementalOTA_InstallEnd(info):
   try:
