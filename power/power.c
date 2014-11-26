@@ -187,11 +187,11 @@ static void grouper_power_init( __attribute__((unused)) struct power_module *mod
      */
 
     sysfs_write("/sys/devices/system/cpu/cpufreq/interactive/timer_rate",
-                "20000");
+                "50000");
     sysfs_write("/sys/devices/system/cpu/cpufreq/interactive/min_sample_time",
-                "30000");
+                "500000");
     sysfs_write("/sys/devices/system/cpu/cpufreq/interactive/go_hispeed_load",
-                "85");
+                "75");
     sysfs_write("/sys/devices/system/cpu/cpufreq/interactive/boost_factor",
 		"0");
     sysfs_write("/sys/devices/system/cpu/cpufreq/interactive/input_boost",
@@ -199,22 +199,9 @@ static void grouper_power_init( __attribute__((unused)) struct power_module *mod
     uevent_init();
 }
 
-static void grouper_power_set_interactive( __attribute__((unused)) struct power_module *module, int on)
+static void grouper_power_set_interactive(__attribute__((unused)) struct power_module *module,
+                                          __attribute__((unused)) int on)
 {
-    /*
-     * Lower maximum frequency when screen is off.  CPU 0 and 1 share a
-     * cpufreq policy.
-     */
-
-    sysfs_write("/sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq",
-                on ? "1300000" : "700000");
-
-    sysfs_write("/sys/devices/system/cpu/cpufreq/interactive/input_boost",
-                on ? "1" : "0");
-
-    sysfs_write("/sys/devices/system/cpu/cpufreq/interactive/boost_factor",
-                on ? "0" : "2");
-
 }
 
 static void grouper_power_hint(__attribute__((unused)) struct power_module *module, power_hint_t hint,
