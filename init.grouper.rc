@@ -276,6 +276,10 @@ on boot
 # Interactive governor settings
     chown system system /sys/devices/system/cpu/cpufreq/interactive/boost_factor
     chmod 0660 /sys/devices/system/cpu/cpufreq/interactive/boost_factor
+    chown system system /sys/devices/system/cpu/cpufreq/interactive/core_lock_count
+    chmod 0660 /sys/devices/system/cpu/cpufreq/interactive/core_lock_count
+    chown system system /sys/devices/system/cpu/cpufreq/interactive/core_lock_period
+    chmod 0660 /sys/devices/system/cpu/cpufreq/interactive/core_lock_period
     chown system system /sys/devices/system/cpu/cpufreq/interactive/go_maxspeed_load
     chmod 0660 /sys/devices/system/cpu/cpufreq/interactive/go_maxspeed_load
     chown system system /sys/devices/system/cpu/cpufreq/interactive/io_is_busy
