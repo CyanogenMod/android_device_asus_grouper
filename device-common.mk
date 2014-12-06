@@ -28,6 +28,7 @@ PRODUCT_PROPERTY_OVERRIDES := \
     wifi.interface=wlan0 \
     wifi.supplicant_scan_interval=15 \
     tf.enable=y \
+    persist.sys.media.legacy-drm=true \
     drm.service.enabled=true
 
 # libhwui flags
