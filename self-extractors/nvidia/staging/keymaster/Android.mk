@@ -28,7 +28,6 @@ LOCAL_SRC_FILES := \
 
 LOCAL_C_INCLUDES := \
 	libcore/include \
-	external/openssl/include \
 	$(LOCAL_PATH)/../security/tf_sdk/include
 
 LOCAL_CFLAGS := -fvisibility=hidden -Wall -Werror
