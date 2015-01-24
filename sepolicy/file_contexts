@@ -28,3 +28,6 @@
 /sys/devices/platform/tegra-i2c.1/i2c-1/1-0010/update_fw    --  u:object_r:sysfs_firmware_writable:s0
 /sys/devices/platform/bcm4330_rfkill/rfkill/rfkill0/state   --  u:object_r:sysfs_bluetooth_writable:s0
 /sys/devices/platform/bcm4330_rfkill/rfkill/rfkill0/type    --  u:object_r:sysfs_bluetooth_writable:s0
+
+# Hardware tunable
+/sys/devices/tegradc.0/smartdimmer/enable              u:object_r:sysfs_writable:s0
