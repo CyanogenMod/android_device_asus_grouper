@@ -329,8 +329,13 @@ on boot
 
 # Touch
     chown system system /dev/elan-iap
-    chown system system /proc/ektf_dbg  
+    chown system system /proc/ektf_dbg
     start touch_fw_update
+
+#Hardware tunables
+    chown root system /sys/devices/tegradc.0/smartdimmer/enable
+    chmod 0664 /sys/devices/tegradc.0/smartdimmer/enable
+    restorecon /sys/devices/tegradc.0/smartdimmer/enable
 
 service wpa_supplicant /system/bin/wpa_supplicant \
     -iwlan0 -Dnl80211 -c/data/misc/wifi/wpa_supplicant.conf \
@@ -467,4 +472,3 @@ service touch_fw_update /system/bin/sh -c "echo /system/etc/firmware/touch_fw.ek
     user root
     group root
     oneshot
-
