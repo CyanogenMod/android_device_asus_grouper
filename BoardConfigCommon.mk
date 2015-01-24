@@ -68,6 +68,9 @@ BOARD_HAVE_BLUETOOTH_BCM := true
 USE_OPENGL_RENDERER := true
 BOARD_EGL_CFG := device/asus/grouper/egl.cfg
 
+# Hardware tunables
+BOARD_HARDWARE_CLASS := device/asus/grouper/cmhw/
+
 ifneq ($(HAVE_NVIDIA_PROP_SRC),false)
 # needed for source compilation of nvidia libraries
 -include vendor/nvidia/proprietary_src/build/definitions.mk
@@ -86,7 +89,6 @@ BOARD_RECOVERY_SWIPE := true
 TARGET_KERNEL_SOURCE := kernel/asus/grouper
 TARGET_KERNEL_CONFIG := cyanogenmod_grouper_defconfig
 
-TARGET_RUNNING_WITHOUT_SYNC_FRAMEWORK := true
 
 BOARD_SEPOLICY_DIRS += \
         device/asus/grouper/sepolicy
