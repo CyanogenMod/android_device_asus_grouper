@@ -1,1 +1,7 @@
 allow system_app knv_device:chr_file rw_file_perms;
+
+# Access to adaptive backlight sysfs dir
+allow system_app sysfs_devices_tegradc:dir r_dir_perms;
+
+# CMHW sysfs files
+allow system_app sysfs_writable:file rw_file_perms;
