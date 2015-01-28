@@ -467,4 +467,3 @@ service touch_fw_update /system/bin/sh -c "echo /system/etc/firmware/touch_fw.ek
     user root
     group root
     oneshot
-

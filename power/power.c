@@ -40,12 +40,23 @@
 #define LOW_POWER_MAX_FREQ "640000"
 #define LOW_POWER_MIN_FREQ "51000"
 #define NORMAL_MAX_FREQ "1300000"
+#define MAX_MAX_FREQ "1200000"
+#define MAX_MIN_FREQ "1200000"
+#define GOVERNOR_INTERACTIVE "interactive"
+#define GOVERNOR_PERFORMANCES "performance"
 #define UEVENT_STRING "online@/devices/system/cpu/"
 
 static int boost_fd = -1;
 static int boost_warned;
 
 static struct pollfd pfd;
+static char *cpu_path_governor[] = {
+    "/sys/devices/system/cpu/cpu0/cpufreq/scaling_governor",
+    "/sys/devices/system/cpu/cpu1/cpufreq/scaling_governor",
+    "/sys/devices/system/cpu/cpu2/cpufreq/scaling_governor",
+    "/sys/devices/system/cpu/cpu3/cpufreq/scaling_governor",
+};
+
 static char *cpu_path_min[] = {
     "/sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq",
     "/sys/devices/system/cpu/cpu1/cpufreq/scaling_min_freq",
@@ -58,6 +69,15 @@ static char *cpu_path_max[] = {
     "/sys/devices/system/cpu/cpu2/cpufreq/scaling_max_freq",
     "/sys/devices/system/cpu/cpu3/cpufreq/scaling_max_freq",
 };
+
+enum {
+    PROFILE_POWER_SAVE = 0,
+    PROFILE_BALANCED,
+    PROFILE_HIGH_PERFORMANCE
+};
+
+static int current_power_profile = PROFILE_BALANCED;
+
 static bool freq_set[TOTAL_CPUS];
 static bool low_power_mode = false;
 static pthread_mutex_t low_power_mode_lock = PTHREAD_MUTEX_INITIALIZER;
@@ -179,6 +199,47 @@ static void uevent_init()
     return;
 }
 
+static void set_power_profile(int profile) {
+
+    if (profile == current_power_profile)
+        return;
+
+    ALOGV("%s: profile=%d", __func__, profile);
+
+    switch (profile){
+      case 1 :
+        for (cpu = 0; cpu < TOTAL_CPUS; cpu++) {
+            ret = sysfs_write(cpu_path_max[cpu], NORMAL_MAX_FREQ);
+            ret = sysfs_write(cpu_path_min[cpu], MAX_MIN_FREQ);
+            ret = sysfs_write(cpu_path_governor[cpu], GOVERNOR_INTERACTIVE);
+            if (!ret) {
+                freq_set[cpu] = false;
+            };
+        }; break;
+      case 2:
+        for (cpu = 0; cpu < TOTAL_CPUS; cpu++) {
+            ret = sysfs_write(cpu_path_max[cpu], MAX_MAX_FREQ);
+            ret = sysfs_write(cpu_path_min[cpu], LOW_POWER_MIN_FREQ);
+            ret = sysfs_write(cpu_path_governor[cpu], GOVERNOR_PERFORMANCES);
+            if (!ret) {
+                freq_set[cpu] = false;
+            };
+        };
+        sysfs_write("write /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq", NORMAL_MAX_FREQ);
+        break;
+      case 0:
+        for (cpu = 0; cpu < TOTAL_CPUS; cpu++) {
+            sysfs_write(cpu_path_min[cpu], LOW_POWER_MIN_FREQ);
+            ret = sysfs_write(cpu_path_max[cpu], LOW_POWER_MAX_FREQ);
+            if (!ret) {
+                freq_set[cpu] = true;
+            };
+        };
+        break;
+    }
+    current_power_profile = profile;
+}
+
 static void grouper_power_init( __attribute__((unused)) struct power_module *module)
 {
     /*
@@ -230,21 +291,13 @@ static void grouper_power_hint(__attribute__((unused)) struct power_module *modu
         pthread_mutex_lock(&low_power_mode_lock);
         if (data) {
             low_power_mode = true;
-            for (cpu = 0; cpu < TOTAL_CPUS; cpu++) {
-                sysfs_write(cpu_path_min[cpu], LOW_POWER_MIN_FREQ);
-                ret = sysfs_write(cpu_path_max[cpu], LOW_POWER_MAX_FREQ);
-                if (!ret) {
-                    freq_set[cpu] = true;
-                }
+            set_power_profile(PROFILE_POWER_SAVE);
+            return;
             }
         } else {
             low_power_mode = false;
-            for (cpu = 0; cpu < TOTAL_CPUS; cpu++) {
-                ret = sysfs_write(cpu_path_max[cpu], NORMAL_MAX_FREQ);
-                if (!ret) {
-                    freq_set[cpu] = false;
-                }
-            }
+            set_power_profile(PROFILE_BALANCED);
+            return;
         }
         pthread_mutex_unlock(&low_power_mode_lock);
         break;
