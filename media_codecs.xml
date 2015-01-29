@@ -135,8 +135,10 @@ Only the three quirks included above are recognized at this point:
             <Limit name="bitrate" range="1-14000000" />
         </MediaCodec>
         <MediaCodec name="OMX.Nvidia.h263.encoder" type="video/3gpp" >
-            <Limit name="size" min="48x48" max="720x576" />
-            <Limit name="alignment" value="2x2" />
+            <Limit name="size" min="176x144" max="352x288" />
+            <Limit name="alignment" value="16x16" />
+            <Limit name="block-size" value="16x16" />
+            <Limit name="aspect-ratio" in="blocks" value="11:9" />
         </MediaCodec>
         <MediaCodec name="OMX.Nvidia.h264.encoder" type="video/avc" >
             <Limit name="size" min="48x48" max="1920x1088" />
