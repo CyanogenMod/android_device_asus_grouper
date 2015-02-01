@@ -106,9 +106,6 @@ PRODUCT_PACKAGES += \
 
 PRODUCT_CHARACTERISTICS := tablet,nosdcard
 
-# we have enough storage space to hold precise GC data
-PRODUCT_TAGS += dalvik.gc.type-precise
-
 # media config xml file
 PRODUCT_COPY_FILES += \
     device/asus/grouper/media_profiles.xml:system/etc/media_profiles.xml
