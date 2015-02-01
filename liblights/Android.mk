@@ -15,8 +15,6 @@
 
 LOCAL_PATH:= $(call my-dir)
 
-ifneq ($(TARGET_SIMULATOR),true)
-
 # HAL module implemenation, not prelinked and stored in
 # hw/<COPYPIX_HARDWARE_MODULE_ID>.<ro.board.platform>.so
 include $(CLEAR_VARS)
@@ -33,5 +31,3 @@ LOCAL_SHARED_LIBRARIES := liblog
 LOCAL_MODULE := lights.grouper
 
 include $(BUILD_SHARED_LIBRARY)
-
-endif # !TARGET_SIMULATOR
