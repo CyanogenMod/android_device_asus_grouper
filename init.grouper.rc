@@ -72,6 +72,11 @@ on post-fs-data
     mkdir /data/calibration
     mkdir /data/amit
 
+    # gps
+    mkdir /data/gps
+    chown gps system /data/gps
+    chmod 770 /data/gps
+
     # Set indication (checked by vold) that we have finished this action
     setprop vold.post_fs_data_done 1
 
@@ -315,9 +320,6 @@ on boot
     write /sys/class/gpio/gpio162/direction out
     chown gps system /sys/class/gpio/gpio162/value
     chmod 0664 /sys/class/gpio/gpio162/value
-    mkdir /data/gps
-    chown gps system /data/gps
-    chmod 770 /data/gps
     chown gps system /dev/ttyHS1
     chmod 0660 /dev/ttyHS1
 
@@ -425,8 +427,7 @@ service bugreport /system/bin/dumpstate -d -p -B \
     keycodes 115 114
 
 # Start GPS daemon
-  on boot
-  service gps-daemon /system/bin/glgps -c /system/etc/gps/gpsconfig.xml
+service gps-daemon /system/bin/glgps -c /system/etc/gps/gpsconfig.xml
   user gps
   group system
   class late_start
