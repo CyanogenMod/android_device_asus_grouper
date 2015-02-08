@@ -1,0 +1,7 @@
+type touch_fw_update, domain;
+type touch_fw_update_exec, exec_type, file_type;
+
+init_daemon_domain(touch_fw_update)
+
+allow touch_fw_update shell_exec:file rx_file_perms;
+allow touch_fw_update sysfs_firmware_writable:file w_file_perms;

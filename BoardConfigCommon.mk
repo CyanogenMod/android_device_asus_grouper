@@ -117,4 +117,5 @@ BOARD_SEPOLICY_UNION += \
         system_app.te \
         system_server.te \
         ueventd.te \
+        touch_fw_update.te \
         vold.te
