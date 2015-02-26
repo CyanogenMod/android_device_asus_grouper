@@ -25,7 +25,7 @@
 #include <cutils/log.h>
 
 #include <hardware/hardware.h>
-#include <hardware/keymaster.h>
+#include <hardware/keymaster0.h>
 
 #include <openssl/bn.h>
 #include <openssl/err.h>
@@ -67,7 +67,7 @@ struct PKCS8_PRIV_KEY_INFO_Delete {
 };
 typedef UniquePtr<PKCS8_PRIV_KEY_INFO, PKCS8_PRIV_KEY_INFO_Delete> Unique_PKCS8_PRIV_KEY_INFO;
 
-typedef UniquePtr<keymaster_device_t> Unique_keymaster_device_t;
+typedef UniquePtr<keymaster0_device_t> Unique_keymaster_device_t;
 
 typedef UniquePtr<CK_BYTE[]> Unique_CK_BYTE;
 
@@ -327,7 +327,7 @@ static int keyblob_restore(const CryptoSession* session, const uint8_t* keyBlob,
             || find_single_object(p, ID_LENGTH, CKO_PRIVATE_KEY, session, private_key);
 }
 
-static int tee_generate_keypair(const keymaster_device_t* dev,
+static int tee_generate_keypair(const keymaster0_device_t* dev,
         const keymaster_keypair_t type, const void* key_params,
         uint8_t** key_blob, size_t* key_blob_length) {
     CK_BBOOL bTRUE = CK_TRUE;
@@ -406,7 +406,7 @@ static int tee_generate_keypair(const keymaster_device_t* dev,
     return keyblob_save(objId.get(), key_blob, key_blob_length);
 }
 
-static int tee_import_keypair(const keymaster_device_t* dev,
+static int tee_import_keypair(const keymaster0_device_t* dev,
         const uint8_t* key, const size_t key_length,
         uint8_t** key_blob, size_t* key_blob_length) {
     CK_RV rv;
@@ -610,7 +610,7 @@ static int tee_import_keypair(const keymaster_device_t* dev,
     return keyblob_save(objId.get(), key_blob, key_blob_length);
 }
 
-static int tee_get_keypair_public(const struct keymaster_device* dev,
+static int tee_get_keypair_public(const keymaster0_device* dev,
         const uint8_t* key_blob, const size_t key_blob_length,
         uint8_t** x509_data, size_t* x509_data_length) {
 
@@ -722,7 +722,7 @@ static int tee_get_keypair_public(const struct keymaster_device* dev,
     return 0;
 }
 
-static int tee_delete_keypair(const struct keymaster_device* dev,
+static int tee_delete_keypair(const keymaster0_device_t* dev,
             const uint8_t* key_blob, const size_t key_blob_length) {
 
     CryptoSession session(reinterpret_cast<CK_SESSION_HANDLE>(dev->context));
@@ -751,7 +751,7 @@ static int tee_delete_keypair(const struct keymaster_device* dev,
     return 0;
 }
 
-static int tee_sign_data(const keymaster_device_t* dev,
+static int tee_sign_data(const keymaster0_device_t* dev,
         const void* params,
         const uint8_t* key_blob, const size_t key_blob_length,
         const uint8_t* data, const size_t dataLength,
@@ -821,7 +821,7 @@ static int tee_sign_data(const keymaster_device_t* dev,
     return 0;
 }
 
-static int tee_verify_data(const keymaster_device_t* dev,
+static int tee_verify_data(const keymaster0_device_t* dev,
         const void* params,
         const uint8_t* keyBlob, const size_t keyBlobLength,
         const uint8_t* signedData, const size_t signedDataLength,
@@ -877,7 +877,7 @@ static int tee_verify_data(const keymaster_device_t* dev,
 
 /* Close an opened OpenSSL instance */
 static int tee_close(hw_device_t *dev) {
-    keymaster_device_t *keymaster_dev = (keymaster_device_t *) dev;
+    keymaster0_device_t *keymaster_dev = (keymaster0_device_t *) dev;
     if (keymaster_dev != NULL) {
         CK_SESSION_HANDLE handle = reinterpret_cast<CK_SESSION_HANDLE>(keymaster_dev->context);
         if (handle != CK_INVALID_HANDLE) {
@@ -902,7 +902,7 @@ static int tee_open(const hw_module_t* module, const char* name,
     if (strcmp(name, KEYSTORE_KEYMASTER) != 0)
         return -EINVAL;
 
-    Unique_keymaster_device_t dev(new keymaster_device_t);
+    Unique_keymaster_device_t dev(new keymaster0_device_t);
     if (dev.get() == NULL)
         return -ENOMEM;
 
