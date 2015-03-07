@@ -8,3 +8,9 @@ allow system_server gps_data_file:fifo_file { setattr rw_file_perms };
 # Access /data/sensors.
 allow system_server sensors_data_file:dir r_dir_perms;
 allow system_server sensors_data_file:file r_file_perms;
+
+# Access to adaptive backlight sysfs dir
+allow system_server sysfs_devices_tegradc:dir r_dir_perms;
+
+# CMHW sysfs files
+allow system_server sysfs_writable:file rw_file_perms;
