@@ -218,7 +218,7 @@ static void logOpenSSLError(const char* location) {
  * Convert from OpenSSL's BIGNUM format to TEE's Big Integer format.
  */
 static ByteArray* bignum_to_array(const BIGNUM* bn) {
-    const int bignumSize = BN_num_bytes(bn);
+    size_t bignumSize = BN_num_bytes(bn);
 
     Unique_CK_BYTE bytes(new CK_BYTE[bignumSize]);
 
