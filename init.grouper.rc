@@ -1,4 +1,5 @@
 import init.grouper.usb.rc
+import init.grouper.power.rc
 
 on early-init
     mount debugfs debugfs /sys/kernel/debug
@@ -314,7 +315,7 @@ on boot
 
 # Touch
     chown system system /dev/elan-iap
-    chown system system /proc/ektf_dbg  
+    chown system system /proc/ektf_dbg
     start touch_fw_update
 
 service wpa_supplicant /system/bin/wpa_supplicant \
@@ -451,4 +452,3 @@ service touch_fw_update /system/bin/sh -c "echo /system/etc/firmware/touch_fw.ek
     user root
     group root
     oneshot
-
