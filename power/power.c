@@ -33,19 +33,30 @@
 #include <hardware/power.h>
 
 #define BOOST_PATH      "/sys/devices/system/cpu/cpufreq/interactive/boost"
+#define INPUT_BOOST_PATH "/sys/module/cpu_input_boost/parameters/enabled"
+#define CLUSTER "/sys/kernel/cluster/active"
 #define UEVENT_MSG_LEN 2048
 #define TOTAL_CPUS 4
 #define RETRY_TIME_CHANGING_FREQ 20
 #define SLEEP_USEC_BETWN_RETRY 200
 #define LOW_POWER_MAX_FREQ "640000"
 #define LOW_POWER_MIN_FREQ "51000"
-#define NORMAL_MAX_FREQ "1300000"
+#define NORMAL_MAX_FREQ "1200000"
+#define GOVERNOR_INTERACTIVE "interactive"
+#define GOVERNOR_CONSERVATIVE "conservative"
 #define UEVENT_STRING "online@/devices/system/cpu/"
 
 static int boost_fd = -1;
 static int boost_warned;
 
 static struct pollfd pfd;
+
+static char *cpu_path_governor[] = {
+    "/sys/devices/system/cpu/cpu0/cpufreq/scaling_governor",
+    "/sys/devices/system/cpu/cpu1/cpufreq/scaling_governor",
+    "/sys/devices/system/cpu/cpu2/cpufreq/scaling_governor",
+    "/sys/devices/system/cpu/cpu3/cpufreq/scaling_governor",
+};
 static char *cpu_path_min[] = {
     "/sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq",
     "/sys/devices/system/cpu/cpu1/cpufreq/scaling_min_freq",
@@ -61,6 +72,14 @@ static char *cpu_path_max[] = {
 static bool freq_set[TOTAL_CPUS];
 static bool low_power_mode = false;
 static pthread_mutex_t low_power_mode_lock = PTHREAD_MUTEX_INITIALIZER;
+
+enum {
+    PROFILE_POWER_SAVE = 0,
+    PROFILE_BALANCED,
+    PROFILE_PERFORMANCE
+};
+
+static int current_power_profile = PROFILE_BALANCED;
 
 static int sysfs_write(char *path, char *s)
 {
@@ -179,6 +198,47 @@ static void uevent_init()
     return;
 }
 
+static void set_power_profile(int profile)
+{
+    /*
+     * Replicate init.grouper.rc profiles to use
+     * cmprofiles on powerhal with better configs
+     */
+
+    if (profile == current_power_profile)
+        return;
+
+    ALOGW("%s: profile=%d", __func__, profile);
+    int cpu;
+
+    if(profile == PROFILE_POWER_SAVE){
+        /**
+         * Cluster: lp
+         * cpu_input_boost: disabled
+         */
+         sysfs_write(INPUT_BOOST_PATH, 0);
+         sysfs_write(CLUSTER, "lp");
+         ALOGD("%s: set powersave mode", __func__);
+    } else if (profile == PROFILE_BALANCED) {
+        /**
+         * Min: 0.64
+         * Max: 1.2
+         * Governor: interactive
+         * Cluster: G
+         * cpu_input_boost: enabled
+         */
+        for (cpu = 0; cpu < TOTAL_CPUS; cpu++) {
+            sysfs_write(cpu_path_min[cpu], LOW_POWER_MAX_FREQ);
+            sysfs_write(cpu_path_max[cpu], NORMAL_MAX_FREQ);
+            sysfs_write(cpu_path_governor[cpu], GOVERNOR_INTERACTIVE);
+        }
+        sysfs_write(INPUT_BOOST_PATH, 1);
+        sysfs_write(CLUSTER, "G");
+        ALOGD("%s: set balanced mode", __func__);
+    }
+    current_power_profile = profile;
+}
+
 static void grouper_power_init( __attribute__((unused)) struct power_module *module)
 {
     /*
@@ -220,7 +280,7 @@ static void grouper_power_hint(__attribute__((unused)) struct power_module *modu
                             void *data)
 {
     char buf[80];
-    int len, cpu, ret;
+    int len;
 
     switch (hint) {
     case POWER_HINT_VSYNC:
@@ -230,21 +290,12 @@ static void grouper_power_hint(__attribute__((unused)) struct power_module *modu
         pthread_mutex_lock(&low_power_mode_lock);
         if (data) {
             low_power_mode = true;
-            for (cpu = 0; cpu < TOTAL_CPUS; cpu++) {
-                sysfs_write(cpu_path_min[cpu], LOW_POWER_MIN_FREQ);
-                ret = sysfs_write(cpu_path_max[cpu], LOW_POWER_MAX_FREQ);
-                if (!ret) {
-                    freq_set[cpu] = true;
-                }
-            }
+            set_power_profile(PROFILE_POWER_SAVE);
+            return;
         } else {
             low_power_mode = false;
-            for (cpu = 0; cpu < TOTAL_CPUS; cpu++) {
-                ret = sysfs_write(cpu_path_max[cpu], NORMAL_MAX_FREQ);
-                if (!ret) {
-                    freq_set[cpu] = false;
-                }
-            }
+            set_power_profile(PROFILE_BALANCED);
+            return;
         }
         pthread_mutex_unlock(&low_power_mode_lock);
         break;

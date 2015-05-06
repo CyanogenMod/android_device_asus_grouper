@@ -19,7 +19,8 @@ PRODUCT_PROPERTY_OVERRIDES := \
 
 PRODUCT_COPY_FILES := \
     device/asus/grouper/fstab.grouper:root/fstab.grouper \
-    device/asus/grouper/init.grouper.rc:root/init.grouper.rc
+    device/asus/grouper/init.grouper.rc:root/init.grouper.rc \
+	device/asus/grouper/init.grouper.power.rc:root/init.grouper.power.rc
 
 # the actual meat of the device-specific product definition
 $(call inherit-product, device/asus/grouper/device-common.mk)
