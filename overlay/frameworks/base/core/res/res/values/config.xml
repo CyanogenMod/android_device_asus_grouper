@@ -97,7 +97,7 @@
          to this list.  If this is empty, no parts of the host USB bus will be excluded.
     -->
     <string-array name="config_usbHostBlacklist">
-        <!--  
+        <!--
    -->
         <item>/dev/bus/usb/001</item>
     </string-array>
@@ -200,7 +200,7 @@
     <!-- When the free space available in DownloadManager's data dir falls
          below the percentage value specified by this param, DownloadManager
          starts removing files to try to make percentage of available
-         free space above this threshold value. --> 
+         free space above this threshold value. -->
     <integer name="config_downloadDataDirLowSpaceThreshold">10</integer>
 
     <!-- When a database query is executed, the results retuned are paginated
@@ -263,5 +263,9 @@
 
     <!-- enabling WifiDisplay(Miracast Source)-->
     <bool name="config_enableWifiDisplay">true</bool>
+
+    <!-- CyanogenMod Performances Profiles -->
+    <string name="config_perf_profile_prop">powerhal</string>
+    <string name="config_perf_profile_default_entry">1</string>
 
 </resources>
