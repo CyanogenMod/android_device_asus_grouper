@@ -17,3 +17,6 @@ ro.zygote.disable_gl_preload=true
 
 # configure PRISM
 persist.tegra.didim.video = 5
+
+# disable PRISM by default
+persist.tegra.didim.enable=0
