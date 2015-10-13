@@ -50,7 +50,8 @@ PRODUCT_COPY_FILES += \
     device/asus/grouper/ueventd.grouper.rc:root/ueventd.grouper.rc \
     device/asus/grouper/init.grouper.usb.rc:root/init.grouper.usb.rc \
     device/asus/grouper/gps.conf:system/etc/gps.conf \
-    device/asus/grouper/touch_fw_update.sh:system/bin/touch_fw_update.sh
+    device/asus/grouper/touch_fw_update.sh:system/bin/touch_fw_update.sh \
+    device/asus/grouper/gps_daemon.sh:system/bin/gps_daemon.sh
 
 ifneq ($(TARGET_PREBUILT_WIFI_MODULE),)
 PRODUCT_COPY_FILES += \
@@ -86,6 +87,7 @@ PRODUCT_PACKAGES := \
     wpa_supplicant.conf
 
 PRODUCT_PACKAGES += \
+    sensors-config \
     lights.grouper \
     audio.primary.grouper \
     power.grouper \
@@ -104,6 +106,7 @@ PRODUCT_PACKAGES += \
 # NFC packages
 PRODUCT_PACKAGES += \
     nfc.grouper \
+    libnfc\
     Nfc \
     Tag
 

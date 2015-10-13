@@ -291,7 +291,6 @@ on boot
     chown gps system /dev/ttyHS1
     chmod 0660 /dev/ttyHS1
 
-
 # Load WiFi driver
 
 # BB mapping symbolic name to the logging ttyACM port
@@ -397,7 +396,7 @@ service bugreport /system/bin/dumpstate -d -p -B \
     keycodes 115 114
 
 # Start GPS daemon
-service gps-daemon /system/bin/glgps -c /system/etc/gps/gpsconfig.xml
+service gps-daemon /system/bin/gps_daemon.sh
   user gps
   group system
   class late_start

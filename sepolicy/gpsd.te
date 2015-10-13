@@ -1,1 +1,17 @@
-allow gpsd self:process execmem;
+type glgps, domain;
+type glgps_exec, exec_type, file_type;
+
+# Started by init
+init_daemon_domain(glgps)
+
+allow glgps shell_exec:file r_file_perms;
+
+#for text relocs & execution
+allow glgps system_file:file { execute_no_trans execmod };
+allow glgps gps_device:chr_file { getattr setattr };
+allow glgps gps_data_file:dir { search write add_name remove_name };
+allow glgps gps_data_file:file { create rw_file_perms };
+allow glgps gps_data_file:fifo_file { unlink create setattr getattr rw_file_perms };
+allow glgps sysfs:file { setattr write };
+allow glgps gps_device:chr_file { ioctl open read write };
+allow glgps glgps:udp_socket { create };

@@ -2,8 +2,8 @@ allow system_server { knv_device }:chr_file rw_file_perms;
 allow system_server elan_ip_device:chr_file rw_file_perms;
 
 # Access .gps.interface.pipe.to_gpsd.
-allow system_server gps_data_file:dir search;
-allow system_server gps_data_file:fifo_file { setattr rw_file_perms };
+allow system_server gps_data_file:dir rw_dir_perms;
+allow system_server gps_data_file:fifo_file { setattr rw_file_perms create };
 
 # Access /data/sensors.
 allow system_server sensors_data_file:dir r_dir_perms;
@@ -14,3 +14,5 @@ allow system_server sysfs_devices_tegradc:dir r_dir_perms;
 
 # CMHW sysfs files
 allow system_server sysfs_writable:file rw_file_perms;
+#text relocs
+allow system_server system_file:file execmod;

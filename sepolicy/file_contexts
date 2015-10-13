@@ -21,15 +21,24 @@
 /data/tf(/.*)?                    u:object_r:tee_data_file:s0
 
 /system/bin/brcm_patchram_plus -- u:object_r:hci_attach_exec:s0
-/system/bin/glgps              -- u:object_r:gpsd_exec:s0
 /system/bin/sensors-config     -- u:object_r:sensors_config_exec:s0
 /system/bin/touch_fw_update.sh -- u:object_r:touch_fw_update_exec:s0
 
 /sys/devices/tegradc\.0(/.*)?                u:object_r:sysfs_devices_tegradc:s0
 /sys/devices/tegradc\.1(/.*)?                u:object_r:sysfs_devices_tegradc:s0
-/sys/devices/platform/tegra-i2c.1/i2c-1/1-0010/update_fw    --  u:object_r:sysfs_firmware_writable:s0
+/sys/devices/platform/tegra-i2c.1/i2c-1/1-0010/update_fw    u:object_r:sysfs_firmware_writable:s0
 /sys/devices/platform/bcm4330_rfkill/rfkill/rfkill0/state   --  u:object_r:sysfs_bluetooth_writable:s0
 /sys/devices/platform/bcm4330_rfkill/rfkill/rfkill0/type    --  u:object_r:sysfs_bluetooth_writable:s0
 
 # Hardware tunable
 /sys/devices/tegradc.0/smartdimmer/enable              u:object_r:sysfs_writable:s0
+/sys/class/gpio/gpio162/value      u:object_r:sysfs_firmware_writable:s0
+/sys/class/gpio/gpio162/direction      u:object_r:sysfs_firmware_writable:s0
+
+/dev/block/mmcblk0                 u:object_r:root_block_device:s0
+/dev/block/platform/sdhci-tegra.3/by-name/UDA     u:object_r:userdata_block_device:s0
+/dev/block/platform/sdhci-tegra.3/by-name/CAC     u:object_r:cache_block_device:s0
+/dev/block/zram0     u:object_r:swap_block_device:s0
+
+/system/bin/setup_fs	--	u:object_r:setupfs_exec:s0
+/system/bin/gps_daemon.sh        u:object_r:glgps_exec:s0
