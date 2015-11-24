@@ -1,0 +1,9 @@
+#allow init_shell sysfs_firmware_writable:file w_file_perms;
+#
+## Kernel bug for Linux < 3.3: sysfs inodes can lose their security context
+## and revert to the base sysfs type.
+allow init sysfs:file write;
+
+allow init sysfs_firmware_writable:file write;
+
+allow init sysfs_devices_tegradc:lnk_file { read };
