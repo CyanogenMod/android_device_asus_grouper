@@ -36,6 +36,14 @@ PRODUCT_PROPERTY_OVERRIDES := \
 PRODUCT_PROPERTY_OVERRIDES += \
     debug.hwui.render_dirty_regions=false
 
+PRODUCT_PROPERTY_OVERRIDES += \
+    config.disable_atlas=true \
+    dalvik.vm.jit.codecachesize=0 \
+    persist.sys.force_highendgfx=true \
+    ro.config.low_ram=true \
+    ro.config.max_starting_bg=6 \
+    ro.sys.fw.bg_apps_limit=12
+
 # Set default USB interface
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
     persist.sys.usb.config=mtp
@@ -44,7 +52,7 @@ PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
 PRODUCT_PROPERTY_OVERRIDES += \
     persist.sys.isUsbOtgEnabled=true
 
-include frameworks/native/build/tablet-7in-hdpi-1024-dalvik-heap.mk
+include frameworks/native/build/tablet-dalvik-heap.mk
 
 PRODUCT_COPY_FILES += \
     device/asus/grouper/rootdir/root/ueventd.grouper.rc:root/ueventd.grouper.rc \
