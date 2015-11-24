@@ -79,12 +79,15 @@ PRODUCT_COPY_FILES += \
     device/asus/grouper/sensor00fn11.idc:system/usr/idc/sensor00fn11.idc \
     device/asus/grouper/gpio-keys.kl:system/usr/keylayout/gpio-keys.kl
 
-PRODUCT_PACKAGES := \
+PRODUCT_PACKAGES += \
     libwpa_client \
     hostapd \
     dhcpcd.conf \
     wpa_supplicant \
     wpa_supplicant.conf
+
+PRODUCT_PACKAGES += \
+    libdgv1
 
 PRODUCT_PACKAGES += \
     lights.grouper \
