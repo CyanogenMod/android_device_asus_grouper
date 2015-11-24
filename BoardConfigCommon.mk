@@ -72,7 +72,7 @@ BOARD_HAVE_BLUETOOTH := true
 BOARD_HAVE_BLUETOOTH_BCM := true
 
 USE_OPENGL_RENDERER := true
-BOARD_EGL_CFG := device/asus/grouper/egl.cfg
+BOARD_EGL_CFG := device/asus/grouper/config/egl.cfg
 
 # Hardware tunables
 BOARD_HARDWARE_CLASS := device/asus/grouper/cmhw/

@@ -33,7 +33,7 @@ USE_PROPRIETARY_AUDIO_EXTENSIONS := false
 
 BOARD_HAL_STATIC_LIBRARIES := libdumpstate.grouper
 
-TARGET_RELEASETOOLS_EXTENSIONS := device/asus/grouper
+TARGET_RELEASETOOLS_EXTENSIONS := device/asus/grouper/releasetool
 
 -include vendor/asus/grouper/BoardConfigVendor.mk
 include device/asus/grouper/BoardConfigCommon.mk
