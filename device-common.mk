@@ -91,6 +91,7 @@ PRODUCT_PACKAGES += \
 
 PRODUCT_PACKAGES += \
     lights.grouper \
+    sensors-config \
     audio.primary.grouper \
     power.grouper \
     audio.a2dp.default \
