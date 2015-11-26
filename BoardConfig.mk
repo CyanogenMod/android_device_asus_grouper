@@ -40,4 +40,4 @@ include device/asus/grouper/BoardConfigCommon.mk
 
 TARGET_RECOVERY_FSTAB = device/asus/grouper/fstab.grouper
 
-MALLOC_IMPL := dlmalloc
+#BOARD_WIDEVINE_OEMCRYPTO_LEVEL := 1
