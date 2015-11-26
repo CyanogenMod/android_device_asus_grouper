@@ -264,4 +264,7 @@
     <!-- enabling WifiDisplay(Miracast Source)-->
     <bool name="config_enableWifiDisplay">true</bool>
 
+    <!-- enable doze powersaving mode -->
+    <bool name="config_enableAutoPowerModes">true</bool>
+
 </resources>
