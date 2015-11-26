@@ -1,0 +1,10 @@
+type touchfw, domain;
+type touchfw_exec, exec_type, file_type;
+
+# Started by init
+init_daemon_domain(touchfw)
+
+# Access to /sys/bus/i2c/drivers/elan-ktf3k/1-0010/update_fw
+allow touchfw sysfs_firmware_writable:file w_file_perms;
+
+allow touchfw shell_exec:file r_file_perms;

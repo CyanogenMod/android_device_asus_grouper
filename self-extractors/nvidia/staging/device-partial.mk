@@ -21,9 +21,9 @@ PRODUCT_PACKAGES := \
     nvavp_vid_ucode_alt \
     nvcamera \
     nvram \
-    libEGL_tegra \
-    libGLESv1_CM_tegra \
-    libGLESv2_tegra \
+    libEGL \
+    libGLESv1_CM \
+    libGLESv2 \
     gralloc.tegra3 \
     hwcomposer.tegra3 \
     libardrv_dynamic \
