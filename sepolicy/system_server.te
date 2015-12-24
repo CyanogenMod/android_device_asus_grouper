@@ -16,3 +16,7 @@ allow system_server sysfs_devices_tegradc:dir r_dir_perms;
 allow system_server sysfs_writable:file rw_file_perms;
 #text relocs
 allow system_server system_file:file execmod;
+
+allow system_server sysfs_devices_tegradc:dir search;
+allow system_server sysfs_devices_tegradc:file { read write getattr open };
+
