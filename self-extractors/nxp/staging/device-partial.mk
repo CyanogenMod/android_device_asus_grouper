@@ -1,6 +1,4 @@
-#!/bin/sh
-
-# Copyright (C) 2011 The Android Open Source Project
+# Copyright (C) 2010 The Android Open Source Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,25 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# start jb-dev
-# 334698 = JRN19
-# 342231 = JRN26D
-# 367578 = JRN60B
-# 386704 = JRN80
-# 391496 = JRN83D
-# 392829 = JRN84D
-# 397360 = JRO02C
-# 398337 = JRO03C
-# end jb-dev
-
-source ../../../common/clear-factory-images-variables.sh
-BUILD=398337
-DEVICE=grouper
-PRODUCT=nakasi
-VERSION=jro03c
-SRCPREFIX=signed-
-BOOTLOADERFILE=bootloader.bin
-BOOTLOADER=3.34
-SLEEPDURATION=10
-ERASEALL=true
-source ../../../common/generate-factory-images-common.sh
+# NXP blob(s) necessary for Grouper hardware
+PRODUCT_PACKAGES := \
+    libpn544_fw
